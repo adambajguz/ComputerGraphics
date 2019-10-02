@@ -5,6 +5,8 @@
 
     public sealed partial class MainPage
     {
+        //TODO clamp to 255
+
         private async void AddPageMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             int cR = 200, cG = 201, cB = 201;

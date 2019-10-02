@@ -5,6 +5,8 @@
 
     public static class ImageArithmeticHelper
     {
+        //TODO clamp to 255
+
         public static void AddConstToImage(WriteableBitmap bmp, int cR, int cG, int cB)
         {
             bmp.ForEach((x, y, color) =>
