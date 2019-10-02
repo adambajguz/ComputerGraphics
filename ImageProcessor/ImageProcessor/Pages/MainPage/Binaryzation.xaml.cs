@@ -11,10 +11,25 @@ namespace ImageProcessor.Pages
 {
     public partial class MainPage
     {
-
         private async void ConvertToGrayScalePageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             WriteableOutputImage = BinaryzationHelper.ConvertToGrayscale(WriteableOutputImage);
+
+            AddToUndo(WriteableOutputImage.Clone());
+            await UpdateOutputImage();
+        }
+
+        private async void ConvertToGrayScaleYUVPageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            WriteableOutputImage = BinaryzationHelper.ConvertToGrayscaleYUV(WriteableOutputImage);
+
+            AddToUndo(WriteableOutputImage.Clone());
+            await UpdateOutputImage();
+        }
+
+        private async void ConvertToGrayScaleYUVLikeColorimetricPageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            WriteableOutputImage = BinaryzationHelper.ConvertToGrayscaleYUVLikeColorimetric(WriteableOutputImage);
 
             AddToUndo(WriteableOutputImage.Clone());
             await UpdateOutputImage();
@@ -36,7 +51,7 @@ namespace ImageProcessor.Pages
 
         private async Task ManualBinaryzation(int threshold)
         {
-            ConvertToGrayScalePageMenuFlyoutItem_Click(null, null);
+            ConvertToGrayScaleYUVPageMenuFlyoutItem_Click(null, null);
 
             BinaryzationHelper.ManualBinaryzation(threshold, WriteableOutputImage);
 
@@ -47,7 +62,7 @@ namespace ImageProcessor.Pages
 
         private async void OtsuBinaryzationPageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            ConvertToGrayScalePageMenuFlyoutItem_Click(null, null);
+            ConvertToGrayScaleYUVPageMenuFlyoutItem_Click(null, null);
 
             int threshold = Otsu.GetOtsuThreshold(WriteableOutputImage);
 
@@ -74,7 +89,6 @@ namespace ImageProcessor.Pages
 
         private async void NiblackinaryzationPageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-
             NiblackBinaryzationDialog dialog = new NiblackBinaryzationDialog();
             ContentDialogResult result = await dialog.ShowAsync();
 

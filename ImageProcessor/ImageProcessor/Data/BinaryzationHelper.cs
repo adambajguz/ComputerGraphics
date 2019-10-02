@@ -28,7 +28,7 @@ namespace ImageProcessor.Data
             return true;
         }
 
-        public static WriteableBitmap ConvertToGrayscale(WriteableBitmap WriteableOutputImage)
+        public static WriteableBitmap ConvertToGrayscaleYUVLikeColorimetric(WriteableBitmap WriteableOutputImage)
         {
             using (var context = WriteableOutputImage.GetBitmapContext(ReadWriteMode.ReadOnly))
             {
@@ -64,8 +64,80 @@ namespace ImageProcessor.Data
             return WriteableOutputImage;
         }
 
+        public static WriteableBitmap ConvertToGrayscaleYUV(WriteableBitmap WriteableOutputImage)
+        {
+            using (var context = WriteableOutputImage.GetBitmapContext(ReadWriteMode.ReadOnly))
+            {
+                var nWidth = context.Width;
+                var nHeight = context.Height;
+                var px = context.Pixels;
+                var result = BitmapFactory.New(nWidth, nHeight);
+
+                using (var dest = result.GetBitmapContext())
+                {
+                    var rp = dest.Pixels;
+                    var len = context.Length;
+                    for (var i = 0; i < len; ++i)
+                    {
+                        // Extract
+                        var c = px[i];
+                        var a = (c >> 24) & 0x000000FF;
+                        var r = (c >> 16) & 0x000000FF;
+                        var g = (c >> 8) & 0x000000FF;
+                        var b = (c) & 0x000000FF;
+
+                        // Convert to gray with constant factors 0.2126, 0.7152, 0.0722
+                        var gray = (byte)(r * 0.299 + g * 0.587 + b * 0.114);
+                        r = g = b = gray;
+
+                        // Set
+                        rp[i] = (a << 24) | (r << 16) | (g << 8) | b;
+                    }
+                }
+                WriteableOutputImage = result;
+            }
+
+            return WriteableOutputImage;
+        }
+
+        public static WriteableBitmap ConvertToGrayscale(WriteableBitmap WriteableOutputImage)
+        {
+            using (var context = WriteableOutputImage.GetBitmapContext(ReadWriteMode.ReadOnly))
+            {
+                var nWidth = context.Width;
+                var nHeight = context.Height;
+                var px = context.Pixels;
+                var result = BitmapFactory.New(nWidth, nHeight);
+
+                using (var dest = result.GetBitmapContext())
+                {
+                    var rp = dest.Pixels;
+                    var len = context.Length;
+                    for (var i = 0; i < len; ++i)
+                    {
+                        // Extract
+                        var c = px[i];
+                        var a = (c >> 24) & 0x000000FF;
+                        var r = (c >> 16) & 0x000000FF;
+                        var g = (c >> 8) & 0x000000FF;
+                        var b = (c) & 0x000000FF;
+
+                        // Convert to gray with constant factors 0.2126, 0.7152, 0.0722
+                        var gray = (byte)((r + g + b) / 3);
+                        r = g = b = gray;
+
+                        // Set
+                        rp[i] = (a << 24) | (r << 16) | (g << 8) | b;
+                    }
+                }
+                WriteableOutputImage = result;
+            }
+
+            return WriteableOutputImage;
+        }
+
         public static WriteableBitmap ManualBinaryzation(int threshold, WriteableBitmap bitmap)
-        {         
+        {
             bitmap.ForEach((x, y, curColor) =>
             {
                 if (curColor.R > threshold)

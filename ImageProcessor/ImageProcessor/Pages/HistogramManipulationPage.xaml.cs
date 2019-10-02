@@ -56,7 +56,7 @@ namespace ImageProcessor.Pages
                 {
                     Title = "Red",
                     Values = new ChartValues<int>(data.R.AsEnumerable()),
-                    Fill = new SolidColorBrush(Colors.Red),
+                    Fill = new SolidColorBrush(Colors.Red)
                 }
             };
             RPlot.Series = SeriesCollectionR;
@@ -67,7 +67,7 @@ namespace ImageProcessor.Pages
                 {
                     Title = "Green",
                     Values = new ChartValues<int>(data.G.AsEnumerable()),
-                    Fill = new SolidColorBrush(Colors.Green),
+                    Fill = new SolidColorBrush(Colors.Green)
                 }
             };
             GPlot.Series = SeriesCollectionG;
@@ -78,7 +78,7 @@ namespace ImageProcessor.Pages
                 {
                     Title = "Blue",
                     Values = new ChartValues<int>(data.B.AsEnumerable()),
-                    Fill = new SolidColorBrush(Colors.Blue),
+                    Fill = new SolidColorBrush(Colors.Blue)
                 }
             };
             BPlot.Series = SeriesCollectionB;
@@ -89,7 +89,7 @@ namespace ImageProcessor.Pages
                 {
                     Title = "(R+G+B)/3",
                     Values = new ChartValues<int>(data.C.AsEnumerable()),
-                    Fill = new SolidColorBrush(Colors.Black),
+                    Fill = new SolidColorBrush(Colors.Black)
                 }
             };
             CPlot.Series = SeriesCollectionC;

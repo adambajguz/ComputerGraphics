@@ -123,8 +123,11 @@
     <Compile Include="Data\ArrayUtil.cs" />
     <Compile Include="Data\BinaryzationHelper.cs" />
     <Compile Include="Data\FingerprintHelper.cs" />
+    <Compile Include="Data\GaussianBlureHelper.cs" />
+    <Compile Include="Data\ImageArithmeticHelper.cs" />
     <Compile Include="Data\ImageHistogramData.cs" />
     <Compile Include="Data\KMMHelper.cs" />
+    <Compile Include="Data\MedianFilterHelper.cs" />
     <Compile Include="Data\Minutiae.cs" />
     <Compile Include="Data\MinutiaeType.cs" />
     <Compile Include="Data\NiblackThreshold.cs" />
@@ -133,6 +136,15 @@
     <Compile Include="Data\WriteableBitmapCovolute.cs" />
     <Compile Include="Dialogs\CustomConvolutionFilterDialog.xaml.cs">
       <DependentUpon>CustomConvolutionFilterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\MedianFilterDialog.xaml.cs">
+      <DependentUpon>MedianFilterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\GaussianBlurDialog.xaml.cs">
+      <DependentUpon>GaussianBlurDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SaveDialog.xaml.cs">
+      <DependentUpon>SaveDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\NiblackBinaryzationDialog.xaml.cs">
       <DependentUpon>NiblackBinaryzationDialog.xaml</DependentUpon>
@@ -143,18 +155,28 @@
     <Compile Include="Pages\FingerprintPage.xaml.cs">
       <DependentUpon>FingerprintPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MainPageFilters.xaml.cs" />
+    <Compile Include="Pages\MainPage\Arithmetic.cs" />
+    <Compile Include="Pages\MainPage\BasicOperations.cs" />
+    <Compile Include="Pages\MainPage\Canvas.cs" />
+    <Compile Include="Pages\MainPage\Filters.xaml.cs" />
     <Compile Include="Pages\HistogramManipulationPage.xaml.cs">
       <DependentUpon>HistogramManipulationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MainPageBinaryzation.xaml.cs" />
-    <Compile Include="Pages\MainPageNavigation.xaml.cs" />
+    <Compile Include="Pages\MainPage\Binaryzation.xaml.cs" />
+    <Compile Include="Pages\MainPage\File\Load.cs" />
+    <Compile Include="Pages\MainPage\Navigation.xaml.cs" />
     <Compile Include="Dialogs\PixelManagerDialog.xaml.cs">
       <DependentUpon>PixelManagerDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\MainPage\OpenDialog.cs" />
+    <Compile Include="Pages\MainPage\Page.cs" />
+    <Compile Include="Pages\MainPage\File\Save.cs" />
+    <Compile Include="Pages\MainPage\TrackScroll.cs" />
+    <Compile Include="Pages\MainPage\Undo.cs" />
+    <Compile Include="Pages\MainPage\Zoom.cs" />
     <Compile Include="Pages\PixelManagerPage.xaml.cs">
       <DependentUpon>PixelManagerPage.xaml</DependentUpon>
     </Compile>
@@ -224,6 +246,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Dialogs\MedianFilterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\GaussianBlurDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\SaveDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Dialogs\NiblackBinaryzationDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -254,21 +288,21 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="LiveCharts">
-      <Version>0.8.1.1</Version>
-    </PackageReference>
     <PackageReference Include="LiveCharts.Uwp">
       <Version>0.8.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.8</Version>
+      <Version>6.2.9</Version>
     </PackageReference>
     <PackageReference Include="Win2D.uwp">
       <Version>1.23.0</Version>
     </PackageReference>
     <PackageReference Include="WriteableBitmapEx">
-      <Version>1.6.2</Version>
+      <Version>1.6.3</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Enums\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

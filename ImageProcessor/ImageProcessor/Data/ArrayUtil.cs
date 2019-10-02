@@ -4,7 +4,7 @@ namespace ImageProcessor.Data
 {
     public class ArrayUtil
     {
-        public static double[,] sumNeighborhoods(double[,] sum, double[,] arr, int neighborhood)
+        public static double[,] SumNeighborhoods(double[,] sum, double[,] arr, int neighborhood)
         {
             int n = (neighborhood - 1) / 2;
             int rows = arr.GetLength(0);
@@ -67,7 +67,7 @@ namespace ImageProcessor.Data
             return sum;
         }
 
-        public static double[,] squareEach(double[,] squares, double[,] arr)
+        public static double[,] SquareEach(double[,] squares, double[,] arr)
         {
             int rows = arr.GetLength(0);
             int cols = arr.GetLength(1);
@@ -84,7 +84,7 @@ namespace ImageProcessor.Data
         }
 
 
-        public static double[,] squareRootEach(double[,] squareRoots, double[,] arr)
+        public static double[,] SquareRootEach(double[,] squareRoots, double[,] arr)
         {
             int rows = arr.GetLength(0);
             int cols = arr.GetLength(1);
@@ -99,7 +99,7 @@ namespace ImageProcessor.Data
             return squareRoots;
         }
 
-        public static double[,] multiplyEach(double[,] products, double[,] arr, double val)
+        public static double[,] MultiplyEach(double[,] products, double[,] arr, double val)
         {
             int rows = arr.GetLength(0);
             int cols = arr.GetLength(1);
@@ -114,15 +114,15 @@ namespace ImageProcessor.Data
             return products;
         }
 
-        public static double[,] add(double[,] a, double[,] b)
+        public static double[,] Add(double[,] a, double[,] b)
         {
             int rows = a.GetLength(0);
             int cols = a.GetLength(1);
             double[,] target = new double[rows, cols];
-            return add(target, a, b);
+            return Add(target, a, b);
         }
 
-        public static double[,] add(double[,] sum, double[,] a, double[,] b)
+        public static double[,] Add(double[,] sum, double[,] a, double[,] b)
         {
             int rows = a.GetLength(0);
             int cols = b.GetLength(1);
@@ -137,7 +137,7 @@ namespace ImageProcessor.Data
             return sum;
         }
 
-        public static double[,] subtract(double[,] difference, double[,] a, double[,] b)
+        public static double[,] Subtract(double[,] difference, double[,] a, double[,] b)
         {
             int rows = a.GetLength(0);
             int cols = a.GetLength(1);
@@ -152,49 +152,49 @@ namespace ImageProcessor.Data
             return difference;
         }
 
-        public static double[,] meanNeighborhood(double[,] arr, int neighborhood)
+        public static double[,] MeanNeighborhood(double[,] arr, int neighborhood)
         {
             int rows = arr.GetLength(0);
             int cols = arr.GetLength(1);
 
             double[,] target = new double[rows, cols];
-            return meanNeighborhood(target, arr, neighborhood);
+            return MeanNeighborhood(target, arr, neighborhood);
         }
 
-        public static double[,] meanNeighborhood(double[,] target, double[,] arr, int neighborhood)
+        public static double[,] MeanNeighborhood(double[,] target, double[,] arr, int neighborhood)
         {
             int count = neighborhood * neighborhood;
-            double[,] sums = sumNeighborhoods(target, arr, neighborhood);
-            return multiplyEach(target, sums, 1.0 / count);
+            double[,] sums = SumNeighborhoods(target, arr, neighborhood);
+            return MultiplyEach(target, sums, 1.0 / count);
         }
 
-        public static double[,] stdevNeighborhood(double[,] arr, int neighborhood)
+        public static double[,] StdevNeighborhood(double[,] arr, int neighborhood)
         {
             int rows = arr.GetLength(0);
             int cols = arr.GetLength(1);
 
             double[,] target = new double[rows, cols]; //new array
-            return stdevNeighborhood(target, arr, neighborhood);
+            return StdevNeighborhood(target, arr, neighborhood);
         }
 
-        public static double[,] stdevNeighborhood(double[,] target, double[,] arr, int neighborhood)
+        public static double[,] StdevNeighborhood(double[,] target, double[,] arr, int neighborhood)
         {
             //See the 'Rapid calculation methods' in the 'Standard Deviation' 
             //Wikipedia entry for this formula.
             int count = neighborhood * neighborhood;
 
-            double[,] meansSquared = meanNeighborhood(arr, neighborhood); //new array
-            squareEach(meansSquared, meansSquared);
+            double[,] meansSquared = MeanNeighborhood(arr, neighborhood); //new array
+            SquareEach(meansSquared, meansSquared);
 
-            double[,] squaresMean = squareEach(target, arr);
-            squaresMean = meanNeighborhood(target, squaresMean, neighborhood);
+            double[,] squaresMean = SquareEach(target, arr);
+            squaresMean = MeanNeighborhood(target, squaresMean, neighborhood);
 
-            subtract(target, squaresMean, meansSquared);
-            squareRootEach(target, target);
+            Subtract(target, squaresMean, meansSquared);
+            SquareRootEach(target, target);
             return target;
         }
 
-        public static double[,] toDoubleArray(short[,] arr)
+        public static double[,] ToDoubleArray(short[,] arr)
         {
             int rows = arr.GetLength(0);
             int cols = arr.GetLength(1);

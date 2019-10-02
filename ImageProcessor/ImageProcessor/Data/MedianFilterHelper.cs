@@ -1,143 +1,12 @@
 ﻿using System;
-using ImageProcessor.Data;
-using ImageProcessor.Dialogs;
 using Windows.UI;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace ImageProcessor.Pages
+namespace ImageProcessor.Data
 {
-    public partial class MainPage
+    public static class MedianFilterHelper
     {
-        private static readonly int[,] PrewittX = {
-                                                    {1, 0, -1},
-                                                    {1, 0, -1},
-                                                    {1, 0, -1}
-                                                  };
-        private static readonly int[,] PrewittY = {
-                                                     { 1,  1,  1},
-                                                     { 0,  0,  0},
-                                                     {-1, -1, -1}
-                                                  };
-
-        private static readonly int[,] SobelX = {
-                                                   {-1, 0, 1},
-                                                   {-2, 0, 2},
-                                                   {-1, 0, 1}
-                                                };
-        private static readonly int[,] SobelY = {
-                                                    {-1, -2, -1},
-                                                    { 0,  0,  0},
-                                                    { 1,  2,  1}
-                                                };
-        //https://homepages.inf.ed.ac.uk/rbf/HIPR2/log.htm
-        private static readonly int[,] Laplace1 = {
-                                                    { 0, -1,  0},
-                                                    {-1,  4, -1},
-                                                    { 0, -1,  0}
-                                                };
-
-        private static readonly int[,] Laplace2 = {
-                                                    {-1, -1, -1},
-                                                    {-1,  8, -1},
-                                                    {-1, -1, -1}
-                                                };
-
-
-        private async void CustomPageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            CustomConvolutionFilterDialog dialog = new CustomConvolutionFilterDialog();
-            ContentDialogResult result = await dialog.ShowAsync();
-
-
-            if (result == ContentDialogResult.Secondary)
-            {
-                WriteableOutputImage = WriteableBitmapCovolute.Convolute(WriteableOutputImage, await dialog.GetKernel());
-
-                AddToUndo(WriteableOutputImage.Clone());
-                await UpdateOutputImage();
-            }
-            else
-            {
-                // The user clicked the CLoseButton, pressed ESC, Gamepad B, or the system back button.
-                // Do nothing.
-            }
-        }
-
-        private async void PrewittXPageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            WriteableOutputImage = WriteableBitmapCovolute.Convolute(WriteableOutputImage, PrewittX);
-
-            AddToUndo(WriteableOutputImage.Clone());
-            await UpdateOutputImage();
-        }
-
-        private async void PrewittYPageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            WriteableOutputImage = WriteableBitmapCovolute.Convolute(WriteableOutputImage, PrewittY);
-
-            AddToUndo(WriteableOutputImage.Clone());
-            await UpdateOutputImage();
-        }
-
-        private async void SobelXPageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            WriteableOutputImage = WriteableBitmapCovolute.Convolute(WriteableOutputImage, SobelX);
-
-            AddToUndo(WriteableOutputImage.Clone());
-            await UpdateOutputImage();
-        }
-
-        private async void SobelYPageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            WriteableOutputImage = WriteableBitmapCovolute.Convolute(WriteableOutputImage, SobelY);
-
-            AddToUndo(WriteableOutputImage.Clone());
-            await UpdateOutputImage();
-        }
-
-        private async void Laplace1PageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            WriteableOutputImage = WriteableBitmapCovolute.Convolute(WriteableOutputImage, Laplace1);
-
-            AddToUndo(WriteableOutputImage.Clone());
-            await UpdateOutputImage();
-        }
-
-        private async void Laplace2PageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            WriteableOutputImage = WriteableBitmapCovolute.Convolute(WriteableOutputImage, Laplace2);
-
-            AddToUndo(WriteableOutputImage.Clone());
-            await UpdateOutputImage();
-        }
-
-        private async void KuwaharaPageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            KuwaharaFilter(WriteableOutputImage, 5);
-
-            AddToUndo(WriteableOutputImage.Clone());
-            await UpdateOutputImage();
-        }
-
-        private async void Median3x3PageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            MedianFilter(WriteableOutputImage, 3);
-
-            AddToUndo(WriteableOutputImage.Clone());
-            await UpdateOutputImage();
-        }
-
-        private async void Medain5x5PageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            MedianFilter(WriteableOutputImage, 5);
-
-            AddToUndo(WriteableOutputImage.Clone());
-            await UpdateOutputImage();
-        }
-
-        public void MedianFilter(WriteableBitmap Input, int maskSize)
+        public static void MedianFilter(WriteableBitmap Input, int maskSize)
         {
             int width = Input.PixelWidth;
             int height = Input.PixelHeight;
@@ -195,7 +64,7 @@ namespace ImageProcessor.Pages
 
         }
 
-        public void KuwaharaFilter(WriteableBitmap Image, int size)
+        public static void KuwaharaFilter(WriteableBitmap Image, int size)
         {
             int width = Image.PixelWidth;
             int height = Image.PixelHeight;

@@ -56,10 +56,10 @@ namespace ImageProcessor.Data
             }
 
 
-            double[,] dataFloat = ArrayUtil.toDoubleArray(data);
-            double[,] stdev = ArrayUtil.stdevNeighborhood(dataFloat, neighborhoodSize);
-            double[,] mean = ArrayUtil.meanNeighborhood(dataFloat, neighborhoodSize);
-            double[,] threshold = ArrayUtil.add(dataFloat, mean, ArrayUtil.multiplyEach(dataFloat, stdev, k));
+            double[,] dataFloat = ArrayUtil.ToDoubleArray(data);
+            double[,] stdev = ArrayUtil.StdevNeighborhood(dataFloat, neighborhoodSize);
+            double[,] mean = ArrayUtil.MeanNeighborhood(dataFloat, neighborhoodSize);
+            double[,] threshold = ArrayUtil.Add(dataFloat, mean, ArrayUtil.MultiplyEach(dataFloat, stdev, k));
 
             input.ForEach((x, y, curColor) =>
             {

@@ -42,6 +42,8 @@
                     <MenuFlyoutSeparator/>
 
                     <MenuFlyoutItem Text="Convert to grayscale" Click="ConvertToGrayScalePageMenuFlyoutItem_Click"/>
+                    <MenuFlyoutItem Text="Convert to grayscale YUV" Click="ConvertToGrayScaleYUVPageMenuFlyoutItem_Click"/>
+                    <MenuFlyoutItem Text="Convert to grayscale YUVLikeColorimetric" Click="ConvertToGrayScaleYUVLikeColorimetricPageMenuFlyoutItem_Click"/>
                     <MenuFlyoutItem Text="Invert" Click="InvertMenuFlyoutItem_Click"/>
 
                     <MenuFlyoutSubItem Text="Binaryzation">
@@ -49,10 +51,18 @@
                         <MenuFlyoutItem Text="Otsu binaryzation" Click="OtsuBinaryzationPageMenuFlyoutItem_Click"/>
                         <MenuFlyoutItem Text="Niblack binaryzation" Click="NiblackinaryzationPageMenuFlyoutItem_Click"/>
                     </MenuFlyoutSubItem>
+                    
+                    <MenuFlyoutSubItem Text="Arithmetic">
+                        <MenuFlyoutItem Text="Add" Click="AddPageMenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Text="Subtract" Click="SubtractPageMenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Text="Multiply" Click="MultiplyPageMenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Text="Divide" Click="DividePageMenuFlyoutItem_Click"/>
+                    </MenuFlyoutSubItem>
 
                     <MenuFlyoutSeparator/>
                     <MenuFlyoutSubItem Text="Convolution filters">
                         <MenuFlyoutItem Text="Low/High pass or custom" Click="CustomPageMenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Text="Gaussian blur" Click="GaussianBlurPageMenuFlyoutItem_Click"/>
                         <MenuFlyoutSeparator/>
                         <MenuFlyoutItem Text="Prewitt X" Click="PrewittXPageMenuFlyoutItem_Click"/>
                         <MenuFlyoutItem Text="Prewitt Y" Click="PrewittYPageMenuFlyoutItem_Click"/>
@@ -66,7 +76,8 @@
                     <MenuFlyoutSubItem Text="Nonlinear filters">
                         <MenuFlyoutItem Text="Kuwahara" Click="KuwaharaPageMenuFlyoutItem_Click"/>
                         <MenuFlyoutItem Text="Median 3x3" Click="Median3x3PageMenuFlyoutItem_Click"/>
-                        <MenuFlyoutItem Text="Median 5x5" Click="Medain5x5PageMenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Text="Median 5x5" Click="Median5x5PageMenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Text="Median Custom" Click="MedianCustomPageMenuFlyoutItem_Click"/>
                     </MenuFlyoutSubItem>
                 </MenuBarItem>
 
