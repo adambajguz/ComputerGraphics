@@ -111,7 +111,7 @@
                 }
                 catch (Exception)
                 {
-                    await ShowFileOperationErrorDialog("An error occured during file open. Damaged file!");
+                    await ShowErrorDialog("An error occured during file open. Damaged file!");
                     return;
                 }
 

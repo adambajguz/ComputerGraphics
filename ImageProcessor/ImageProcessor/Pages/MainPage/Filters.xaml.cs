@@ -62,6 +62,29 @@ namespace ImageProcessor.Pages
                 // The user clicked the CLoseButton, pressed ESC, Gamepad B, or the system back button.
                 // Do nothing.
             }
+        }      
+        
+        private async void CustomConvolutionPageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            AnySizeCustomConvolutionFilterDialog dialog = new AnySizeCustomConvolutionFilterDialog();
+            ContentDialogResult result = await dialog.ShowAsync();
+
+
+            if (result == ContentDialogResult.Secondary)
+            {
+                if (dialog.Kernel != null)
+                {
+                    WriteableOutputImage = WriteableBitmapCovolute.Convolute(WriteableOutputImage, dialog.Kernel);
+
+                    AddToUndo(WriteableOutputImage.Clone());
+                    await UpdateOutputImage();
+                }
+            }
+            else
+            {
+                // The user clicked the CLoseButton, pressed ESC, Gamepad B, or the system back button.
+                // Do nothing.
+            }
         }
 
         private async void GaussianBlurPageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)

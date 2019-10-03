@@ -31,7 +31,7 @@
             await aboutDialog.ShowAsync();
         }
 
-        private async Task ShowFileOperationErrorDialog(string text)
+        private async Task ShowErrorDialog(string text)
         {
             ContentDialog aboutDialog = new ContentDialog
             {

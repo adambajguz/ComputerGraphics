@@ -134,6 +134,9 @@
     <Compile Include="Data\OtsuThreshold.cs" />
     <Compile Include="Data\PixelHelper.cs" />
     <Compile Include="Data\WriteableBitmapCovolute.cs" />
+    <Compile Include="Dialogs\AnySizeCustomConvolutionFilterDialog.xaml.cs">
+      <DependentUpon>AnySizeCustomConvolutionFilterDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\ThreeIntsDialog.xaml.cs">
       <DependentUpon>ThreeIntsDialog.xaml</DependentUpon>
     </Compile>
@@ -245,6 +248,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Dialogs\AnySizeCustomConvolutionFilterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Dialogs\ThreeIntsDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -300,6 +307,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.9</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.2</Version>
     </PackageReference>
     <PackageReference Include="Win2D.uwp">
       <Version>1.23.0</Version>

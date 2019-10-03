@@ -41,17 +41,20 @@
                     <MenuFlyoutItem Text="Histograms" Click="OpenHistogramsPageMenuFlyoutItem_Click"/>
                     <MenuFlyoutSeparator/>
 
-                    <MenuFlyoutItem Text="Convert to grayscale" Click="ConvertToGrayScalePageMenuFlyoutItem_Click"/>
-                    <MenuFlyoutItem Text="Convert to grayscale YUV" Click="ConvertToGrayScaleYUVPageMenuFlyoutItem_Click"/>
-                    <MenuFlyoutItem Text="Convert to grayscale YUVLikeColorimetric" Click="ConvertToGrayScaleYUVLikeColorimetricPageMenuFlyoutItem_Click"/>
                     <MenuFlyoutItem Text="Invert" Click="InvertMenuFlyoutItem_Click"/>
+
+                    <MenuFlyoutSubItem Text="Conversion">
+                        <MenuFlyoutItem Text="Convert to grayscale" Click="ConvertToGrayScalePageMenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Text="Convert to grayscale YUV" Click="ConvertToGrayScaleYUVPageMenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Text="Convert to grayscale YUVLikeColorimetric" Click="ConvertToGrayScaleYUVLikeColorimetricPageMenuFlyoutItem_Click"/>
+                    </MenuFlyoutSubItem>
 
                     <MenuFlyoutSubItem Text="Binaryzation">
                         <MenuFlyoutItem Text="Manual binaryzation" Click="ManualBinaryzationPageMenuFlyoutItem_Click"/>
                         <MenuFlyoutItem Text="Otsu binaryzation" Click="OtsuBinaryzationPageMenuFlyoutItem_Click"/>
                         <MenuFlyoutItem Text="Niblack binaryzation" Click="NiblackinaryzationPageMenuFlyoutItem_Click"/>
                     </MenuFlyoutSubItem>
-                    
+
                     <MenuFlyoutSubItem Text="Arithmetic">
                         <MenuFlyoutItem Text="Add" Click="AddPageMenuFlyoutItem_Click"/>
                         <MenuFlyoutItem Text="Subtract" Click="SubtractPageMenuFlyoutItem_Click"/>
@@ -61,7 +64,8 @@
 
                     <MenuFlyoutSeparator/>
                     <MenuFlyoutSubItem Text="Convolution filters">
-                        <MenuFlyoutItem Text="Low/High pass or custom" Click="CustomPageMenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Text="Low/High pass or 3x3 custom" Click="CustomPageMenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Text="Custom convolution" Click="CustomConvolutionPageMenuFlyoutItem_Click"/>
                         <MenuFlyoutItem Text="Gaussian blur" Click="GaussianBlurPageMenuFlyoutItem_Click"/>
                         <MenuFlyoutSeparator/>
                         <MenuFlyoutItem Text="Prewitt X" Click="PrewittXPageMenuFlyoutItem_Click"/>
