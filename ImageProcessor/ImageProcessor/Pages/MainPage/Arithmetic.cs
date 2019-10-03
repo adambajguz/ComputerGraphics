@@ -1,6 +1,9 @@
 ﻿namespace ImageProcessor.Pages
 {
+    using System;
     using ImageProcessor.Data;
+    using ImageProcessor.Dialogs;
+    using Windows.UI.Xaml.Controls;
     using Windows.UI.Xaml.Media.Imaging;
 
     public sealed partial class MainPage
@@ -9,42 +12,86 @@
 
         private async void AddPageMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            int cR = 200, cG = 201, cB = 201;
+            ThreeIntsDialog dialog = new ThreeIntsDialog("Add", "Default value for empty cell is 0", "Red", "Green", "Blue", true, false);
+            ContentDialogResult result = await dialog.ShowAsync();
 
-            AddToUndo(WriteableOutputImage.Clone());
-            ImageArithmeticHelper.AddConstToImage(WriteableOutputImage, cR, cG, cB);
+            if (result == ContentDialogResult.Secondary)
+            {
+                int[] c = await dialog.GetValues();
 
-            await UpdateOutputImage();
+                AddToUndo(WriteableOutputImage.Clone());
+                ImageArithmeticHelper.AddConstToImage(WriteableOutputImage, c[0], c[1], c[2]);
+
+                await UpdateOutputImage();
+            }
+            else
+            {
+                // The user clicked the CLoseButton, pressed ESC, Gamepad B, or the system back button.
+                // Do nothing.
+            }
         }
 
         private async void SubtractPageMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            int cR = 1, cG = 1, cB = 1;
+            ThreeIntsDialog dialog = new ThreeIntsDialog("Subtract", "Default value for empty cell is 0", "Red", "Green", "Blue", true, false);
+            ContentDialogResult result = await dialog.ShowAsync();
 
-            AddToUndo(WriteableOutputImage.Clone());
-            ImageArithmeticHelper.SubtractConstToImage(WriteableOutputImage, cR, cG, cB);
+            if (result == ContentDialogResult.Secondary)
+            {
+                int[] c = await dialog.GetValues();
 
-            await UpdateOutputImage();
+                AddToUndo(WriteableOutputImage.Clone());
+                ImageArithmeticHelper.SubtractConstToImage(WriteableOutputImage, c[0], c[1], c[2]);
+
+                await UpdateOutputImage();
+            }
+            else
+            {
+                // The user clicked the CLoseButton, pressed ESC, Gamepad B, or the system back button.
+                // Do nothing.
+            }
         }
 
         private async void MultiplyPageMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            int cR = 2, cG = 1, cB = 1;
+            ThreeIntsDialog dialog = new ThreeIntsDialog("Multiply", "Default value for empty cell is 1", "Red", "Green", "Blue", false, false);
+            ContentDialogResult result = await dialog.ShowAsync();
 
-            AddToUndo(WriteableOutputImage.Clone());
-            ImageArithmeticHelper.MultiplyConstToImage(WriteableOutputImage, cR, cG, cB);
+            if (result == ContentDialogResult.Secondary)
+            {
+                int[] c = await dialog.GetValues();
 
-            await UpdateOutputImage();
+                AddToUndo(WriteableOutputImage.Clone());
+                ImageArithmeticHelper.MultiplyConstToImage(WriteableOutputImage, c[0], c[1], c[2]);
+
+                await UpdateOutputImage();
+            }
+            else
+            {
+                // The user clicked the CLoseButton, pressed ESC, Gamepad B, or the system back button.
+                // Do nothing.
+            }
         }
 
         private async void DividePageMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            int cR = 1, cG = 1, cB = 1;
+            ThreeIntsDialog dialog = new ThreeIntsDialog("Divide", "Default value for empty or equal to 0 cell is 1", "Red", "Green", "Blue", false, true);
+            ContentDialogResult result = await dialog.ShowAsync();
 
-            AddToUndo(WriteableOutputImage.Clone());
-            ImageArithmeticHelper.DivideConstToImage(WriteableOutputImage, cR, cG, cB);
+            if (result == ContentDialogResult.Secondary)
+            {
+                int[] c = await dialog.GetValues();
 
-            await UpdateOutputImage();
+                AddToUndo(WriteableOutputImage.Clone());
+                ImageArithmeticHelper.DivideConstToImage(WriteableOutputImage, c[0], c[1], c[2]);
+
+                await UpdateOutputImage();
+            }
+            else
+            {
+                // The user clicked the CLoseButton, pressed ESC, Gamepad B, or the system back button.
+                // Do nothing.
+            }
         }
     }
 }
