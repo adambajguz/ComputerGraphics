@@ -41,6 +41,7 @@
                     <MenuFlyoutItem Text="Histograms" Click="OpenHistogramsPageMenuFlyoutItem_Click"/>
                     <MenuFlyoutSeparator/>
 
+                    <MenuFlyoutItem Text="Scale" Click="ScaleMenuFlyoutItem_Click"/>
                     <MenuFlyoutItem Text="Invert" Click="InvertMenuFlyoutItem_Click"/>
 
                     <MenuFlyoutSubItem Text="Conversion">
@@ -51,6 +52,8 @@
 
                     <MenuFlyoutSubItem Text="Binaryzation">
                         <MenuFlyoutItem Text="Manual binaryzation" Click="ManualBinaryzationPageMenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Text="Percentage Black Selection" Click="PercentageBlackSelectionPageMenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Text="Minimum Error" Click="MinimumErrorSelectionPageMenuFlyoutItem_Click"/>
                         <MenuFlyoutItem Text="Otsu binaryzation" Click="OtsuBinaryzationPageMenuFlyoutItem_Click"/>
                         <MenuFlyoutItem Text="Niblack binaryzation" Click="NiblackinaryzationPageMenuFlyoutItem_Click"/>
                     </MenuFlyoutSubItem>

@@ -2,12 +2,30 @@
 {
     using System;
     using System.Threading.Tasks;
+    using ImageProcessor.Data;
     using Windows.ApplicationModel.Core;
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
+    using Windows.UI.Xaml.Media.Imaging;
 
     public sealed partial class MainPage
     {
+        private async void InvertMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            AddToUndo(WriteableOutputImage.Clone());
+            WriteableOutputImage = WriteableOutputImage.Invert();
+
+            await UpdateOutputImage();
+        }
+
+        private async void ScaleMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            AddToUndo(WriteableOutputImage.Clone());
+            WriteableOutputImage = BitmapResizeHelper.Resize(WriteableOutputImage, WriteableOutputImage.PixelWidth * 2, WriteableOutputImage.PixelHeight * 2, );
+
+            await UpdateOutputImage();
+        }
+
         private void ExitMenuFlyoutItem_Click(object sender, RoutedEventArgs e) => CoreApplication.Exit();
 
 

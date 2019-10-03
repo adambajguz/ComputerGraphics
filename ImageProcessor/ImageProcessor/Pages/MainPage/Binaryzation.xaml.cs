@@ -13,25 +13,25 @@ namespace ImageProcessor.Pages
     {
         private async void ConvertToGrayScalePageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
+            AddToUndo(WriteableOutputImage.Clone());
             WriteableOutputImage = BinaryzationHelper.ConvertToGrayscale(WriteableOutputImage);
 
-            AddToUndo(WriteableOutputImage.Clone());
             await UpdateOutputImage();
         }
 
         private async void ConvertToGrayScaleBT601PageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
+            AddToUndo(WriteableOutputImage.Clone());
             WriteableOutputImage = BinaryzationHelper.ConvertToGrayscaleBT601(WriteableOutputImage);
 
-            AddToUndo(WriteableOutputImage.Clone());
             await UpdateOutputImage();
         }
 
         private async void ConvertToGrayScaleITUR_BT709PageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            WriteableOutputImage = BinaryzationHelper.ConvertToGrayscaleBT601(WriteableOutputImage);
-
             AddToUndo(WriteableOutputImage.Clone());
+            WriteableOutputImage = BinaryzationHelper.ConvertToGrayscaleITUR_BT709(WriteableOutputImage);
+
             await UpdateOutputImage();
         }
 
@@ -51,17 +51,63 @@ namespace ImageProcessor.Pages
 
         private async Task ManualBinaryzation(int threshold)
         {
+            AddToUndo(WriteableOutputImage.Clone());
             ConvertToGrayScaleITUR_BT709PageMenuFlyoutItem_Click(null, null);
 
             BinaryzationHelper.ManualBinaryzation(threshold, WriteableOutputImage);
 
-            AddToUndo(WriteableOutputImage.Clone());
             await UpdateOutputImage();
         }
 
+        private async void PercentageBlackSelectionPageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            ConvertToGrayScaleITUR_BT709PageMenuFlyoutItem_Click(null, null);
+
+            PercentageBlackSelectionBinaryzationDialog dialog = new PercentageBlackSelectionBinaryzationDialog();
+            ContentDialogResult result = await dialog.ShowAsync();
+
+            if (result == ContentDialogResult.Secondary)
+            {
+                AddToUndo(WriteableOutputImage.Clone());
+                if (ExtraThresholds.PercentageBlackSelectionCalculate(WriteableOutputImage, dialog.TresholdValue) == null)
+                {
+                    ConvertToGrayScaleITUR_BT709PageMenuFlyoutItem_Click(null, null);
+                    ExtraThresholds.PercentageBlackSelectionCalculate(WriteableOutputImage, dialog.TresholdValue);
+                }
+                await UpdateOutputImage();
+            }
+            else
+            {
+                // The user clicked the CLoseButton, pressed ESC, Gamepad B, or the system back button.
+                // Do nothing.
+            }
+        }
+
+        private async void MinimumErrorSelectionPageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            AddToUndo(WriteableOutputImage.Clone());
+            int? threshold = null;
+            if (ExtraThresholds.MinimumErrorCalculate(WriteableOutputImage, out threshold) == null)
+            {
+                ConvertToGrayScaleITUR_BT709PageMenuFlyoutItem_Click(null, null);
+                ExtraThresholds.MinimumErrorCalculate(WriteableOutputImage, out threshold);
+            }
+
+            ContentDialog dialog = new ContentDialog
+            {
+                Title = "Binaryzation",
+                Content = "Minimum Error threshold value = " + threshold ?? "[Error]",
+                CloseButtonText = "Ok"
+            };
+
+            ContentDialogResult result = await dialog.ShowAsync();
+
+            await UpdateOutputImage();
+        }
 
         private async void OtsuBinaryzationPageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
+            AddToUndo(WriteableOutputImage.Clone());
             ConvertToGrayScaleITUR_BT709PageMenuFlyoutItem_Click(null, null);
 
             int threshold = Otsu.GetOtsuThreshold(WriteableOutputImage);
@@ -74,7 +120,6 @@ namespace ImageProcessor.Pages
                 return Color.FromArgb(255, 0, 0, 0);
             });
 
-            AddToUndo(WriteableOutputImage.Clone());
             await UpdateOutputImage();
 
             ContentDialog dialog = new ContentDialog
@@ -104,12 +149,12 @@ namespace ImageProcessor.Pages
 
         private async Task NiblackBinaryzation(int size = 25, double k = 0.5)
         {
+            AddToUndo(WriteableOutputImage.Clone());
             ConvertToGrayScalePageMenuFlyoutItem_Click(null, null);
 
             NiblackThreshold niblack = new NiblackThreshold(size, k);
             WriteableOutputImage = niblack.Threshold(WriteableOutputImage);
 
-            AddToUndo(WriteableOutputImage.Clone());
             await UpdateOutputImage();
         }
     }

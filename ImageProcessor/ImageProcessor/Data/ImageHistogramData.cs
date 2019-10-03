@@ -1,10 +1,15 @@
-﻿using Windows.UI;
+﻿using System;
+using Windows.UI;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace ImageProcessor.Data
 {
     public class ImageHistogramData
     {
+        public bool IsGrayscale { get; private set; }
+
+        public int[] GrayscaleHistogram { get => IsGrayscale ? R : null; }
+
         public int[] R { get; private set; } = new int[256];
 
         public int[] G { get; private set; } = new int[256];
@@ -36,6 +41,8 @@ namespace ImageProcessor.Data
         {
             using (var context = Bitmap.GetBitmapContext(ReadWriteMode.ReadOnly))
             {
+                bool tmpIsGrayscale = true;
+
                 int[] pixels = context.Pixels;
 
                 for (int x = 0; x < Bitmap.PixelWidth; ++x)
@@ -59,10 +66,15 @@ namespace ImageProcessor.Data
                                                       (byte)((((c & 0xFF) * ai) >> 8)));
 
 
+                        if (tmp.R != tmp.G || tmp.R != tmp.B || tmp.G != tmp.B)
+                            tmpIsGrayscale = false;
+
                         ++R[tmp.R];
                         ++G[tmp.G];
                         ++B[tmp.B];
                     }
+
+                IsGrayscale = tmpIsGrayscale;
             }
         }
     }

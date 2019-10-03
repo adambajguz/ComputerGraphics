@@ -217,9 +217,9 @@
                 return;
             }
 
-            var size = InputVirtualBitmap.Size;
-            InputImageCanvas.Width = size.Width * (Zoom + 1);
-            InputImageCanvas.Height = size.Height * (Zoom + 1);
+          //  var size = InputVirtualBitmap.Size;
+            //InputImageCanvas.Width = size.Width * (Zoom + 1);
+          //  InputImageCanvas.Height = size.Height * (Zoom + 1);
             InputImageCanvas.Invalidate();
 
             //LoadedImageInfo = string.Format("{0}x{1} image, is {2}CachedOnDemand", size.Width, size.Height, virtualBitmap.IsCachedOnDemand ? "" : "not ");
@@ -243,9 +243,9 @@
                 return;
             }
 
-            var size = OutputVirtualBitmap.Size;
-            OutputImageCanvas.Width = size.Width * (Zoom + 1);
-            OutputImageCanvas.Height = size.Height * (Zoom + 1);
+           // var size = OutputVirtualBitmap.Size;
+            //OutputImageCanvas.Width = size.Width * (Zoom + 1);
+            //OutputImageCanvas.Height = size.Height * (Zoom + 1);
             OutputImageCanvas.Invalidate();
 
             //LoadedImageInfo = string.Format("{0}x{1} image, is {2}CachedOnDemand", size.Width, size.Height, virtualBitmap.IsCachedOnDemand ? "" : "not ");

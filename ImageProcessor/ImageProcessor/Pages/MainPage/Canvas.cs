@@ -8,12 +8,12 @@
 
     public sealed partial class MainPage
     {
-        private IRandomAccessStream InputImageStream;
-        private CanvasVirtualBitmap InputVirtualBitmap;
-        private IRandomAccessStream OutputImageStream;
-        private CanvasVirtualBitmap OutputVirtualBitmap;
-        public WriteableBitmap WriteableOutputImage;
-        public WriteableBitmap WriteableOutputImageCopy;
+        private IRandomAccessStream InputImageStream { get; set;  }
+        private CanvasVirtualBitmap InputVirtualBitmap { get; set; }
+        private IRandomAccessStream OutputImageStream { get; set; }
+        private CanvasVirtualBitmap OutputVirtualBitmap { get; set; }
+        public WriteableBitmap WriteableOutputImage { get; set; }
+        public WriteableBitmap WriteableOutputImageCopy { get; set; }
 
         private void InputImageCanvas_CreateResources(Microsoft.Graphics.Canvas.UI.Xaml.CanvasVirtualControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
         {
@@ -30,7 +30,11 @@
                 using (var ds = InputImageCanvas.CreateDrawingSession(region))
                 {
                     if (InputVirtualBitmap != null)
-                        ds.DrawImage(InputVirtualBitmap, new Rect(0, 0, region.Width * Zoom, region.Height * Zoom), new Rect(0, 0, region.Width, region.Height), 1.0f, CanvasImageInterpolation.NearestNeighbor);
+                        ds.DrawImage(InputVirtualBitmap,
+                                     new Rect(0, 0, region.Width * Zoom, region.Height * Zoom),
+                                     new Rect(0, 0, region.Width, region.Height),
+                                     1.0f,
+                                     CanvasImageInterpolation.NearestNeighbor);
                 }
             }
         }
@@ -50,7 +54,11 @@
                 using (var ds = OutputImageCanvas.CreateDrawingSession(region))
                 {
                     if (OutputVirtualBitmap != null)
-                        ds.DrawImage(OutputVirtualBitmap, new Rect(0, 0, region.Width * Zoom, region.Height * Zoom), new Rect(0, 0, region.Width, region.Height), 1.0f, CanvasImageInterpolation.NearestNeighbor);
+                        ds.DrawImage(OutputVirtualBitmap,
+                                     new Rect(0, 0, region.Width * Zoom, region.Height * Zoom),
+                                     new Rect(0, 0, region.Width, region.Height),
+                                     1.0f,
+                                     CanvasImageInterpolation.NearestNeighbor);
                 }
             }
         }

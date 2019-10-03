@@ -1,20 +1,13 @@
 ﻿namespace ImageProcessor.Pages
 {
     using System;
+    using ImageProcessor.Data;
     using ImageProcessor.Dialogs;
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Media.Imaging;
 
     public sealed partial class MainPage
-    {
-        private async void InvertMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            WriteableOutputImage = WriteableOutputImage.Invert();
-
-            AddToUndo(WriteableOutputImage.Clone());
-            await UpdateOutputImage();
-        }
-
+    { 
         private async void OpenPixelManagerDialogMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             PixelManagerDialog dialog = new PixelManagerDialog(WriteableOutputImage.Clone());

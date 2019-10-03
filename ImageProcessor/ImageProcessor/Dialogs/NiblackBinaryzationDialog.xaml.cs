@@ -1,5 +1,6 @@
 ﻿using System;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 
 namespace ImageProcessor.Dialogs
 {
@@ -17,6 +18,6 @@ namespace ImageProcessor.Dialogs
 
         public double KValue => SliderValue2.Value;
 
-        private void SliderValue2_ValueChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e) => SliderValue2Text.Text = Math.Round(SliderValue2.Value, 2).ToString();
+        private void SliderValue2_ValueChanged(object sender, RangeBaseValueChangedEventArgs e) => SliderValue2Text.Text = Math.Round(SliderValue2.Value, 2).ToString();
     }
 }

@@ -122,6 +122,8 @@
     <Compile Include="Data\ArrayExtension.cs" />
     <Compile Include="Data\ArrayUtil.cs" />
     <Compile Include="Data\BinaryzationHelper.cs" />
+    <Compile Include="Data\BitmapResizeHelper.cs" />
+    <Compile Include="Data\ExtraThresholds.cs" />
     <Compile Include="Data\FingerprintHelper.cs" />
     <Compile Include="Data\GaussianBlureHelper.cs" />
     <Compile Include="Data\ImageArithmeticHelper.cs" />
@@ -136,6 +138,9 @@
     <Compile Include="Data\WriteableBitmapCovolute.cs" />
     <Compile Include="Dialogs\AnySizeCustomConvolutionFilterDialog.xaml.cs">
       <DependentUpon>AnySizeCustomConvolutionFilterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\PercentageBlackSelectionBinaryzationDialog.xaml.cs">
+      <DependentUpon>PercentageBlackSelectionBinaryzationDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\ThreeIntsDialog.xaml.cs">
       <DependentUpon>ThreeIntsDialog.xaml</DependentUpon>
@@ -235,6 +240,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="Data\JavaScript1.js" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -249,6 +255,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Dialogs\AnySizeCustomConvolutionFilterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\PercentageBlackSelectionBinaryzationDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

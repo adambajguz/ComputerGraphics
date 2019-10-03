@@ -26,11 +26,11 @@
                 InputImageCanvas.Invalidate();
                 OutputImageCanvas.Invalidate();
 
-                var size = InputVirtualBitmap.Size;
-                InputImageCanvas.Width = size.Width * (zoom + 1);
-                InputImageCanvas.Height = size.Height * (zoom + 1);
-                OutputImageCanvas.Width = size.Width * (zoom + 1);
-                OutputImageCanvas.Height = size.Height * (zoom + 1);
+                //var size = InputVirtualBitmap.Size;
+                //InputImageCanvas.Width = size.Width * (zoom + 1);
+                //InputImageCanvas.Height = size.Height * (zoom + 1);
+                //OutputImageCanvas.Width = size.Width * (zoom + 1);
+                //OutputImageCanvas.Height = size.Height * (zoom + 1);
 
                 ContentFrameContent = ContentFrame.Content;
             }

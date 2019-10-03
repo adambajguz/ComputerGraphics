@@ -1,4 +1,5 @@
-﻿using Windows.UI;
+﻿using System;
+using Windows.UI;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace ImageProcessor.Data
