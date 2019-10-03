@@ -44,9 +44,9 @@
                     <MenuFlyoutItem Text="Invert" Click="InvertMenuFlyoutItem_Click"/>
 
                     <MenuFlyoutSubItem Text="Conversion">
-                        <MenuFlyoutItem Text="Convert to grayscale" Click="ConvertToGrayScalePageMenuFlyoutItem_Click"/>
-                        <MenuFlyoutItem Text="Convert to grayscale YUV" Click="ConvertToGrayScaleYUVPageMenuFlyoutItem_Click"/>
-                        <MenuFlyoutItem Text="Convert to grayscale YUVLikeColorimetric" Click="ConvertToGrayScaleYUVLikeColorimetricPageMenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Text="Convert to grayscale Average" Click="ConvertToGrayScalePageMenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Text="Convert to grayscale BT601" Click="ConvertToGrayScaleBT601PageMenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Text="Convert to grayscale ITU-R (BT709)" Click="ConvertToGrayScaleITUR_BT709PageMenuFlyoutItem_Click"/>
                     </MenuFlyoutSubItem>
 
                     <MenuFlyoutSubItem Text="Binaryzation">

@@ -28,7 +28,7 @@ namespace ImageProcessor.Data
             return true;
         }
 
-        public static WriteableBitmap ConvertToGrayscaleYUVLikeColorimetric(WriteableBitmap WriteableOutputImage)
+        public static WriteableBitmap ConvertToGrayscaleITUR_BT709(WriteableBitmap WriteableOutputImage)
         {
             using (var context = WriteableOutputImage.GetBitmapContext(ReadWriteMode.ReadOnly))
             {
@@ -64,7 +64,7 @@ namespace ImageProcessor.Data
             return WriteableOutputImage;
         }
 
-        public static WriteableBitmap ConvertToGrayscaleYUV(WriteableBitmap WriteableOutputImage)
+        public static WriteableBitmap ConvertToGrayscaleBT601(WriteableBitmap WriteableOutputImage)
         {
             using (var context = WriteableOutputImage.GetBitmapContext(ReadWriteMode.ReadOnly))
             {

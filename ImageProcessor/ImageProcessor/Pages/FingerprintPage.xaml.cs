@@ -105,14 +105,14 @@ namespace ImageProcessor.Pages
 
         private void GetOtsuThreshold_Click(object sender, RoutedEventArgs e)
         {
-            var gray = BinaryzationHelper.ConvertToGrayscaleYUVLikeColorimetric(editingBitmap.Clone());
+            var gray = BinaryzationHelper.ConvertToGrayscaleBT601(editingBitmap.Clone());
 
             ThresholdValue = Otsu.GetOtsuThreshold(gray);
         }
 
         private async void ApplyManualBinaryzation_Click(object sender, RoutedEventArgs e)
         {
-            BinaryzationHelper.ConvertToGrayscaleYUVLikeColorimetric(editingBitmap);
+            BinaryzationHelper.ConvertToGrayscaleBT601(editingBitmap);
 
             parentMainPage.WriteableOutputImage = editingBitmap;
             await parentMainPage.UpdateOutputImage();
