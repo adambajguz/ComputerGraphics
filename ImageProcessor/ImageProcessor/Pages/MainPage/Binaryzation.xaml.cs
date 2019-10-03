@@ -83,20 +83,20 @@ namespace ImageProcessor.Pages
             }
         }
 
-        private async void MinimumErrorSelectionPageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        private async void EntropySelectionPageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             AddToUndo(WriteableOutputImage.Clone());
             int? threshold = null;
-            if (ExtraThresholds.MinimumErrorCalculate(WriteableOutputImage, out threshold) == null)
+            if (ExtraThresholds.EntropySelectionCalculate(WriteableOutputImage, out threshold) == null)
             {
                 ConvertToGrayScaleITUR_BT709PageMenuFlyoutItem_Click(null, null);
-                ExtraThresholds.MinimumErrorCalculate(WriteableOutputImage, out threshold);
+                ExtraThresholds.EntropySelectionCalculate(WriteableOutputImage, out threshold);
             }
 
             ContentDialog dialog = new ContentDialog
             {
                 Title = "Binaryzation",
-                Content = "Minimum Error threshold value = " + threshold ?? "[Error]",
+                Content = "Entropy Selection threshold value = " + threshold ?? "[Error]",
                 CloseButtonText = "Ok"
             };
 

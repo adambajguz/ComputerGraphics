@@ -53,7 +53,7 @@
                     <MenuFlyoutSubItem Text="Binaryzation">
                         <MenuFlyoutItem Text="Manual binaryzation" Click="ManualBinaryzationPageMenuFlyoutItem_Click"/>
                         <MenuFlyoutItem Text="Percentage Black Selection" Click="PercentageBlackSelectionPageMenuFlyoutItem_Click"/>
-                        <MenuFlyoutItem Text="Minimum Error" Click="MinimumErrorSelectionPageMenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Text="Entropy Selection" Click="EntropySelectionPageMenuFlyoutItem_Click"/>
                         <MenuFlyoutItem Text="Otsu binaryzation" Click="OtsuBinaryzationPageMenuFlyoutItem_Click"/>
                         <MenuFlyoutItem Text="Niblack binaryzation" Click="NiblackinaryzationPageMenuFlyoutItem_Click"/>
                     </MenuFlyoutSubItem>
