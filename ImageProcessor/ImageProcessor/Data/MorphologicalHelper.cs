@@ -17,13 +17,12 @@ namespace ImageProcessor.Data
                 using (BitmapContext context = Input.GetBitmapContext())
                 {
 
-
                     for (int y = 0; y < height; y++)
                     {
                         for (int x = 0; x < width; x++)
                         {
 
-                            Color tmp = PixelHelper.GetPixel(contextOriginal, c, r);
+                            Color tmp = PixelHelper.GetPixel(contextOriginal, x, y);
 
 
                             PixelHelper.SetPixel(context, x, y, tmp);

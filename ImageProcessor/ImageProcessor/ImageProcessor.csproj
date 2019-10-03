@@ -126,6 +126,7 @@
     <Compile Include="Data\ExtraThresholds.cs" />
     <Compile Include="Data\FingerprintHelper.cs" />
     <Compile Include="Data\GaussianBlureHelper.cs" />
+    <Compile Include="Data\HSLColor.cs" />
     <Compile Include="Data\ImageArithmeticHelper.cs" />
     <Compile Include="Data\ImageHistogramData.cs" />
     <Compile Include="Data\KMMHelper.cs" />
@@ -135,6 +136,8 @@
     <Compile Include="Data\MorphologicalHelper.cs" />
     <Compile Include="Data\NiblackThreshold.cs" />
     <Compile Include="Data\OtsuThreshold.cs" />
+    <Compile Include="Data\PercentagAreasData.cs" />
+    <Compile Include="Data\PercentageAreasDetectorHelper.cs" />
     <Compile Include="Data\PixelHelper.cs" />
     <Compile Include="Data\WriteableBitmapCovolute.cs" />
     <Compile Include="Dialogs\AnySizeCustomConvolutionFilterDialog.xaml.cs">
@@ -167,6 +170,7 @@
     <Compile Include="Dialogs\ManualBinaryzationDialog.xaml.cs">
       <DependentUpon>ManualBinaryzationDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\MainPage\Area.cs" />
     <Compile Include="Pages\FingerprintPage.xaml.cs">
       <DependentUpon>FingerprintPage.xaml</DependentUpon>
     </Compile>
@@ -244,7 +248,6 @@
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
-    <Content Include="Data\JavaScript1.js" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

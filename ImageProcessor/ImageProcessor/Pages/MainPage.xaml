@@ -64,6 +64,12 @@
                         <MenuFlyoutItem Text="Multiply" Click="MultiplyPageMenuFlyoutItem_Click"/>
                         <MenuFlyoutItem Text="Divide" Click="DividePageMenuFlyoutItem_Click"/>
                     </MenuFlyoutSubItem>
+                    
+                    <MenuFlyoutSubItem Text="Area">
+                        <MenuFlyoutItem Text="Percentage of green" Click="PercentageOfGreenMenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Text="Percentage of red" Click="PercentageOfRedMenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Text="Percentage of blue" Click="PercentageOfBlueMenuFlyoutItem_Click"/>
+                    </MenuFlyoutSubItem>
 
                     <MenuFlyoutSeparator/>
                     <MenuFlyoutSubItem Text="Convolution filters">
