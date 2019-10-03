@@ -8,7 +8,7 @@
 
     public sealed partial class MainPage
     {
-        private IRandomAccessStream InputImageStream { get; set;  }
+        private IRandomAccessStream InputImageStream { get; set; }
         private CanvasVirtualBitmap InputVirtualBitmap { get; set; }
         private IRandomAccessStream OutputImageStream { get; set; }
         private CanvasVirtualBitmap OutputVirtualBitmap { get; set; }
@@ -31,8 +31,8 @@
                 {
                     if (InputVirtualBitmap != null)
                         ds.DrawImage(InputVirtualBitmap,
-                                     new Rect(0, 0, region.Width * Zoom, region.Height * Zoom),
-                                     new Rect(0, 0, region.Width, region.Height),
+                                     new Rect(0, 0, InputVirtualBitmap.Bounds.Width * Zoom, InputVirtualBitmap.Bounds.Height * Zoom),
+                                     new Rect(0, 0, InputVirtualBitmap.Bounds.Width, InputVirtualBitmap.Bounds.Height),
                                      1.0f,
                                      CanvasImageInterpolation.NearestNeighbor);
                 }
@@ -55,8 +55,8 @@
                 {
                     if (OutputVirtualBitmap != null)
                         ds.DrawImage(OutputVirtualBitmap,
-                                     new Rect(0, 0, region.Width * Zoom, region.Height * Zoom),
-                                     new Rect(0, 0, region.Width, region.Height),
+                                     new Rect(0, 0, OutputVirtualBitmap.Bounds.Width * Zoom, OutputVirtualBitmap.Bounds.Height * Zoom),
+                                     new Rect(0, 0, OutputVirtualBitmap.Bounds.Width, OutputVirtualBitmap.Bounds.Height),
                                      1.0f,
                                      CanvasImageInterpolation.NearestNeighbor);
                 }

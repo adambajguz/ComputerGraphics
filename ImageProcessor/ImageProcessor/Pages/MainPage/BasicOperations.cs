@@ -3,6 +3,7 @@
     using System;
     using System.Threading.Tasks;
     using ImageProcessor.Data;
+    using ImageProcessor.Dialogs;
     using Windows.ApplicationModel.Core;
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
@@ -21,7 +22,13 @@
         private async void ScaleMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             AddToUndo(WriteableOutputImage.Clone());
-            WriteableOutputImage = BitmapResizeHelper.Resize(WriteableOutputImage, WriteableOutputImage.PixelWidth * 2, WriteableOutputImage.PixelHeight * 2, );
+
+            ScaleImageDialog dialog = new ScaleImageDialog();
+            ContentDialogResult result = await dialog.ShowAsync();
+
+            InterpolationTypes interpolationTypes = dialog.Interpolation;
+            double scale = await dialog.GetScaleValue();
+            WriteableOutputImage = BitmapResizeHelper.Resize(WriteableOutputImage, (int)(WriteableOutputImage.PixelWidth * scale), (int)(WriteableOutputImage.PixelHeight * scale), interpolationTypes);
 
             await UpdateOutputImage();
         }

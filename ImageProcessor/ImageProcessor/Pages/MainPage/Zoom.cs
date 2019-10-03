@@ -15,7 +15,7 @@
             get => zoom;
             set
             {
-                if (value <= 10 && value >= 0.25)
+                if (value <= 10 && value > 0.05)
                     zoom = value;
                 else
                     return;
@@ -23,22 +23,27 @@
                 ZoomFactorTextBlock.Text = (zoom * 100) + "%";
 
                 OutputCanvasScrollViewer.ChangeView(InputCanvasScrollViewer.HorizontalOffset, InputCanvasScrollViewer.VerticalOffset, null);
+
                 InputImageCanvas.Invalidate();
                 OutputImageCanvas.Invalidate();
 
-                //var size = InputVirtualBitmap.Size;
-                //InputImageCanvas.Width = size.Width * (zoom + 1);
-                //InputImageCanvas.Height = size.Height * (zoom + 1);
-                //OutputImageCanvas.Width = size.Width * (zoom + 1);
-                //OutputImageCanvas.Height = size.Height * (zoom + 1);
+                var size = InputVirtualBitmap.Size;
+                InputImageCanvas.Width = size.Width * (zoom + 1);
+                InputImageCanvas.Height = size.Height * (zoom + 1);
+
+                var size2 = OutputImageCanvas.Size;
+                OutputImageCanvas.Width = size2.Width * (zoom + 1);
+                OutputImageCanvas.Height = size2.Height * (zoom + 1);
+
+
 
                 ContentFrameContent = ContentFrame.Content;
             }
         }
 
-        private void ZoomOutButton_Click(object sender, RoutedEventArgs e) => Zoom -= 0.25;
+        private void ZoomOutButton_Click(object sender, RoutedEventArgs e) => Zoom -= 0.05;
 
-        private void ZoomInButton_Click(object sender, RoutedEventArgs e) => Zoom += 0.25;
+        private void ZoomInButton_Click(object sender, RoutedEventArgs e) => Zoom += 0.05;
 
         private void ZoomPresetMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
