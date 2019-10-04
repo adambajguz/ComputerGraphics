@@ -143,6 +143,9 @@
     <Compile Include="Dialogs\AnySizeCustomConvolutionFilterDialog.xaml.cs">
       <DependentUpon>AnySizeCustomConvolutionFilterDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\ColorAreaDialog.xaml.cs">
+      <DependentUpon>ColorAreaDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\ScaleImageDialog.xaml.cs">
       <DependentUpon>ScaleImageDialog.xaml</DependentUpon>
     </Compile>
@@ -262,6 +265,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Dialogs\AnySizeCustomConvolutionFilterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\ColorAreaDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

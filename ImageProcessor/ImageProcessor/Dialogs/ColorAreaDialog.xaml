@@ -1,0 +1,73 @@
+﻿<ContentDialog
+    x:Class="ImageProcessor.Dialogs.ColorAreaDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ImageProcessor.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Color Area range definition"
+    SecondaryButtonText="OK"
+    PrimaryButtonText="Close"
+    Width="Auto" Height="Auto">
+    <StackPanel>
+        <TextBlock Text="Minimum value:"/>
+        <!-- Content body -->
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="H_min:" VerticalAlignment="Center" Margin="0,0,4,0"/>
+            <Slider x:Name="SliderValueMinH" Grid.Row="0" Grid.Column="1" Margin="4" Maximum="360"
+                 TickFrequency="1" TickPlacement="Outside" Value="120" StepFrequency="1"/>
+            <TextBlock x:Name="SliderValueMinHText" Grid.Row="0" Grid.Column="2" />
+
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="S_min:" VerticalAlignment="Center" Margin="0,0,4,0"/>
+            <Slider x:Name="SliderValueMinS" Grid.Row="1" Grid.Column="1" Margin="4" Maximum="100"
+                 TickFrequency="1" TickPlacement="Outside" Value="50" StepFrequency="1"/>
+            <TextBlock x:Name="SliderValueMinSText" Grid.Row="1" Grid.Column="2" />
+
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="L_min:" VerticalAlignment="Center" Margin="0,0,4,0"/>
+            <Slider x:Name="SliderValueMinL" Grid.Row="2" Grid.Column="1" Margin="4" Maximum="100"
+                 TickFrequency="1" TickPlacement="Outside" Value="50" StepFrequency="1"/>
+            <TextBlock x:Name="SliderValueMinLText" Grid.Row="2" Grid.Column="2" />
+        </Grid>
+
+        <TextBlock Text="Maximum value:"/>
+        <!-- Content body -->
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="H_max:" VerticalAlignment="Center" Margin="0,0,4,0"/>
+            <Slider x:Name="SliderValueMaxH" Grid.Row="0" Grid.Column="1" Margin="4" Maximum="360"
+                 TickFrequency="1" TickPlacement="Outside" Value="160" StepFrequency="1"/>
+            <TextBlock x:Name="SliderValueMaxHText" Grid.Row="0" Grid.Column="2" />
+
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="S_max:" VerticalAlignment="Center" Margin="0,0,4,0"/>
+            <Slider x:Name="SliderValueMaxS" Grid.Row="1" Grid.Column="1" Margin="4" Maximum="100"
+                 TickFrequency="1" TickPlacement="Outside" Value="75" StepFrequency="1"/>
+            <TextBlock x:Name="SliderValueMaxSText" Grid.Row="1" Grid.Column="2" />
+
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="L_max:" VerticalAlignment="Center" Margin="0,0,4,0"/>
+            <Slider x:Name="SliderValueMaxL" Grid.Row="2" Grid.Column="1" Margin="4" Maximum="100"
+                 TickFrequency="1" TickPlacement="Outside" Value="75" StepFrequency="1"/>
+            <TextBlock x:Name="SliderValueMaxLText" Grid.Row="2" Grid.Column="2" />
+        </Grid>
+    </StackPanel>
+   
+</ContentDialog>

@@ -3,6 +3,7 @@
     using System;
     using System.Threading.Tasks;
     using ImageProcessor.Data;
+    using ImageProcessor.Dialogs;
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
 
@@ -14,17 +15,25 @@
             await CallShowResultDialog(output, "Percentage of green");
         }
 
-
-        private async void PercentageOfRedMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        private async void PercentageOfCustomMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            PercentagAreasData output = PercentageAreasDetectorHelper.CalculateGreen(WriteableOutputImage);
-            await CallShowResultDialog(output, "Percentage of red");
-        }
+            ColorAreaDialog dialog = new ColorAreaDialog();
+            ContentDialogResult result = await dialog.ShowAsync();
 
-        private async void PercentageOfBlueMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            PercentagAreasData output = PercentageAreasDetectorHelper.CalculateGreen(WriteableOutputImage);
-            await CallShowResultDialog(output, "Percentage of blue");
+            if (result == ContentDialogResult.Secondary)
+            {
+                PercentagAreasData output = PercentageAreasDetectorHelper.Calculate(WriteableOutputImage, 
+                    x => 
+                    x.H >= dialog.Hmin && x.H <= dialog.Hmax &&
+                    x.S >= dialog.Smin && x.S <= dialog.Smax &&
+                    x.L >= dialog.Lmin && x.L <= dialog.Lmax);
+                await CallShowResultDialog(output, "Percentage of custom query");
+            }
+            else
+            {
+                // The user clicked the CLoseButton, pressed ESC, Gamepad B, or the system back button.
+                // Do nothing.
+            }
         }
 
         private async Task CallShowResultDialog(PercentagAreasData output, string title)

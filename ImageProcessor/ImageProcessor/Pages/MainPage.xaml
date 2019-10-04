@@ -67,8 +67,7 @@
                     
                     <MenuFlyoutSubItem Text="Area">
                         <MenuFlyoutItem Text="Percentage of green" Click="PercentageOfGreenMenuFlyoutItem_Click"/>
-                        <MenuFlyoutItem Text="Percentage of red" Click="PercentageOfRedMenuFlyoutItem_Click"/>
-                        <MenuFlyoutItem Text="Percentage of blue" Click="PercentageOfBlueMenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Text="Percentage of custom" Click="PercentageOfCustomMenuFlyoutItem_Click"/>
                     </MenuFlyoutSubItem>
 
                     <MenuFlyoutSeparator/>

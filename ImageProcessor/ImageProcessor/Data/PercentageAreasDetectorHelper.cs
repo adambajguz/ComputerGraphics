@@ -9,7 +9,7 @@ namespace ImageProcessor.Data
     {
         public static PercentagAreasData CalculateGreen(WriteableBitmap input)
         {
-            return Calculate(input, x => x.H >= 75 && x.H <= 145 && x.L >= 25 && x.S >= 40);
+            return Calculate(input, x => x.H >= 75 && x.H <= 145 && x.S >= 28 && x.L >= 32 && x.L <= 75);
         }
 
         public static PercentagAreasData Calculate(WriteableBitmap bmp, Expression<Func<HSLColor, bool>> condition)
