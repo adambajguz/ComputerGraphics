@@ -12,6 +12,16 @@ namespace ImageProcessor.Data
             return Calculate(input, x => x.H >= 75 && x.H <= 145 && x.S >= 28 && x.L >= 32 && x.L <= 75);
         }
 
+        public static PercentagAreasData CalculateBlue(WriteableBitmap input)
+        {
+            return Calculate(input, x => x.H >= 170 && x.H <= 260 && x.S >= 28 && x.L >= 32 && x.L <= 75);
+        }
+
+        public static PercentagAreasData CalculateRed(WriteableBitmap input)
+        {
+            return Calculate(input, x => ((x.H >= 0 && x.H <= 15) || (x.H >= 345 && x.H <= 360)) && x.S >= 28 && x.L >= 32 && x.L <= 75);
+        }
+
         public static PercentagAreasData Calculate(WriteableBitmap bmp, Expression<Func<HSLColor, bool>> condition)
         {
             int width = bmp.PixelWidth;

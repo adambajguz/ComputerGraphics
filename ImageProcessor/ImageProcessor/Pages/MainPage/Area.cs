@@ -15,6 +15,18 @@
             await CallShowResultDialog(output, "Percentage of green");
         }
 
+        private async void PercentageOfRedMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            PercentagAreasData output = PercentageAreasDetectorHelper.CalculateRed(WriteableOutputImage);
+            await CallShowResultDialog(output, "Percentage of red");
+        }
+
+        private async void PercentageOfBlueMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            PercentagAreasData output = PercentageAreasDetectorHelper.CalculateBlue(WriteableOutputImage);
+            await CallShowResultDialog(output, "Percentage of blue");
+        }
+
         private async void PercentageOfCustomMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             ColorAreaDialog dialog = new ColorAreaDialog();
@@ -22,8 +34,8 @@
 
             if (result == ContentDialogResult.Secondary)
             {
-                PercentagAreasData output = PercentageAreasDetectorHelper.Calculate(WriteableOutputImage, 
-                    x => 
+                PercentagAreasData output = PercentageAreasDetectorHelper.Calculate(WriteableOutputImage,
+                    x =>
                     x.H >= dialog.Hmin && x.H <= dialog.Hmax &&
                     x.S >= dialog.Smin && x.S <= dialog.Smax &&
                     x.L >= dialog.Lmin && x.L <= dialog.Lmax);

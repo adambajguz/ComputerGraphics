@@ -139,6 +139,7 @@
     <Compile Include="Data\PercentagAreasData.cs" />
     <Compile Include="Data\PercentageAreasDetectorHelper.cs" />
     <Compile Include="Data\PixelHelper.cs" />
+    <Compile Include="Data\PortableAnymap\PPMImage.cs" />
     <Compile Include="Data\WriteableBitmapCovolute.cs" />
     <Compile Include="Dialogs\AnySizeCustomConvolutionFilterDialog.xaml.cs">
       <DependentUpon>AnySizeCustomConvolutionFilterDialog.xaml</DependentUpon>

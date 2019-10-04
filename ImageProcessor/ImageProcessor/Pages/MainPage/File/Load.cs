@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Net.Mime;
     using System.Threading.Tasks;
+    using ImageProcessor.Data.PortableAnymap;
     using Microsoft.Graphics.Canvas;
     using Windows.Graphics.Imaging;
     using Windows.Storage;
@@ -52,6 +53,7 @@
             picker.FileTypeFilter.Add(".gif");
             picker.FileTypeFilter.Add(".tif");
             picker.FileTypeFilter.Add(".tiff");
+            picker.FileTypeFilter.Add(".ppm");
             picker.FileTypeFilter.Add("*");
 
             StorageFile inputFile = await picker.PickSingleFileAsync();
@@ -62,7 +64,6 @@
                     if (!(await ShowFileTryOpenDialog()))
                         return;
                 }
-
                 ContentFrame_Reset();
 
                 ImageFileTextBox.Text = inputFile.Path;
@@ -73,46 +74,70 @@
                     InputImageStream = null;
                 }
 
-                try
+                if (inputFile.FileType == ".ppm")
                 {
-                    using (IRandomAccessStream stream = await inputFile.OpenAsync(FileAccessMode.Read))
+                    try
                     {
-                        WriteableBitmap writeableInputImage;
-
-                        BitmapDecoder decoder = await BitmapDecoder.CreateAsync(stream);
-
-                        SoftwareBitmap softwareBitmap1 = await decoder.GetSoftwareBitmapAsync();
-                        ImageResolution.Text = softwareBitmap1.PixelWidth + " x " + softwareBitmap1.PixelHeight;
-
-                        writeableInputImage = new WriteableBitmap(softwareBitmap1.PixelWidth, softwareBitmap1.PixelHeight);
-                        writeableInputImage.SetSource(stream);
-
-                        InputImageStream = stream;
-
-                        await LoadInputVirtualBitmap();
+                        PPMImage ppmImage = await PPMImage.Open(inputFile);
+                        WriteableOutputImage = ppmImage.ConvertToWriteableBitmap();
+                    }
+                    catch (Exception)
+                    {
+                        await ShowErrorDialog("An error occured during file open. Damaged file!");
+                        return;
                     }
 
-                    //  inputImage.Source = writeableInputImage;
 
 
-                    using (IRandomAccessStream stream = await inputFile.OpenAsync(FileAccessMode.Read))
-                    {
-                        BitmapDecoder decoder = await BitmapDecoder.CreateAsync(stream);
-                        SoftwareBitmap softwareBitmap1 = await decoder.GetSoftwareBitmapAsync();
-                        WriteableOutputImage = new WriteableBitmap(softwareBitmap1.PixelWidth, softwareBitmap1.PixelHeight);
-                        WriteableOutputImage.SetSource(stream);
-                        WriteableOutputImageCopy = WriteableOutputImage.Clone();
+                    SoftwareBitmap softWriteableOutputImage = SoftwareBitmap.CreateCopyFromBuffer(WriteableOutputImage.PixelBuffer, BitmapPixelFormat.Bgra8, WriteableOutputImage.PixelWidth, WriteableOutputImage.PixelHeight);
+                    InputImageStream = await GetRandomAccessStreamFromSoftwareBitmap(softWriteableOutputImage, BitmapEncoder.PngEncoderId);
+                    await LoadInputVirtualBitmap();
 
-                        PrevOutputs.Push(WriteableOutputImage.Clone());
-                        UndoFlyoutItem.IsEnabled = false;
-
-                        await UpdateOutputImage();
-                    }
+                    await UpdateOutputImage();
                 }
-                catch (Exception)
+                else
                 {
-                    await ShowErrorDialog("An error occured during file open. Damaged file!");
-                    return;
+                    try
+                    {
+                        using (IRandomAccessStream stream = await inputFile.OpenAsync(FileAccessMode.Read))
+                        {
+                            WriteableBitmap writeableInputImage;
+
+                            BitmapDecoder decoder = await BitmapDecoder.CreateAsync(stream);
+
+                            SoftwareBitmap softwareBitmap1 = await decoder.GetSoftwareBitmapAsync();
+                            ImageResolution.Text = softwareBitmap1.PixelWidth + " x " + softwareBitmap1.PixelHeight;
+
+                            writeableInputImage = new WriteableBitmap(softwareBitmap1.PixelWidth, softwareBitmap1.PixelHeight);
+                            writeableInputImage.SetSource(stream);
+
+                            InputImageStream = stream;
+
+                            await LoadInputVirtualBitmap();
+                        }
+
+                        //  inputImage.Source = writeableInputImage;
+
+
+                        using (IRandomAccessStream stream = await inputFile.OpenAsync(FileAccessMode.Read))
+                        {
+                            BitmapDecoder decoder = await BitmapDecoder.CreateAsync(stream);
+                            SoftwareBitmap softwareBitmap1 = await decoder.GetSoftwareBitmapAsync();
+                            WriteableOutputImage = new WriteableBitmap(softwareBitmap1.PixelWidth, softwareBitmap1.PixelHeight);
+                            WriteableOutputImage.SetSource(stream);
+                            WriteableOutputImageCopy = WriteableOutputImage.Clone();
+
+                            PrevOutputs.Push(WriteableOutputImage.Clone());
+                            UndoFlyoutItem.IsEnabled = false;
+
+                            await UpdateOutputImage();
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        await ShowErrorDialog("An error occured during file open. Damaged file!");
+                        return;
+                    }
                 }
 
                 //outputImage.Source = writableOutputImage;
@@ -156,7 +181,8 @@
                                             ".png",
                                             ".gif",
                                             ".tif",
-                                            ".tiff"
+                                            ".tiff",
+                                            ".ppm"
                                           };
 
             return types.Contains(type);
