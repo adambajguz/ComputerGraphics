@@ -250,6 +250,11 @@
                                     </SplitButton.Content>
                                     <SplitButton.Flyout>
                                         <MenuFlyout>
+                                            <MenuFlyoutItem Text="10000%" Tag="10000" Click="ZoomPresetMenuFlyoutItem_Click" />
+                                            <MenuFlyoutItem Text="8000%" Tag="8000" Click="ZoomPresetMenuFlyoutItem_Click" />
+                                            <MenuFlyoutItem Text="6000%" Tag="6000" Click="ZoomPresetMenuFlyoutItem_Click" />
+                                            <MenuFlyoutItem Text="4000%" Tag="4000" Click="ZoomPresetMenuFlyoutItem_Click" />
+                                            <MenuFlyoutItem Text="2000%" Tag="2000" Click="ZoomPresetMenuFlyoutItem_Click" />
                                             <MenuFlyoutItem Text="1000%" Tag="1000" Click="ZoomPresetMenuFlyoutItem_Click" />
                                             <MenuFlyoutItem Text="750%" Tag="750" Click="ZoomPresetMenuFlyoutItem_Click"/>
                                             <MenuFlyoutItem Text="500%" Tag="500" Click="ZoomPresetMenuFlyoutItem_Click"/>
@@ -261,6 +266,8 @@
                                             <MenuFlyoutItem Text="75%" Tag="75" Click="ZoomPresetMenuFlyoutItem_Click"/>
                                             <MenuFlyoutItem Text="50%" Tag="50" Click="ZoomPresetMenuFlyoutItem_Click"/>
                                             <MenuFlyoutItem Text="25%" Tag="25" Click="ZoomPresetMenuFlyoutItem_Click"/>
+                                            <MenuFlyoutItem Text="15%" Tag="15" Click="ZoomPresetMenuFlyoutItem_Click"/>
+                                            <MenuFlyoutItem Text="10%" Tag="10" Click="ZoomPresetMenuFlyoutItem_Click"/>
                                         </MenuFlyout>
                                     </SplitButton.Flyout>
                                 </SplitButton>

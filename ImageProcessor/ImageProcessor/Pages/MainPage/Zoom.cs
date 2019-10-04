@@ -8,14 +8,12 @@
     {
         private double zoom = 1;
 
-        private object ContentFrameContent;
-
         public double Zoom
         {
             get => zoom;
             set
             {
-                if (value <= 10 && value > 0.05)
+                if (value <= 100 && value > 0.06)
                     zoom = value;
                 else
                     return;
@@ -34,10 +32,6 @@
                 var size2 = OutputImageCanvas.Size;
                 OutputImageCanvas.Width = size2.Width * (zoom + 1);
                 OutputImageCanvas.Height = size2.Height * (zoom + 1);
-
-
-
-                ContentFrameContent = ContentFrame.Content;
             }
         }
 
