@@ -2,12 +2,15 @@
 //
 // Licensed under the MIT License. See LICENSE.txt in the project root for license information.
 
+using System;
 using System.Numerics;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using PaintCube;
+using Windows.Foundation;
 using Windows.UI;
+using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -90,6 +93,30 @@ namespace ExampleGallery
             // Explicitly remove references to allow the Win2D controls to get garbage collected
             canvas.RemoveFromVisualTree();
             canvas = null;
+        }
+
+        private bool IsMousePointerPressed { get; set; }
+        Quaternion Q;
+        private void canvas_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            IsMousePointerPressed = true;
+        }
+
+        private void canvas_PointerMoved(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            if (IsMousePointerPressed)
+            {
+                PointerPoint pointerPoint = e.GetCurrentPoint(canvas);
+                Point pos = pointerPoint.Position;
+
+                double angle = (Math.Atan2(pos.Y, pos.X) * (360 / (Math.PI * 2))) - 90;
+                Q = Quaternion.CreateFromAxisAngle(Vector3.Zero, (float)angle);
+            }
+        }
+
+        private void canvas_PointerReleased(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            IsMousePointerPressed = false;
         }
     }
 }

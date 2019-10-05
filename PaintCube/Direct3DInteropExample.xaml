@@ -24,7 +24,10 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                                       CreateResources="canvas_CreateResources"
                                       Update="canvas_Update"
                                       Draw="canvas_Draw"
-                                      ClearColor="Black"/>
+                                      ClearColor="Black" 
+                                      PointerPressed="canvas_PointerPressed"
+                                      PointerMoved="canvas_PointerMoved" 
+                                      PointerReleased="canvas_PointerReleased"/>
 
         <ScrollViewer VerticalScrollMode="Auto" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Hidden">
             <StackPanel Orientation="Vertical" Margin="5" Width="180" HorizontalAlignment="Left">
