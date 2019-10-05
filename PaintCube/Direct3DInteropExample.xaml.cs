@@ -7,7 +7,7 @@ using System.Numerics;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
-using PaintCube;
+using PaintCube.Direct3DInterop;
 using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Input;
@@ -116,6 +116,7 @@ namespace ExampleGallery
 
         private void canvas_PointerReleased(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
+            e.Handled = true;
             IsMousePointerPressed = false;
         }
     }

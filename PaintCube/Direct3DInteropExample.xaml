@@ -19,15 +19,12 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
     d:DesignWidth="400"
     Unloaded="control_Unloaded">
 
-    <Grid>
+    <Grid PointerPressed="canvas_PointerPressed" PointerMoved="canvas_PointerMoved" PointerReleased="canvas_PointerReleased">
         <canvas:CanvasAnimatedControl x:Name="canvas"
                                       CreateResources="canvas_CreateResources"
                                       Update="canvas_Update"
                                       Draw="canvas_Draw"
-                                      ClearColor="Black" 
-                                      PointerPressed="canvas_PointerPressed"
-                                      PointerMoved="canvas_PointerMoved" 
-                                      PointerReleased="canvas_PointerReleased"/>
+                                      ClearColor="Black"/>
 
         <ScrollViewer VerticalScrollMode="Auto" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Hidden">
             <StackPanel Orientation="Vertical" Margin="5" Width="180" HorizontalAlignment="Left">
