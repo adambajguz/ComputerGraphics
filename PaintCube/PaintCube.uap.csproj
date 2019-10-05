@@ -97,7 +97,7 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <ProjectReference Include="Direct3DInterop\ExampleGallery.Direct3DInterop.uap.vcxproj">
       <Project>{a81f96d0-4924-40e3-a463-3cb9ee55aa93}</Project>
-      <Name>ExampleGallery.Direct3DInterop.uap</Name>
+      <Name>PaintCube.Direct3DInterop.uap</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -188,7 +188,6 @@
     <Content Include="Assets\WideLogo.scale-400.png" />
     <Content Include="RuntimeDirectives.rd.xml" />
     <Content Include="Assets\Logo.scale-100.png" />
-    <Content Include="Assets\sample.svg" />
     <Content Include="Assets\SmallLogo.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\Square71x71Logo.scale-100.png" />

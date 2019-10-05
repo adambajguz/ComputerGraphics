@@ -27,6 +27,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <GenerateManifest>false</GenerateManifest>
     <NuGetPackageImportStamp>c59169d0</NuGetPackageImportStamp>
+    <ProjectName>PaintCube.Direct3DInterop.uap</ProjectName>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM">

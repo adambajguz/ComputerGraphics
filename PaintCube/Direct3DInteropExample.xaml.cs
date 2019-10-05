@@ -82,7 +82,6 @@ namespace ExampleGallery
             using (var drawingSession = TextRenderTarget.CreateDrawingSession())
             {
                 drawingSession.Clear(Colors.White);
-                drawingSession.DrawRectangle(0, 0, TextRenderTargetSize - 1, TextRenderTargetSize - 1, Colors.Red);
             }
         }
 
