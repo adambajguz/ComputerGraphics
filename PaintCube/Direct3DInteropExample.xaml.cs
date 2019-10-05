@@ -3,10 +3,10 @@
 // Licensed under the MIT License. See LICENSE.txt in the project root for license information.
 
 using System.Numerics;
-using ExampleGallery.Direct3DInterop;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
+using PaintCube;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -22,8 +22,7 @@ namespace ExampleGallery
 
         // The TeapotRenderer class is provided by the ExampleGallery.Direct3DInterop project,
         // which is written in C++/CX. It uses interop to combine Direct3D rendering with Win2D.
-        private TeapotRenderer Teapot { get; set; }
-
+        private CubeRenderer Cube { get; set; }
 
         private float TextRenderTargetSize { get; } = 256;
 
@@ -39,20 +38,20 @@ namespace ExampleGallery
         private void canvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
         {
             // Create the Direct3D teapot model.
-            Teapot = new TeapotRenderer(sender);
+            Cube = new CubeRenderer(sender);
 
             TextRenderTarget = new CanvasRenderTarget(sender, TextRenderTargetSize, TextRenderTargetSize);
 
             // Set the scrolling text rendertarget (a Win2D object) as
             // source texture for our 3D teapot model (which uses Direct3D).
-            Teapot.SetTexture(TextRenderTarget);
+            Cube.SetTexture(TextRenderTarget);
         }
 
         private void canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
         {
             if (SpinEnabled)
             {
-                SpinTheTeapot += (float)args.Timing.ElapsedTime.TotalSeconds;
+                SpinTheTeapot += (float)args.Timing.ElapsedTime.TotalSeconds / 2;
             }
         }
 
@@ -68,11 +67,11 @@ namespace ExampleGallery
             Vector2 size = sender.Size.ToVector2();
 
             // Draw the teapot (using Direct3D).
-            Teapot.SetWorld(Matrix4x4.CreateFromYawPitchRoll(-SpinTheTeapot, SpinTheTeapot / 23, SpinTheTeapot / 42));
-            Teapot.SetView(Matrix4x4.CreateLookAt(new Vector3(1.5f, 1, 0), Vector3.Zero, Vector3.UnitY));
-            Teapot.SetProjection(Matrix4x4.CreatePerspectiveFieldOfView(1, size.X / size.Y, 0.1f, 10f));
+            Cube.SetWorld(Matrix4x4.CreateFromYawPitchRoll(-SpinTheTeapot, SpinTheTeapot / 23, SpinTheTeapot / 42));
+            Cube.SetView(Matrix4x4.CreateLookAt(new Vector3(1.5f, 1, 0), Vector3.Zero, Vector3.UnitY));
+            Cube.SetProjection(Matrix4x4.CreatePerspectiveFieldOfView(1, size.X / size.Y, 0.1f, 10f));
 
-            Teapot.Draw(drawingSession);
+            Cube.Draw(drawingSession);
         }
 
         private void DrawWalls(CanvasTimingInformation timing)
@@ -82,6 +81,7 @@ namespace ExampleGallery
             using (var drawingSession = TextRenderTarget.CreateDrawingSession())
             {
                 drawingSession.Clear(Colors.White);
+                drawingSession.DrawRectangle(0, 0, TextRenderTargetSize - 1, TextRenderTargetSize - 1, Colors.Red);
             }
         }
 

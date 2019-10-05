@@ -5,18 +5,18 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)TeapotRenderer.cpp" />
+    <ClCompile Include="CubeRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)TeapotRenderer.h" />
+    <ClInclude Include="CubeRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A81F96D0-4924-40E3-A463-3CB9EE55AA93}</ProjectGuid>
-    <RootNamespace>ExampleGallery.Direct3DInterop</RootNamespace>
+    <RootNamespace>PaintCube.Direct3DInterop</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>

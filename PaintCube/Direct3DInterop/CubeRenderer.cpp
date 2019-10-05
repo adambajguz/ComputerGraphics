@@ -3,12 +3,12 @@
 // Licensed under the MIT License. See LICENSE.txt in the project root for license information.
 
 #include "pch.h"
-#include "TeapotRenderer.h"
+#include "CubeRenderer.h"
 
-using namespace ExampleGallery::Direct3DInterop;
+using namespace PaintCube::Direct3DInterop;
 
 
-TeapotRenderer::TeapotRenderer(ICanvasResourceCreator^ resourceCreator)
+CubeRenderer::CubeRenderer(ICanvasResourceCreator^ resourceCreator)
     : m_depthStencilWidth(0)
     , m_depthStencilHeight(0)
 {
@@ -30,25 +30,25 @@ TeapotRenderer::TeapotRenderer(ICanvasResourceCreator^ resourceCreator)
 }
 
 
-void TeapotRenderer::SetWorld(float4x4 value)
+void CubeRenderer::SetWorld(float4x4 value)
 {
     m_basicEffect->SetWorld(XMLoadFloat4x4(&value));
 }
 
 
-void TeapotRenderer::SetView(float4x4 value)
+void CubeRenderer::SetView(float4x4 value)
 {
     m_basicEffect->SetView(XMLoadFloat4x4(&value));
 }
 
 
-void TeapotRenderer::SetProjection(float4x4 value)
+void CubeRenderer::SetProjection(float4x4 value)
 {
     m_basicEffect->SetProjection(XMLoadFloat4x4(&value));
 }
 
 
-void TeapotRenderer::SetTexture(IDirect3DSurface^ texture)
+void CubeRenderer::SetTexture(IDirect3DSurface^ texture)
 {
     // Look up the Direct3D texture corresponding to the specified IDirect3DSurface.
     ComPtr<ID3D11Texture2D> d3dTexture;
@@ -64,7 +64,7 @@ void TeapotRenderer::SetTexture(IDirect3DSurface^ texture)
 }
 
 
-void TeapotRenderer::Draw(CanvasDrawingSession^ drawingSession)
+void CubeRenderer::Draw(CanvasDrawingSession^ drawingSession)
 {
     // Look up the Direct2D device context corresponding to the specified CanvasDrawingSession.
     ComPtr<ID2D1DeviceContext> d2dContext = GetWrappedResource<ID2D1DeviceContext>(drawingSession);;
@@ -83,7 +83,7 @@ void TeapotRenderer::Draw(CanvasDrawingSession^ drawingSession)
 }
 
 
-void TeapotRenderer::SetRenderTarget(ID2D1DeviceContext* d2dContext)
+void CubeRenderer::SetRenderTarget(ID2D1DeviceContext* d2dContext)
 {
     // Look up what target image this Direct2D device context is drawing onto.
     ComPtr<ID2D1Image> d2dTarget;

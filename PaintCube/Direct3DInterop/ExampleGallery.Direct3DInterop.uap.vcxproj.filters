@@ -7,10 +7,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)TeapotRenderer.cpp" />
+    <ClCompile Include="CubeRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)TeapotRenderer.h" />
+    <ClInclude Include="CubeRenderer.h" />
   </ItemGroup>
 </Project>
