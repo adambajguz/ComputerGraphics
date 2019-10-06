@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ExampleGallery
+namespace PaintCube
 {
     static class Utils
     {

@@ -8,12 +8,13 @@ using System.Numerics;
 using Microsoft.Graphics.Canvas.Svg;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
+using PaintCube.Shapes;
 using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace ExampleGallery
+namespace PaintCube
 {
     public sealed partial class SvgExample : UserControl
     {
@@ -74,6 +75,7 @@ namespace ExampleGallery
         public List<ShapeType> Shapes { get { return Utils.GetEnumAsList<ShapeType>(); } }
         public ShapeType CurrentShapeType { get; set; }
 
+        public List<MShape> DrawnShapes { get; } = new List<MShape>();
 
         public SvgExample()
         {
@@ -82,14 +84,16 @@ namespace ExampleGallery
 
         void canvasControl_CreateResources(CanvasControl sender, CanvasCreateResourcesEventArgs args)
         {
-            CreateSomeSimplePlaceholderDocument();
+            // Clears everything.
+            svgDocument = new CanvasSvgDocument(canvasControl);
+            canvasControl.Invalidate();
         }
 
         private void canvasControl_Draw(CanvasControl sender, CanvasDrawEventArgs args)
         {
             Size viewportSize = new Size() { Width = 1000, Height = 1000 };
 
-            args.DrawingSession.DrawSvg(svgDocument, viewportSize);
+            //args.DrawingSession.DrawSvg(svgDocument, viewportSize);
 
 
             if (pointerDrag != null)
@@ -110,6 +114,11 @@ namespace ExampleGallery
                     args.DrawingSession.DrawLine(pointerDrag.StartLocation.ToVector2(), pointerDrag.CurrentLocation.ToVector2(), Colors.Magenta);
                 }
             }
+
+            foreach (MShape shape in DrawnShapes)
+            {
+                shape.Draw(sender, args);
+            }
         }
 
         private void SettingsCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -117,53 +126,17 @@ namespace ExampleGallery
             canvasControl.Invalidate();
         }
 
-        void CreateSomeSimplePlaceholderDocument()
-        {
-            svgDocument = new CanvasSvgDocument(canvasControl);
-
-            {
-                var rect = svgDocument.Root.CreateAndAppendNamedChildElement("rect");
-                UseDefaultStroke(rect);
-                rect.SetColorAttribute("fill", Color.FromArgb(0xFF, 0xFF, 0xFF, 0x0));
-                rect.SetFloatAttribute("x", 20);
-                rect.SetFloatAttribute("y", 20);
-                rect.SetFloatAttribute("width", 100);
-                rect.SetFloatAttribute("height", 100);
-            }
-            {
-                var circle = svgDocument.Root.CreateAndAppendNamedChildElement("circle");
-                UseDefaultStroke(circle);
-                circle.SetColorAttribute("fill", Color.FromArgb(0xFF, 0x8B, 0x0, 0x0));
-                circle.SetFloatAttribute("cx", 140);
-                circle.SetFloatAttribute("cy", 140);
-                circle.SetFloatAttribute("r", 70);
-            }
-            {
-                var line = svgDocument.Root.CreateAndAppendNamedChildElement("line");
-                UseDefaultStroke(line);
-                line.SetFloatAttribute("x1", 20);
-                line.SetFloatAttribute("y1", 20);
-                line.SetFloatAttribute("x2", 300);
-                line.SetFloatAttribute("y2", 180);
-            }
-        }
-
-        private static void UseDefaultStroke(CanvasSvgNamedElement rect)
-        {
-            rect.SetColorAttribute("stroke", Colors.Black);
-            rect.SetFloatAttribute("stroke-width", 5);
-        }
-
-        private void NewDocument_Click(object sender, RoutedEventArgs e)
-        {
-            CreateSomeSimplePlaceholderDocument();
-            canvasControl.Invalidate();
-        }
-
         private void Clear_Clicked(object sender, RoutedEventArgs e)
         {
             // Clears everything.
             svgDocument = new CanvasSvgDocument(canvasControl);
+            DrawnShapes.Clear();
+            canvasControl.Invalidate();
+        }
+
+        private void Undo_Clicked(object sender, RoutedEventArgs e)
+        {
+            DrawnShapes.RemoveAt(DrawnShapes.Count - 1);
             canvasControl.Invalidate();
         }
 
@@ -194,11 +167,14 @@ namespace ExampleGallery
             if (pointerDrag == null)
                 return; // Nothing to do
 
+
             // Commit the shape into the document
             CanvasSvgNamedElement newChild = null;
 
             if (CurrentShapeType == ShapeType.Rectangle)
             {
+                DrawnShapes.Add(new MRectangle(pointerDrag.StartLocation, pointerDrag.CurrentLocation));
+
                 Rect r = pointerDrag.GetRectangle();
                 newChild = svgDocument.Root.CreateAndAppendNamedChildElement("rect");
                 newChild.SetFloatAttribute("x", (float)r.Left);
@@ -208,6 +184,8 @@ namespace ExampleGallery
             }
             else if (CurrentShapeType == ShapeType.Circle)
             {
+                DrawnShapes.Add(new MCircle(pointerDrag.StartLocation, pointerDrag.CurrentLocation));
+
                 var circle = pointerDrag.GetCircle();
                 newChild = svgDocument.Root.CreateAndAppendNamedChildElement("circle");
                 newChild.SetFloatAttribute("cx", circle.Center.X);
@@ -216,18 +194,8 @@ namespace ExampleGallery
             }
             else if (CurrentShapeType == ShapeType.Line)
             {
-                var start = pointerDrag.StartLocation.ToVector2();
-                var end = pointerDrag.CurrentLocation.ToVector2();
-                newChild = svgDocument.Root.CreateAndAppendNamedChildElement("line");
-                newChild.SetFloatAttribute("x1", start.X);
-                newChild.SetFloatAttribute("y1", start.Y);
-                newChild.SetFloatAttribute("x2", end.X);
-                newChild.SetFloatAttribute("y2", end.Y);
+                DrawnShapes.Add(new MLine(pointerDrag.StartLocation, pointerDrag.CurrentLocation));
             }
-
-            newChild.SetColorAttribute("fill", Colors.Transparent);
-            newChild.SetColorAttribute("stroke", Colors.Black);
-            newChild.SetFloatAttribute("stroke-width", 4.0f);
 
             pointerDrag = null;
             canvasControl.Invalidate();

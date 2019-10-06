@@ -6,11 +6,11 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
 -->
 
 <Page
-    x:Class="ExampleGallery.Direct3DInteropExample"
+    x:Class="PaintCube.Direct3DInteropExample"
     x:Name="control"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:ExampleGallery"
+    xmlns:local="using:PaintCube"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -19,16 +19,20 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
     d:DesignWidth="400"
     Unloaded="control_Unloaded">
 
-    <Grid PointerPressed="canvas_PointerPressed" PointerMoved="canvas_PointerMoved" PointerReleased="canvas_PointerReleased">
+    <Grid>
         <canvas:CanvasAnimatedControl x:Name="canvas"
                                       CreateResources="canvas_CreateResources"
                                       Update="canvas_Update"
                                       Draw="canvas_Draw"
                                       ClearColor="Black"/>
 
+
         <ScrollViewer VerticalScrollMode="Auto" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Hidden">
             <StackPanel Orientation="Vertical" Margin="5" Width="180" HorizontalAlignment="Left">
                 <ToggleButton Content="Spin" IsChecked="{Binding SpinEnabled, ElementName=control, Mode=TwoWay}"/>
+                <Slider x:Name="Yaw" Minimum="0" Maximum="6.31" StepFrequency="0.01"/>
+                <Slider  x:Name="Pitch" Minimum="0" Maximum="6.31" StepFrequency="0.01" />
+                <Slider x:Name="Roll" Minimum="0" Maximum="6.31" StepFrequency="0.01" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

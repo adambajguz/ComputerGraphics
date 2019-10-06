@@ -123,6 +123,10 @@
     <Compile Include="Infrastructure\NavigationHelper.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Infrastructure\Utils.cs" />
+    <Compile Include="Shapes\MCircle.cs" />
+    <Compile Include="Shapes\MRectangle.cs" />
+    <Compile Include="Shapes\MLine.cs" />
+    <Compile Include="Shapes\MShape.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SvgExample.xaml.cs">
       <DependentUpon>SvgExample.xaml</DependentUpon>
@@ -224,6 +228,7 @@
       <Name>PaintCube.Direct3DInterop.uap</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

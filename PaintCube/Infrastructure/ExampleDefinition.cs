@@ -1,6 +1,6 @@
 using System;
 
-namespace ExampleGallery
+namespace PaintCube
 {
     public class ExampleDefinition
     {

@@ -7,7 +7,6 @@
 
 using namespace PaintCube::Direct3DInterop;
 
-
 CubeRenderer::CubeRenderer(ICanvasResourceCreator^ resourceCreator)
     : m_depthStencilWidth(0)
     , m_depthStencilHeight(0)

@@ -6,11 +6,11 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
 -->
 
 <UserControl
-    x:Class="ExampleGallery.SvgExample"
+    x:Class="PaintCube.SvgExample"
     x:Name="control"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:ExampleGallery"
+    xmlns:local="using:PaintCube"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
@@ -26,19 +26,29 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" Width="182">
             <StackPanel Orientation="Vertical" MinWidth="100" Margin="5" x:Name="optionsPanel">
 
-                <Button Content="New Document" HorizontalAlignment="Stretch" Click="NewDocument_Click"/>
+                <Button HorizontalAlignment="Stretch" Click="Clear_Clicked">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon Symbol="Delete" Margin="0,0,8,0"/>
+                        <TextBlock>Clear</TextBlock>
+                    </StackPanel>
+                </Button>
 
+                <Button HorizontalAlignment="Stretch" Click="Undo_Clicked">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon Symbol="Undo" Margin="0,0,8,0"/>
+                        <TextBlock>Undo</TextBlock>
+                    </StackPanel>
+                </Button>
                 <TextBlock>Shape:</TextBlock>
                 <ComboBox 
                   ItemsSource="{Binding ElementName=control, Path=Shapes}"
                   SelectedItem="{Binding CurrentShapeType, ElementName=control, Mode=TwoWay}"
                   FontSize="15"
-                  SelectionChanged="SettingsCombo_SelectionChanged"/>
+                  SelectionChanged="SettingsCombo_SelectionChanged" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
-                <Button Content="Clear" HorizontalAlignment="Stretch" Click="Clear_Clicked"/>
             </StackPanel>
         </ScrollViewer>
 

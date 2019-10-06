@@ -8,13 +8,11 @@ using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using PaintCube.Direct3DInterop;
-using Windows.Foundation;
 using Windows.UI;
-using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace ExampleGallery
+namespace PaintCube
 {
     public sealed partial class Direct3DInteropExample : Page
     {
@@ -50,12 +48,26 @@ namespace ExampleGallery
             Cube.SetTexture(TextRenderTarget);
         }
 
-        private void canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
+        private async void canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
         {
             if (SpinEnabled)
             {
                 SpinTheTeapot += (float)args.Timing.ElapsedTime.TotalSeconds / 2;
+
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    Yaw.Value = SpinTheTeapot % 6.21;
+                    Pitch.Value = (SpinTheTeapot / 23) % 6.21;
+                    Roll.Value = (SpinTheTeapot / 42) % 6.21;
+                });
             }
+
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                yawVal = (float)Yaw.Value;
+                pitchVal = (float)Pitch.Value;
+                rollVal = (float)Roll.Value;
+            });
         }
 
         private void canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
@@ -65,12 +77,16 @@ namespace ExampleGallery
             DrawTeapot(sender, args.DrawingSession);
         }
 
+        private float yawVal, pitchVal, rollVal;
         private void DrawTeapot(ICanvasAnimatedControl sender, CanvasDrawingSession drawingSession)
         {
             Vector2 size = sender.Size.ToVector2();
 
             // Draw the teapot (using Direct3D).
-            Cube.SetWorld(Matrix4x4.CreateFromYawPitchRoll(-SpinTheTeapot, SpinTheTeapot / 23, SpinTheTeapot / 42));
+            //Cube.SetWorld(Matrix4x4.CreateFromYawPitchRoll(-SpinTheTeapot, SpinTheTeapot / 23, SpinTheTeapot / 42));
+
+
+            Cube.SetWorld(Matrix4x4.CreateFromYawPitchRoll(-yawVal, pitchVal, rollVal));
             Cube.SetView(Matrix4x4.CreateLookAt(new Vector3(1.5f, 1, 0), Vector3.Zero, Vector3.UnitY));
             Cube.SetProjection(Matrix4x4.CreatePerspectiveFieldOfView(1, size.X / size.Y, 0.1f, 10f));
 
@@ -95,29 +111,9 @@ namespace ExampleGallery
             canvas = null;
         }
 
-        private bool IsMousePointerPressed { get; set; }
-        Quaternion Q;
-        private void canvas_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            IsMousePointerPressed = true;
-        }
-
-        private void canvas_PointerMoved(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            if (IsMousePointerPressed)
-            {
-                PointerPoint pointerPoint = e.GetCurrentPoint(canvas);
-                Point pos = pointerPoint.Position;
-
-                double angle = (Math.Atan2(pos.Y, pos.X) * (360 / (Math.PI * 2))) - 90;
-                Q = Quaternion.CreateFromAxisAngle(Vector3.Zero, (float)angle);
-            }
-        }
-
         private void canvas_PointerReleased(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             e.Handled = true;
-            IsMousePointerPressed = false;
         }
     }
 }
