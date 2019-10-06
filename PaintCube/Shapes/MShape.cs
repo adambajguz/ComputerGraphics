@@ -1,5 +1,6 @@
 ﻿using Microsoft.Graphics.Canvas.UI.Xaml;
 using Windows.Foundation;
+using Windows.UI;
 
 namespace PaintCube.Shapes
 {
@@ -8,7 +9,26 @@ namespace PaintCube.Shapes
         public virtual Point StartLocation { get; set; }
         public virtual Point EndLocation { get; set; }
 
-        public bool IsInEditMode { get; set; }
+        public ShapeModes Mode { get; set; } = ShapeModes.Drawn;
+
+        public Color ShapeColor
+        {
+            get
+            {
+                switch (Mode)
+                {
+                    case ShapeModes.Drawing:
+                        return Colors.Blue;
+                    case ShapeModes.Drawn:
+                        return Colors.Black;
+                    case ShapeModes.Editing:
+                        return Colors.Magenta;
+
+                    default:
+                        return Colors.Green;
+                }
+            }
+        }
 
         protected MShape()
         {
@@ -23,11 +43,13 @@ namespace PaintCube.Shapes
 
         public void Draw(CanvasControl sender, CanvasDrawEventArgs args)
         {
-            if (IsInEditMode)
-                DrawGhost(sender, args);
-            else
+            if (Mode == ShapeModes.Drawn)
                 DrawNormal(sender, args);
+            else
+                DrawGhost(sender, args);
         }
+
+        public abstract bool OnMouseOver(Point mousePosition);
 
         protected abstract void DrawNormal(CanvasControl sender, CanvasDrawEventArgs args);
         protected abstract void DrawGhost(CanvasControl sender, CanvasDrawEventArgs args);

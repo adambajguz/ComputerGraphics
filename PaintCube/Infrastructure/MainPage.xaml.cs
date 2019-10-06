@@ -20,6 +20,7 @@ namespace PaintCube
         public MainPage()
         {
             this.InitializeComponent();
+            this.RequestedTheme = ElementTheme.Dark;
 
             this.navigationHelper = new NavigationHelper(this);
         }
@@ -62,7 +63,7 @@ namespace PaintCube
             {
                 VisualStateManager.GoToState(this, newVisualState.ToString(), false);
                 currentVisualState = newVisualState;
-            }            
+            }
         }
     }
 }

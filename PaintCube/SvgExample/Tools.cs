@@ -7,55 +7,77 @@ namespace PaintCube
     {
         public enum Tools
         {
-            Pointer,
+            Select,
             Move,
             Draw,
-            DrawClick
+            DrawClick,
+            DrawTextTool
         }
 
         public Tools SelectedTool { get; set; }
 
-        private void PointerTool_Checked(object sender, RoutedEventArgs e)
+        private void SelectTool_Checked(object sender, RoutedEventArgs e)
         {
-            SelectedTool = Tools.Pointer;
+            SelectedTool = Tools.Select;
 
             DrawTool.IsChecked = false;
             MoveTool.IsChecked = false;
             DrawClickTool.IsChecked = false;
+            DrawTextTool.IsChecked = false;
         }
 
         private void MoveTool_Checked(object sender, RoutedEventArgs e)
         {
             SelectedTool = Tools.Move;
 
-            PointerTool.IsChecked = false;
+            SelectTool.IsChecked = false;
             DrawTool.IsChecked = false;
             DrawClickTool.IsChecked = false;
+            DrawTextTool.IsChecked = false;
         }
 
         private void DrawTool_Checked(object sender, RoutedEventArgs e)
         {
             SelectedTool = Tools.Draw;
 
-            PointerTool.IsChecked = false;
+            SelectTool.IsChecked = false;
             MoveTool.IsChecked = false;
             DrawClickTool.IsChecked = false;
+            DrawTextTool.IsChecked = false;
         }
 
         private void DrawClickTool_Checked(object sender, RoutedEventArgs e)
         {
             SelectedTool = Tools.DrawClick;
 
-            PointerTool.IsChecked = false;
+            SelectTool.IsChecked = false;
             MoveTool.IsChecked = false;
             DrawTool.IsChecked = false;
+            DrawTextTool.IsChecked = false;
+        }
+
+        private void DrawTextTool_Checked(object sender, RoutedEventArgs e)
+        {
+            SelectedTool = Tools.DrawTextTool;
+
+            SelectTool.IsChecked = false;
+            MoveTool.IsChecked = false;
+            DrawTool.IsChecked = false;
+            DrawClickTool.IsChecked = false;
+            optionsPanelAddShape.Visibility = Visibility.Visible;
         }
 
         private void Tool_Unchecked(object sender, RoutedEventArgs e)
         {
+            if (PendingShape != null)
+                CancelDraw();
+
+            optionsPanelAddShape.Visibility = Visibility.Collapsed;
+
             if (DrawTool.IsChecked == true ||
                 MoveTool.IsChecked == true ||
-                PointerTool.IsChecked == true ||
+                SelectTool.IsChecked == true ||
+                DrawTextTool.IsChecked == true ||
                 DrawClickTool.IsChecked == true)
                 return;
 

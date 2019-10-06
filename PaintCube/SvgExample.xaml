@@ -16,7 +16,7 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    d:DesignHeight="800"
+    d:DesignHeight="1000"
     d:DesignWidth="480"
     Unloaded="control_Unloaded">
 
@@ -43,32 +43,39 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                 <TextBlock>Tools:</TextBlock>
                 <CommandBar Background="Transparent" IsOpen="False" DefaultLabelPosition="Collapsed"
                             HorizontalAlignment="Left">
-                    <AppBarToggleButton x:Name="PointerTool" Icon="TouchPointer"
-                                        IsCompact="True" Label="Edit" HorizontalContentAlignment="Center" Width="48" 
-                                        Checked="PointerTool_Checked" Unchecked="Tool_Unchecked"/>
+                    <AppBarToggleButton x:Name="SelectTool" Icon="TouchPointer"
+                                        IsCompact="True" Label="Select" ToolTipService.ToolTip="Select" HorizontalContentAlignment="Center" Width="48" 
+                                        Checked="SelectTool_Checked" Unchecked="Tool_Unchecked"/>
                     <AppBarToggleButton x:Name="MoveTool" 
-                                        IsCompact="True" Label="Move" Width="48" 
+                                        IsCompact="True" Label="Move" ToolTipService.ToolTip="Move" Width="48" 
                                         Checked="MoveTool_Checked" Unchecked="Tool_Unchecked">
                         <AppBarToggleButton.Icon>
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE759;"/>
                         </AppBarToggleButton.Icon>
                     </AppBarToggleButton>
                     <AppBarToggleButton x:Name="DrawTool" 
-                                        IsCompact="True" Label="Move" Width="48" 
+                                        IsCompact="True" Label="Drag draw" ToolTipService.ToolTip="Drag draw" Width="48" 
                                         Checked="DrawTool_Checked" Unchecked="Tool_Unchecked">
                         <AppBarToggleButton.Icon>
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEC87;"/>
                         </AppBarToggleButton.Icon>
                     </AppBarToggleButton>
                     <AppBarToggleButton x:Name="DrawClickTool" Icon="Edit" 
-                                        IsCompact="True" Label="Draw by click" Width="48" 
+                                        IsCompact="True" Label="Click drwa" ToolTipService.ToolTip="Click draw" Width="48" 
                                         Checked="DrawClickTool_Checked" Unchecked="Tool_Unchecked"/>
+                    <AppBarToggleButton x:Name="DrawTextTool" 
+                                        IsCompact="True" Label="Text draw" ToolTipService.ToolTip="Text draw" Width="48" 
+                                        Checked="DrawTextTool_Checked" Unchecked="Tool_Unchecked">
+                        <AppBarToggleButton.Icon>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE97C;"/>
+                        </AppBarToggleButton.Icon>
+                    </AppBarToggleButton>
                 </CommandBar>
 
                 <Button HorizontalAlignment="Stretch" Click="Undo_Clicked">
                     <StackPanel Orientation="Horizontal">
                         <SymbolIcon Symbol="Undo" Margin="0,0,8,0"/>
-                        <TextBlock>Undo</TextBlock>
+                        <TextBlock>Undo draw</TextBlock>
                     </StackPanel>
                 </Button>
                 <TextBlock>Shape:</TextBlock>
@@ -78,6 +85,38 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                   FontSize="15"
                   SelectionChanged="ShapeCombo_SelectionChanged" 
                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedIndex="0"/>
+
+                <ScrollViewer Grid.Column="0" Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,8">
+                    <StackPanel Orientation="Vertical" MinWidth="100" Margin="5" x:Name="optionsPanelAddShape" 
+                        BorderBrush="DarkGreen" BorderThickness="2" Padding="4">
+                   
+                        <TextBlock x:Name="AddShapeOptionsLabel">Define shape:</TextBlock>
+                        <StackPanel x:Name="AddShapeOptionsLine" Orientation="Vertical" BorderBrush="MediumVioletRed" BorderThickness="2" Padding="4" Margin="4">
+                            <TextBlock>Start:</TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock VerticalAlignment="Center" Margin="0,0,4,0">X:</TextBlock>
+                                <TextBox x:Name="AddStartLocationX" />
+                                <TextBlock VerticalAlignment="Center" Margin="4,0,4,0">Y:</TextBlock>
+                                <TextBox x:Name="AddStartLocationY"/>
+                            </StackPanel>
+
+                            <TextBlock Margin="0,8,0,0">End:</TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock VerticalAlignment="Center" Margin="0,0,4,0">X:</TextBlock>
+                                <TextBox x:Name="AddEndLocationX"/>
+                                <TextBlock VerticalAlignment="Center" Margin="4,0,4,0">Y:</TextBlock>
+                                <TextBox x:Name="AddEndLocationY"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <Button HorizontalAlignment="Stretch" Click="ShapeAdd_Clicked" Margin="8,0,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <SymbolIcon Symbol="Add" Margin="0,0,8,0"/>
+                                <TextBlock>Add shape</TextBlock>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+
 
             </StackPanel>
         </ScrollViewer>
@@ -103,17 +142,17 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                   FontSize="15"
                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="DrawnShapesCombo_SelectionChanged"/>
 
-                <TextBlock x:Name="ShapeOptionsCommonLabel">Common:</TextBlock>
-                <StackPanel x:Name="ShapeOptionsCommon" Orientation="Vertical" BorderBrush="MediumVioletRed" BorderThickness="2" Padding="4" Margin="4">
-                    <TextBlock>Start location:</TextBlock>
+                <TextBlock x:Name="ShapeOptionsLineLabel">Line:</TextBlock>
+                <StackPanel x:Name="ShapeOptionsLine" Orientation="Vertical" BorderBrush="MediumVioletRed" BorderThickness="2" Padding="4" Margin="4">
+                    <TextBlock>Start:</TextBlock>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock VerticalAlignment="Center" Margin="0,0,4,0">X:</TextBlock>
-                        <TextBox x:Name="StartLocationXEdit" InputScope="Number"/>
+                        <TextBox x:Name="StartLocationXEdit" />
                         <TextBlock VerticalAlignment="Center" Margin="4,0,4,0">Y:</TextBlock>
                         <TextBox x:Name="StartLocationYEdit"/>
                     </StackPanel>
 
-                    <TextBlock Margin="0,8,0,0">End location:</TextBlock>
+                    <TextBlock Margin="0,8,0,0">End:</TextBlock>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock VerticalAlignment="Center" Margin="0,0,4,0">X:</TextBlock>
                         <TextBox x:Name="EndLocationXEdit"/>
@@ -124,7 +163,15 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
 
                 <TextBlock x:Name="ShapeOptionsRectangleLabel">Rectangle:</TextBlock>
                 <StackPanel x:Name="ShapeOptionsRectangle" Orientation="Vertical" BorderBrush="MediumVioletRed" BorderThickness="2" Padding="4" Margin="4">
-                    <TextBlock>Width:</TextBlock>
+                    <TextBlock>Position (top left):</TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,4,0">X:</TextBlock>
+                        <TextBox x:Name="RectXEdit" />
+                        <TextBlock VerticalAlignment="Center" Margin="4,0,4,0">Y:</TextBlock>
+                        <TextBox x:Name="RectYEdit"/>
+                    </StackPanel>
+
+                    <TextBlock Margin="0,8,0,0">Width:</TextBlock>
                     <TextBox x:Name="RectangleWidthEdit"/>
                     <TextBlock>Height:</TextBlock>
                     <TextBox x:Name="RectangleHeightEdit"/>

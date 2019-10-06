@@ -25,14 +25,16 @@ namespace PaintCube
         public SvgExample()
         {
             this.InitializeComponent();
-            PointerTool.IsChecked = true;
+            SelectTool.IsChecked = true;
 
-            ShapeOptionsCommon.Visibility = Visibility.Collapsed;
-            ShapeOptionsCommonLabel.Visibility = Visibility.Collapsed;
+            ShapeOptionsLine.Visibility = Visibility.Collapsed;
+            ShapeOptionsLineLabel.Visibility = Visibility.Collapsed;
             ShapeOptionsRectangle.Visibility = Visibility.Collapsed;
             ShapeOptionsRectangleLabel.Visibility = Visibility.Collapsed;
             ShapeOptionsCircle.Visibility = Visibility.Collapsed;
             ShapeOptionsCircleLabel.Visibility = Visibility.Collapsed;
+
+            optionsPanelAddShape.Visibility = Visibility.Collapsed;
         }
 
         private void ShapeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)

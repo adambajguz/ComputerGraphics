@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using PaintCube.Shapes;
+using Windows.UI.Xaml;
 
 namespace PaintCube
 {
@@ -27,9 +28,13 @@ namespace PaintCube
         {
             DrawnShapesCombo.ItemsSource = null;
             DrawnShapesCombo.ItemsSource = DrawnShapes;
-            ShapeToEdit.IsInEditMode = false;
 
-            ShapeToEdit = null;
+            if (ShapeToEdit != null)
+            {
+                ShapeToEdit.Mode = ShapeModes.Drawn;
+                ShapeToEdit = null;
+            }
+
             UpdateEditPanel();
             canvasControl.Invalidate();
         }

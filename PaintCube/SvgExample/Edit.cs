@@ -18,24 +18,26 @@ namespace PaintCube
         {
             if (ShapeToEdit != null)
             {
-                ShapeToEdit.IsInEditMode = false;
+                ShapeToEdit.Mode = ShapeModes.Drawn;
             }
 
             if (DrawnShapesCombo.SelectedIndex < 0)
                 return;
 
             ShapeToEdit = DrawnShapesCombo.SelectedItem as MShape;
-            ShapeToEdit.IsInEditMode = true;
+            ShapeToEdit.Mode = ShapeModes.Editing;
 
-            ShapeOptionsCommon.Visibility = Visibility.Visible;
-            ShapeOptionsCommonLabel.Visibility = Visibility.Visible;
+            if (ShapeToEdit is MLine line)
+            {
+                ShapeOptionsLine.Visibility = Visibility.Visible;
+                ShapeOptionsLineLabel.Visibility = Visibility.Visible;
 
-            StartLocationXEdit.Text = ShapeToEdit.StartLocation.X.ToString();
-            StartLocationYEdit.Text = ShapeToEdit.StartLocation.Y.ToString();
-            EndLocationXEdit.Text = ShapeToEdit.EndLocation.X.ToString();
-            EndLocationYEdit.Text = ShapeToEdit.EndLocation.Y.ToString();
-
-            if (ShapeToEdit is MCircle circle)
+                StartLocationXEdit.Text = line.StartLocation.X.ToString();
+                StartLocationYEdit.Text = line.StartLocation.Y.ToString();
+                EndLocationXEdit.Text = line.EndLocation.X.ToString();
+                EndLocationYEdit.Text = line.EndLocation.Y.ToString();
+            }
+            else if (ShapeToEdit is MCircle circle)
             {
                 ShapeOptionsCircle.Visibility = Visibility.Visible;
                 ShapeOptionsCircleLabel.Visibility = Visibility.Visible;
@@ -49,6 +51,8 @@ namespace PaintCube
                 ShapeOptionsRectangle.Visibility = Visibility.Visible;
                 ShapeOptionsRectangleLabel.Visibility = Visibility.Visible;
 
+                RectXEdit.Text = rect.Rectangle.X.ToString();
+                RectYEdit.Text = rect.Rectangle.Y.ToString();
                 RectangleWidthEdit.Text = rect.Rectangle.Width.ToString();
                 RectangleHeightEdit.Text = rect.Rectangle.Height.ToString();
             }
@@ -68,46 +72,28 @@ namespace PaintCube
 
         private void UpdateShapeFromEditPanel()
         {
-            if (ShapeToEdit is MShape shape)
+            if (ShapeToEdit is MLine shape)
             {
-                UpdateShape(shape);
-
-                if (ShapeToEdit is MCircle circle)
-                {
-                    UpdateCircle(circle);
-                }
-                else if (ShapeToEdit is MRectangle rect)
-                {
-                    UpdateRect(rect);
-                }
-
-                canvasControl.Invalidate();
+                UpdateLine(shape);
             }
+            else if (ShapeToEdit is MCircle circle)
+            {
+                UpdateCircle(circle);
+            }
+            else if (ShapeToEdit is MRectangle rect)
+            {
+                UpdateRect(rect);
+            }
+
+            UpdateEditPanel();
+
+            canvasControl.Invalidate();
         }
 
-        private void UpdateRect(MRectangle rect)
+        private async void UpdateLine(MLine line)
         {
-            ShapeOptionsRectangle.Visibility = Visibility.Visible;
-            ShapeOptionsRectangleLabel.Visibility = Visibility.Visible;
-
-            RectangleWidthEdit.Text = rect.Rectangle.Width.ToString();
-            RectangleHeightEdit.Text = rect.Rectangle.Height.ToString();
-        }
-
-        private void UpdateCircle(MCircle circle)
-        {
-            ShapeOptionsCircle.Visibility = Visibility.Visible;
-            ShapeOptionsCircleLabel.Visibility = Visibility.Visible;
-
-            CircleCenterXEdit.Text = circle.Center.X.ToString();
-            CircleCenterYEdit.Text = circle.Center.X.ToString();
-            CircleRadiusEdit.Text = circle.Radius.ToString();
-        }
-
-        private async void UpdateShape(MShape shape)
-        {
-            ShapeOptionsCommon.Visibility = Visibility.Visible;
-            ShapeOptionsCommonLabel.Visibility = Visibility.Visible;
+            ShapeOptionsLine.Visibility = Visibility.Visible;
+            ShapeOptionsLineLabel.Visibility = Visibility.Visible;
 
             double sx, sy, ex, ey;
             try
@@ -124,13 +110,56 @@ namespace PaintCube
                 return;
             }
 
-            shape.StartLocation = new Point(sx, sy);
-            shape.EndLocation = new Point(ex, ey);
+            line.StartLocation = new Point(sx, sy);
+            line.EndLocation = new Point(ex, ey);
+        }
 
-            StartLocationXEdit.Text = shape.StartLocation.X.ToString();
-            StartLocationYEdit.Text = shape.StartLocation.Y.ToString();
-            EndLocationXEdit.Text = shape.EndLocation.X.ToString();
-            EndLocationYEdit.Text = shape.EndLocation.Y.ToString();
+        private async void UpdateCircle(MCircle circle)
+        {
+            ShapeOptionsCircle.Visibility = Visibility.Visible;
+            ShapeOptionsCircleLabel.Visibility = Visibility.Visible;
+
+            double x, y;
+            float r;
+            try
+            {
+                x = double.Parse(CircleCenterXEdit.Text);
+                y = double.Parse(CircleCenterYEdit.Text);
+                r = float.Parse(CircleRadiusEdit.Text);
+            }
+            catch (Exception)
+            {
+                await InvalidValuesFormatDialog();
+
+                return;
+            }
+
+            circle.Center = new Point(x, y);
+            circle.Radius = r;
+        }
+
+        private async void UpdateRect(MRectangle rect)
+        {
+            ShapeOptionsRectangle.Visibility = Visibility.Visible;
+            ShapeOptionsRectangleLabel.Visibility = Visibility.Visible;
+
+            double x, y;
+            float w, h;
+            try
+            {
+                x = double.Parse(RectXEdit.Text);
+                y = double.Parse(RectYEdit.Text);
+                w = float.Parse(RectangleWidthEdit.Text);
+                h = float.Parse(RectangleHeightEdit.Text);
+            }
+            catch (Exception)
+            {
+                await InvalidValuesFormatDialog();
+
+                return;
+            }
+
+            rect.Rectangle = new Rect(x, y, w, h);
         }
 
         private static async Task InvalidValuesFormatDialog()

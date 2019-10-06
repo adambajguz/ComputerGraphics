@@ -7,11 +7,28 @@ namespace PaintCube
     {
         private bool ClickedOnce { get; set; }
 
+        private void CancelDraw()
+        {
+            ClickedOnce = false;
+            PendingShape = null;
+            canvasControl.Invalidate();
+        }
+
         private void canvasControl_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            if (SelectedTool == Tools.Pointer)
-            {
+            Point startPosition = e.GetCurrentPoint(canvasControl).Position;
 
+            if (SelectedTool == Tools.Select)
+            {
+                foreach (MShape shape in DrawnShapes)
+                {
+                    if (shape.OnMouseOver(startPosition))
+                    {
+                        DrawnShapesCombo.SelectedItem = shape;
+
+                        break;
+                    }
+                }
             }
             else if (SelectedTool == Tools.Draw || SelectedTool == Tools.DrawClick)
             {
@@ -29,7 +46,6 @@ namespace PaintCube
                     }
                 }
 
-                Point startPosition = e.GetCurrentPoint(canvasControl).Position;
                 if (CurrentShapeType == ShapeType.Rectangle)
                 {
                     PendingShape = new MRectangle(startPosition, startPosition);
@@ -43,7 +59,7 @@ namespace PaintCube
                     PendingShape = new MLine(startPosition, startPosition);
                 }
 
-                PendingShape.IsInEditMode = true;
+                PendingShape.Mode = ShapeModes.Drawing;
 
                 canvasControl.Invalidate();
             }
@@ -51,7 +67,7 @@ namespace PaintCube
 
         private void AddShape()
         {
-            PendingShape.IsInEditMode = false;
+            PendingShape.Mode = ShapeModes.Drawn;
             DrawnShapes.Add(PendingShape);
 
             int idx = DrawnShapesCombo.SelectedIndex;
@@ -65,16 +81,14 @@ namespace PaintCube
 
         private void canvasControl_PointerMoved(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            if (SelectedTool == Tools.Pointer)
-            {
+            Point pos = e.GetCurrentPoint(canvasControl).Position;
 
-            }
-            else if (SelectedTool == Tools.Draw || SelectedTool == Tools.DrawClick)
+            if (SelectedTool == Tools.Draw || SelectedTool == Tools.DrawClick)
             {
                 if (PendingShape == null)
                     return; // Nothing to do
 
-                PendingShape.EndLocation = e.GetCurrentPoint(canvasControl).Position;
+                PendingShape.EndLocation = pos;
 
                 canvasControl.Invalidate();
             }
@@ -82,11 +96,7 @@ namespace PaintCube
 
         private void canvasControl_PointerReleased(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            if (SelectedTool == Tools.Pointer)
-            {
-
-            }
-            else if (SelectedTool == Tools.Draw || SelectedTool == Tools.DrawClick)
+            if (SelectedTool == Tools.Draw || SelectedTool == Tools.DrawClick)
             {
                 if (PendingShape == null || SelectedTool == Tools.DrawClick)
                     return; // Nothing to do
