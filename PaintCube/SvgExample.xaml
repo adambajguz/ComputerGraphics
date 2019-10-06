@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <!--
 Copyright (c) Microsoft Corporation. All rights reserved.
 
@@ -26,23 +26,24 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="256"/>
+            <ColumnDefinition Width="320"/>
             <ColumnDefinition Width="16"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <ScrollViewer Grid.Column="0" Grid.Row="0" VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical" MinWidth="100" Margin="5" x:Name="optionsPanel">
-
                 <Button HorizontalAlignment="Stretch" Click="Clear_Clicked">
                     <StackPanel Orientation="Horizontal">
                         <SymbolIcon Symbol="Delete" Margin="0,0,8,0"/>
                         <TextBlock>Clear</TextBlock>
                     </StackPanel>
                 </Button>
-                <TextBlock>Mouse drag draw:</TextBlock>
 
-                <ToggleSwitch IsOn="{Binding IsMouseDragDrawOn, ElementName=control, Mode=TwoWay}"/>
+                <StackPanel Orientation="Horizontal">
+                    <ToggleSwitch Header="Selection mode:" IsOn="{Binding IsSelectionMode, ElementName=control, Mode=TwoWay}" Toggled="ToggleSwitch_Toggled"/>
+                    <ToggleSwitch Header="Mouse drag draw:" IsOn="{Binding IsMouseDragDrawOn, ElementName=control, Mode=TwoWay}" Toggled="ToggleSwitch_Toggled_1"/>
+                </StackPanel>
 
                 <Button HorizontalAlignment="Stretch" Click="Undo_Clicked">
                     <StackPanel Orientation="Horizontal">
@@ -51,12 +52,12 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                     </StackPanel>
                 </Button>
                 <TextBlock>Shape:</TextBlock>
-                <ComboBox 
+                <ComboBox
                   ItemsSource="{Binding ElementName=control, Path=Shapes}"
                   SelectedItem="{Binding CurrentShapeType, ElementName=control, Mode=TwoWay}"
                   FontSize="15"
                   SelectionChanged="SettingsCombo_SelectionChanged" 
-                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedIndex="0"/>
 
             </StackPanel>
         </ScrollViewer>
@@ -79,7 +80,6 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                 <TextBlock>Drawn shapes:</TextBlock>
                 <ComboBox x:Name="DrawnShapesCombo"
                   ItemsSource="{Binding ElementName=control, Path=DrawnShapes, Mode=TwoWay}"
-                  SelectedItem="{Binding ShapeToEdit, ElementName=control, Mode=TwoWay}"
                   FontSize="15"
                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="DrawnShapesCombo_SelectionChanged"/>
 
@@ -92,7 +92,7 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                         <TextBlock VerticalAlignment="Center" Margin="4,0,4,0">Y:</TextBlock>
                         <TextBox x:Name="StartLocationYEdit"/>
                     </StackPanel>
-                    
+
                     <TextBlock Margin="0,8,0,0">End location:</TextBlock>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock VerticalAlignment="Center" Margin="0,0,4,0">X:</TextBlock>
@@ -105,7 +105,7 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                 <TextBlock x:Name="ShapeOptionsRectangleLabel">Rectangle:</TextBlock>
                 <StackPanel x:Name="ShapeOptionsRectangle" Orientation="Vertical" BorderBrush="MediumVioletRed" BorderThickness="2" Padding="4" Margin="4">
                     <TextBlock>Width:</TextBlock>
-                    <TextBox x:Name="RectangleWidthEdit"/>  
+                    <TextBox x:Name="RectangleWidthEdit"/>
                     <TextBlock>Height:</TextBlock>
                     <TextBox x:Name="RectangleHeightEdit"/>
                 </StackPanel>
@@ -125,11 +125,11 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button HorizontalAlignment="Stretch" Click="ShapeCancelUpdate_Clicked">
-                    <StackPanel Orientation="Horizontal">
-                        <SymbolIcon Symbol="Cancel" Margin="0,0,8,0"/>
-                        <TextBlock>Cancel</TextBlock>
-                    </StackPanel>
-                </Button>
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon Symbol="Cancel" Margin="0,0,8,0"/>
+                            <TextBlock>Cancel</TextBlock>
+                        </StackPanel>
+                    </Button>
                     <Button HorizontalAlignment="Stretch" Click="ShapeUpdate_Clicked" Margin="8,0,0,0">
                         <StackPanel Orientation="Horizontal">
                             <SymbolIcon Symbol="Accept" Margin="0,0,8,0"/>

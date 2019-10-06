@@ -22,14 +22,16 @@ namespace PaintCube
             Circle,
             Line,
         }
+
         public List<ShapeType> Shapes { get { return Utils.GetEnumAsList<ShapeType>(); } }
         public ShapeType CurrentShapeType { get; set; }
 
         public List<MShape> DrawnShapes { get; } = new List<MShape>();
-        public object ShapeToEdit { get; set; }
+        public MShape ShapeToEdit { get; set; }
 
         public MShape PendingShape { get; set; }
         public bool IsMouseDragDrawOn { get; set; }
+        public bool IsSelectionMode { get; set; }
 
         public SvgExample()
         {
@@ -90,14 +92,11 @@ namespace PaintCube
         {
             DrawnShapesCombo.ItemsSource = null;
             DrawnShapesCombo.ItemsSource = DrawnShapes;
-
-            if (ShapeToEdit is MShape shape)
-            {
-                shape.IsInEditMode = false;
-            }
+            ShapeToEdit.IsInEditMode = false;
 
             ShapeToEdit = null;
             UpdateEditPanel();
+            canvasControl.Invalidate();
         }
 
         private void control_Unloaded(object sender, RoutedEventArgs e)
@@ -111,6 +110,12 @@ namespace PaintCube
 
         private void canvasControl_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
+            if (IsSelectionMode)
+            {
+
+                return;
+            }
+
             if (IsMouseDragDrawOn)
             {
                 if (!ClickedOnce)
@@ -146,6 +151,11 @@ namespace PaintCube
 
         private void canvasControl_PointerMoved(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
+            if (IsSelectionMode)
+            {
+                return;
+            }
+
             if (PendingShape == null)
                 return; // Nothing to do
 
@@ -156,6 +166,11 @@ namespace PaintCube
 
         private void canvasControl_PointerReleased(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
+            if (IsSelectionMode)
+            {
+                return;
+            }
+
             if (PendingShape == null || IsMouseDragDrawOn)
                 return; // Nothing to do
 
@@ -183,45 +198,44 @@ namespace PaintCube
 
         private void UpdateEditPanel()
         {
-            if (ShapeToEdit is MShape shape)
+            if (ShapeToEdit != null)
             {
-                shape.IsInEditMode = true;
-
-                ShapeOptionsCommon.Visibility = Visibility.Visible;
-                ShapeOptionsCommonLabel.Visibility = Visibility.Visible;
-
-                StartLocationXEdit.Text = shape.StartLocation.X.ToString();
-                StartLocationYEdit.Text = shape.StartLocation.Y.ToString();
-                EndLocationXEdit.Text = shape.EndLocation.X.ToString();
-                EndLocationYEdit.Text = shape.EndLocation.Y.ToString();
-
-                if (ShapeToEdit is MCircle circle)
-                {
-                    ShapeOptionsCircle.Visibility = Visibility.Visible;
-                    ShapeOptionsCircleLabel.Visibility = Visibility.Visible;
-
-                    CircleCenterXEdit.Text = circle.Center.X.ToString();
-                    CircleCenterYEdit.Text = circle.Center.X.ToString();
-                    CircleRadiusEdit.Text = circle.Radius.ToString();
-                }
-                else if (ShapeToEdit is MRectangle rect)
-                {
-                    ShapeOptionsRectangle.Visibility = Visibility.Visible;
-                    ShapeOptionsRectangleLabel.Visibility = Visibility.Visible;
-
-                    RectangleWidthEdit.Text = rect.Rectangle.Width.ToString();
-                    RectangleHeightEdit.Text = rect.Rectangle.Height.ToString();
-                }
-
-                return;
+                ShapeToEdit.IsInEditMode = false;
             }
 
-            ShapeOptionsCommon.Visibility = Visibility.Collapsed;
-            ShapeOptionsCommonLabel.Visibility = Visibility.Collapsed;
-            ShapeOptionsRectangle.Visibility = Visibility.Collapsed;
-            ShapeOptionsRectangleLabel.Visibility = Visibility.Collapsed;
-            ShapeOptionsCircle.Visibility = Visibility.Collapsed;
-            ShapeOptionsCircleLabel.Visibility = Visibility.Collapsed;
+            if (DrawnShapesCombo.SelectedIndex < 0)
+                return;
+
+            ShapeToEdit = DrawnShapesCombo.SelectedItem as MShape;
+            ShapeToEdit.IsInEditMode = true;
+
+            ShapeOptionsCommon.Visibility = Visibility.Visible;
+            ShapeOptionsCommonLabel.Visibility = Visibility.Visible;
+
+            StartLocationXEdit.Text = ShapeToEdit.StartLocation.X.ToString();
+            StartLocationYEdit.Text = ShapeToEdit.StartLocation.Y.ToString();
+            EndLocationXEdit.Text = ShapeToEdit.EndLocation.X.ToString();
+            EndLocationYEdit.Text = ShapeToEdit.EndLocation.Y.ToString();
+
+            if (ShapeToEdit is MCircle circle)
+            {
+                ShapeOptionsCircle.Visibility = Visibility.Visible;
+                ShapeOptionsCircleLabel.Visibility = Visibility.Visible;
+
+                CircleCenterXEdit.Text = circle.Center.X.ToString();
+                CircleCenterYEdit.Text = circle.Center.X.ToString();
+                CircleRadiusEdit.Text = circle.Radius.ToString();
+            }
+            else if (ShapeToEdit is MRectangle rect)
+            {
+                ShapeOptionsRectangle.Visibility = Visibility.Visible;
+                ShapeOptionsRectangleLabel.Visibility = Visibility.Visible;
+
+                RectangleWidthEdit.Text = rect.Rectangle.Width.ToString();
+                RectangleHeightEdit.Text = rect.Rectangle.Height.ToString();
+            }
+
+            canvasControl.Invalidate();
         }
 
         private void ShapeUpdate_Clicked(object sender, RoutedEventArgs e)
@@ -311,6 +325,16 @@ namespace PaintCube
             };
 
             ContentDialogResult result = await noWifiDialog.ShowAsync();
+        }
+
+        private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            // IsSelectionMode = (sender as ToggleSwitch).IsOn;
+        }
+
+        private void ToggleSwitch_Toggled_1(object sender, RoutedEventArgs e)
+        {
+            // IsMouseDragDrawOn = (sender as ToggleSwitch).IsOn;
         }
     }
 }
