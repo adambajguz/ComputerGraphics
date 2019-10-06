@@ -8,6 +8,11 @@ namespace PaintCube.Shapes
         public virtual Point StartLocation { get; set; }
         public virtual Point EndLocation { get; set; }
 
+        protected MShape()
+        {
+
+        }
+
         protected MShape(Point startLocation, Point endLocation)
         {
             StartLocation = startLocation;
@@ -15,5 +20,6 @@ namespace PaintCube.Shapes
         }
 
         public abstract void Draw(CanvasControl sender, CanvasDrawEventArgs args);
+        public abstract void DrawGhost(CanvasControl sender, CanvasDrawEventArgs args);
     }
 }

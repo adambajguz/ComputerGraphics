@@ -6,40 +6,41 @@ namespace PaintCube.Shapes
 {
     public class MRectangle : MShape
     {
-        private Rect rectangle;
-
+        private Rect _rectangle;
         public Rect Rectangle
         {
-            get => rectangle;
+            get => _rectangle;
             set
             {
-                rectangle = value;
-                StartLocation = new Point(rectangle.X, rectangle.Y);
-                EndLocation = new Point(rectangle.X + rectangle.Width, rectangle.Y + rectangle.Height);
+                _rectangle = value;
+                _startLocation = new Point(_rectangle.X, _rectangle.Y);
+                _endLocation = new Point(_rectangle.X + _rectangle.Width, _rectangle.Y + _rectangle.Height);
             }
         }
 
+        private Point _startLocation;
         public override Point StartLocation
         {
-            get => base.StartLocation;
+            get => _startLocation;
             set
             {
-                base.StartLocation = value;
+                _startLocation = value;
                 Rectangle = new Rect(StartLocation, EndLocation);
             }
         }
 
+        private Point _endLocation;
         public override Point EndLocation
         {
-            get => base.EndLocation;
+            get => _endLocation;
             set
             {
-                base.EndLocation = value;
+                _endLocation = value;
                 Rectangle = new Rect(StartLocation, EndLocation);
             }
         }
 
-        public MRectangle(Point startLocation, Point endLocation) : base(startLocation, endLocation)
+        public MRectangle(Point startLocation, Point endLocation)
         {
             Rectangle = new Rect(startLocation, endLocation);
         }
@@ -47,6 +48,11 @@ namespace PaintCube.Shapes
         public override void Draw(CanvasControl sender, CanvasDrawEventArgs args)
         {
             args.DrawingSession.DrawRectangle(Rectangle, Colors.Black, 2);
+        }
+
+        public override void DrawGhost(CanvasControl sender, CanvasDrawEventArgs args)
+        {
+            args.DrawingSession.DrawRectangle(Rectangle, Colors.Magenta, 1);
         }
     }
 }
