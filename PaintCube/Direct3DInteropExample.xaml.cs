@@ -56,18 +56,20 @@ namespace PaintCube
 
                 await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                 {
-                    Yaw.Value = SpinTheTeapot % 6.21;
-                    Pitch.Value = (SpinTheTeapot / 23) % 6.21;
-                    Roll.Value = (SpinTheTeapot / 42) % 6.21;
+                    Yaw.Value = yawVal = (float)(SpinTheTeapot % 6.21);
+                    Pitch.Value = pitchVal = (float)((SpinTheTeapot / 23) % 6.21);
+                    Roll.Value = rollVal = (float)((SpinTheTeapot / 42) % 6.21);
                 });
             }
-
-            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            else
             {
-                yawVal = (float)Yaw.Value;
-                pitchVal = (float)Pitch.Value;
-                rollVal = (float)Roll.Value;
-            });
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    yawVal = (float)Yaw.Value;
+                    pitchVal = (float)Pitch.Value;
+                    rollVal = (float)Roll.Value;
+                });
+            }
         }
 
         private void canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
