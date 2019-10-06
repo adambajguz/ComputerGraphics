@@ -40,10 +40,30 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                     </StackPanel>
                 </Button>
 
-                <StackPanel Orientation="Horizontal">
-                    <ToggleSwitch Header="Selection mode:" IsOn="{Binding IsSelectionMode, ElementName=control, Mode=TwoWay}" Toggled="ToggleSwitch_Toggled"/>
-                    <ToggleSwitch Header="Mouse drag draw:" IsOn="{Binding IsMouseDragDrawOn, ElementName=control, Mode=TwoWay}" Toggled="ToggleSwitch_Toggled_1"/>
-                </StackPanel>
+                <TextBlock>Tools:</TextBlock>
+                <CommandBar Background="Transparent" IsOpen="False" DefaultLabelPosition="Collapsed"
+                            HorizontalAlignment="Left">
+                    <AppBarToggleButton x:Name="PointerTool" Icon="TouchPointer"
+                                        IsCompact="True" Label="Edit" HorizontalContentAlignment="Center" Width="48" 
+                                        Checked="PointerTool_Checked" Unchecked="Tool_Unchecked"/>
+                    <AppBarToggleButton x:Name="MoveTool" 
+                                        IsCompact="True" Label="Move" Width="48" 
+                                        Checked="MoveTool_Checked" Unchecked="Tool_Unchecked">
+                        <AppBarToggleButton.Icon>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE759;"/>
+                        </AppBarToggleButton.Icon>
+                    </AppBarToggleButton>
+                    <AppBarToggleButton x:Name="DrawTool" 
+                                        IsCompact="True" Label="Move" Width="48" 
+                                        Checked="DrawTool_Checked" Unchecked="Tool_Unchecked">
+                        <AppBarToggleButton.Icon>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEC87;"/>
+                        </AppBarToggleButton.Icon>
+                    </AppBarToggleButton>
+                    <AppBarToggleButton x:Name="DrawClickTool" Icon="Edit" 
+                                        IsCompact="True" Label="Draw by click" Width="48" 
+                                        Checked="DrawClickTool_Checked" Unchecked="Tool_Unchecked"/>
+                </CommandBar>
 
                 <Button HorizontalAlignment="Stretch" Click="Undo_Clicked">
                     <StackPanel Orientation="Horizontal">
@@ -56,7 +76,7 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                   ItemsSource="{Binding ElementName=control, Path=Shapes}"
                   SelectedItem="{Binding CurrentShapeType, ElementName=control, Mode=TwoWay}"
                   FontSize="15"
-                  SelectionChanged="SettingsCombo_SelectionChanged" 
+                  SelectionChanged="ShapeCombo_SelectionChanged" 
                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedIndex="0"/>
 
             </StackPanel>

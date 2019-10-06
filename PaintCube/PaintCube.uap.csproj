@@ -134,6 +134,11 @@
     <Compile Include="SvgExample.xaml.cs">
       <DependentUpon>SvgExample.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SvgExample\Buttons.cs" />
+    <Compile Include="SvgExample\Canvas.cs" />
+    <Compile Include="SvgExample\Edit.cs" />
+    <Compile Include="SvgExample\Mouse.cs" />
+    <Compile Include="SvgExample\Tools.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="ExampleGallery.uap.appxmanifest">
