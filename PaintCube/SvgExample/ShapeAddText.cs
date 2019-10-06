@@ -33,6 +33,7 @@ namespace PaintCube
             }
             else if (CurrentShapeType == ShapeType.Circle)
             {
+                start = new Point((ex - sx) / 2, (ey - sy) / 2);
                 DrawnShapes.Add(new MCircle(start, end));
             }
             else if (CurrentShapeType == ShapeType.Line)

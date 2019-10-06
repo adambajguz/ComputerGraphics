@@ -14,19 +14,38 @@ namespace PaintCube
             canvasControl.Invalidate();
         }
 
+        private MShape MovingShape { get; set; }
+        private Point MovingShapeBeginStart { get; set; }
+        private Point MovingShapeBeginEnd { get; set; }
+        private Point MovingShapeBeginMouse { get; set; }
+
         private void canvasControl_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             Point startPosition = e.GetCurrentPoint(canvasControl).Position;
 
-            if (SelectedTool == Tools.Select)
+            if (SelectedTool == Tools.Select || SelectedTool == Tools.Move)
             {
                 foreach (MShape shape in DrawnShapes)
                 {
                     if (shape.OnMouseOver(startPosition))
                     {
-                        DrawnShapesCombo.SelectedItem = shape;
+                        if (SelectedTool == Tools.Select)
+                        {
+                            DrawnShapesCombo.SelectedItem = shape;
+                            break;
+                        }
+                        else if (SelectedTool == Tools.Move)
+                        {
+                            MovingShape = shape;
+                            MovingShape.Mode = ShapeModes.Drawing;
+                            MovingShapeBeginStart = shape.StartLocation;
+                            MovingShapeBeginEnd = shape.EndLocation;
+                            MovingShapeBeginMouse = startPosition;
 
-                        break;
+                            canvasControl.Invalidate();
+
+                            break;
+                        }
                     }
                 }
             }
@@ -82,8 +101,27 @@ namespace PaintCube
         private void canvasControl_PointerMoved(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             Point pos = e.GetCurrentPoint(canvasControl).Position;
+            if (SelectedTool == Tools.Move)
+            {
+                if (MovingShape != null)
+                {
+                    double x0 = MovingShapeBeginStart.X;
+                    double y0 = MovingShapeBeginStart.Y;
+                    double x1 = MovingShapeBeginEnd.X;
+                    double y1 = MovingShapeBeginEnd.Y;
 
-            if (SelectedTool == Tools.Draw || SelectedTool == Tools.DrawClick)
+                    double mx = MovingShapeBeginMouse.X;
+                    double my = MovingShapeBeginMouse.Y;
+
+                    double shiftX = mx - pos.X;
+                    double shiftY = my - pos.Y;
+
+                    MovingShape.StartLocation = new Point(x0 - shiftX, y0 - shiftY);
+                    MovingShape.EndLocation = new Point(x1 - shiftX, y1 - shiftY);
+                    canvasControl.Invalidate();
+                }
+            }
+            else if (SelectedTool == Tools.Draw || SelectedTool == Tools.DrawClick)
             {
                 if (PendingShape == null)
                     return; // Nothing to do
@@ -96,7 +134,16 @@ namespace PaintCube
 
         private void canvasControl_PointerReleased(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            if (SelectedTool == Tools.Draw || SelectedTool == Tools.DrawClick)
+            if (SelectedTool == Tools.Move)
+            {
+                if (MovingShape != null)
+                {
+                    MovingShape.Mode = ShapeModes.Drawn;
+                    MovingShape = null;
+                    canvasControl.Invalidate();
+                }
+            }
+            else if (SelectedTool == Tools.Draw || SelectedTool == Tools.DrawClick)
             {
                 if (PendingShape == null || SelectedTool == Tools.DrawClick)
                     return; // Nothing to do
@@ -104,6 +151,5 @@ namespace PaintCube
                 AddShape();
             }
         }
-
     }
 }

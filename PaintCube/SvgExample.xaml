@@ -43,15 +43,19 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                 <TextBlock>Tools:</TextBlock>
                 <CommandBar Background="Transparent" IsOpen="False" DefaultLabelPosition="Collapsed"
                             HorizontalAlignment="Left">
-                    <AppBarToggleButton x:Name="SelectTool" Icon="TouchPointer"
+                    <AppBarToggleButton x:Name="SelectTool"
                                         IsCompact="True" Label="Select" ToolTipService.ToolTip="Select" HorizontalContentAlignment="Center" Width="48" 
-                                        Checked="SelectTool_Checked" Unchecked="Tool_Unchecked"/>
+                                        Checked="SelectTool_Checked" Unchecked="Tool_Unchecked">
+                        <AppBarToggleButton.Icon>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8B0;"/>
+                        </AppBarToggleButton.Icon>
+                    </AppBarToggleButton>
                     <AppBarToggleButton x:Name="MoveTool" 
                                         IsCompact="True" Label="Move" ToolTipService.ToolTip="Move" Width="48" 
                                         Checked="MoveTool_Checked" Unchecked="Tool_Unchecked">
                         <AppBarToggleButton.Icon>
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE759;"/>
-                        </AppBarToggleButton.Icon>
+                        </AppBarToggleButton.Icon>                      
                     </AppBarToggleButton>
                     <AppBarToggleButton x:Name="DrawTool" 
                                         IsCompact="True" Label="Drag draw" ToolTipService.ToolTip="Drag draw" Width="48" 
