@@ -8,6 +8,8 @@ namespace PaintCube.Shapes
         public virtual Point StartLocation { get; set; }
         public virtual Point EndLocation { get; set; }
 
+        public bool IsInEditMode { get; set; }
+
         protected MShape()
         {
 
@@ -19,8 +21,16 @@ namespace PaintCube.Shapes
             EndLocation = endLocation;
         }
 
-        public abstract void Draw(CanvasControl sender, CanvasDrawEventArgs args);
-        public abstract void DrawGhost(CanvasControl sender, CanvasDrawEventArgs args);
+        public void Draw(CanvasControl sender, CanvasDrawEventArgs args)
+        {
+            if (IsInEditMode)
+                DrawGhost(sender, args);
+            else
+                DrawNormal(sender, args);
+        }
+
+        protected abstract void DrawNormal(CanvasControl sender, CanvasDrawEventArgs args);
+        protected abstract void DrawGhost(CanvasControl sender, CanvasDrawEventArgs args);
 
         public override string ToString()
         {

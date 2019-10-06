@@ -16,14 +16,14 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    d:DesignHeight="600"
+    d:DesignHeight="800"
     d:DesignWidth="480"
     Unloaded="control_Unloaded">
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="256"/>
@@ -74,19 +74,68 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
         </controls:GridSplitter>
 
         <ScrollViewer Grid.Column="0" Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,8">
-            <StackPanel Orientation="Vertical" MinWidth="100" Margin="5" x:Name="optionsPanel2">
+            <StackPanel Orientation="Vertical" MinWidth="100" Margin="5" x:Name="optionsPanel2" 
+                        BorderBrush="DarkGreen" BorderThickness="2" Padding="4">
                 <TextBlock>Drawn shapes:</TextBlock>
                 <ComboBox x:Name="DrawnShapesCombo"
                   ItemsSource="{Binding ElementName=control, Path=DrawnShapes, Mode=TwoWay}"
                   SelectedItem="{Binding ShapeToEdit, ElementName=control, Mode=TwoWay}"
                   FontSize="15"
-                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="DrawnShapesCombo_SelectionChanged"/>
 
-                <StackPanel Orientation="Vertical">
+                <TextBlock x:Name="ShapeOptionsCommonLabel">Common:</TextBlock>
+                <StackPanel x:Name="ShapeOptionsCommon" Orientation="Vertical" BorderBrush="MediumVioletRed" BorderThickness="2" Padding="4" Margin="4">
                     <TextBlock>Start location:</TextBlock>
-                    <TextBox x:Name="StartLocationEdit"/>
-                    <TextBlock>End location:</TextBlock>
-                    <TextBox x:Name="EndLocationEdit"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,4,0">X:</TextBlock>
+                        <TextBox x:Name="StartLocationXEdit" InputScope="Number"/>
+                        <TextBlock VerticalAlignment="Center" Margin="4,0,4,0">Y:</TextBlock>
+                        <TextBox x:Name="StartLocationYEdit"/>
+                    </StackPanel>
+                    
+                    <TextBlock Margin="0,8,0,0">End location:</TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,4,0">X:</TextBlock>
+                        <TextBox x:Name="EndLocationXEdit"/>
+                        <TextBlock VerticalAlignment="Center" Margin="4,0,4,0">Y:</TextBlock>
+                        <TextBox x:Name="EndLocationYEdit"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <TextBlock x:Name="ShapeOptionsRectangleLabel">Rectangle:</TextBlock>
+                <StackPanel x:Name="ShapeOptionsRectangle" Orientation="Vertical" BorderBrush="MediumVioletRed" BorderThickness="2" Padding="4" Margin="4">
+                    <TextBlock>Width:</TextBlock>
+                    <TextBox x:Name="RectangleWidthEdit"/>  
+                    <TextBlock>Height:</TextBlock>
+                    <TextBox x:Name="RectangleHeightEdit"/>
+                </StackPanel>
+                <TextBlock x:Name="ShapeOptionsCircleLabel">Circle:</TextBlock>
+                <StackPanel x:Name="ShapeOptionsCircle" Orientation="Vertical" BorderBrush="MediumVioletRed" BorderThickness="2" Padding="4" Margin="4">
+                    <TextBlock>Radius:</TextBlock>
+                    <TextBox x:Name="CircleRadiusEdit"/>
+
+                    <TextBlock Margin="0,8,0,0">Center:</TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,4,0">X:</TextBlock>
+                        <TextBox x:Name="CircleCenterXEdit"/>
+                        <TextBlock VerticalAlignment="Center" Margin="4,0,4,0">Y:</TextBlock>
+                        <TextBox x:Name="CircleCenterYEdit"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button HorizontalAlignment="Stretch" Click="ShapeCancelUpdate_Clicked">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon Symbol="Cancel" Margin="0,0,8,0"/>
+                        <TextBlock>Cancel</TextBlock>
+                    </StackPanel>
+                </Button>
+                    <Button HorizontalAlignment="Stretch" Click="ShapeUpdate_Clicked" Margin="8,0,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon Symbol="Accept" Margin="0,0,8,0"/>
+                            <TextBlock>Update shape</TextBlock>
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>

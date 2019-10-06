@@ -12,12 +12,12 @@ namespace PaintCube.Shapes
 
         }
 
-        public override void Draw(CanvasControl sender, CanvasDrawEventArgs args)
+        protected override void DrawNormal(CanvasControl sender, CanvasDrawEventArgs args)
         {
             args.DrawingSession.DrawLine(StartLocation.ToVector2(), EndLocation.ToVector2(), Colors.Black, 2);
         }
 
-        public override void DrawGhost(CanvasControl sender, CanvasDrawEventArgs args)
+        protected override void DrawGhost(CanvasControl sender, CanvasDrawEventArgs args)
         {
             args.DrawingSession.DrawLine(StartLocation.ToVector2(), EndLocation.ToVector2(), Colors.Magenta, 1);
         }

@@ -71,12 +71,12 @@ namespace PaintCube.Shapes
             EndLocation = endLocation;
         }
 
-        public override void Draw(CanvasControl sender, CanvasDrawEventArgs args)
+        protected override void DrawNormal(CanvasControl sender, CanvasDrawEventArgs args)
         {
             args.DrawingSession.DrawCircle(Center.ToVector2(), Radius, Colors.Black, 2);
         }
 
-        public override void DrawGhost(CanvasControl sender, CanvasDrawEventArgs args)
+        protected override void DrawGhost(CanvasControl sender, CanvasDrawEventArgs args)
         {
             args.DrawingSession.DrawCircle(Center.ToVector2(), Radius, Colors.Magenta, 1);
         }

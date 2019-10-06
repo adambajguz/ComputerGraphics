@@ -45,12 +45,12 @@ namespace PaintCube.Shapes
             Rectangle = new Rect(startLocation, endLocation);
         }
 
-        public override void Draw(CanvasControl sender, CanvasDrawEventArgs args)
+        protected override void DrawNormal(CanvasControl sender, CanvasDrawEventArgs args)
         {
             args.DrawingSession.DrawRectangle(Rectangle, Colors.Black, 2);
         }
 
-        public override void DrawGhost(CanvasControl sender, CanvasDrawEventArgs args)
+        protected override void DrawGhost(CanvasControl sender, CanvasDrawEventArgs args)
         {
             args.DrawingSession.DrawRectangle(Rectangle, Colors.Magenta, 1);
         }
