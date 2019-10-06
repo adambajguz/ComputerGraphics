@@ -54,5 +54,10 @@ namespace PaintCube.Shapes
         {
             args.DrawingSession.DrawRectangle(Rectangle, Colors.Magenta, 1);
         }
+
+        public override string ToString()
+        {
+            return $"Rect: {base.ToString()}";
+        }
     }
 }

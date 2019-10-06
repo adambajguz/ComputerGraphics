@@ -21,5 +21,10 @@ namespace PaintCube.Shapes
 
         public abstract void Draw(CanvasControl sender, CanvasDrawEventArgs args);
         public abstract void DrawGhost(CanvasControl sender, CanvasDrawEventArgs args);
+
+        public override string ToString()
+        {
+            return $"{StartLocation} - {EndLocation}";
+        }
     }
 }

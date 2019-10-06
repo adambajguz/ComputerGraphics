@@ -24,6 +24,8 @@ namespace PaintCube
         public ShapeType CurrentShapeType { get; set; }
 
         public List<MShape> DrawnShapes { get; } = new List<MShape>();
+        public object ShapeToEdit { get; set; }
+
         public MShape PendingShape { get; set; }
         public bool IsMouseDragDrawOn { get; set; }
 
@@ -64,8 +66,11 @@ namespace PaintCube
 
         private void Undo_Clicked(object sender, RoutedEventArgs e)
         {
-            DrawnShapes.RemoveAt(DrawnShapes.Count - 1);
-            canvasControl.Invalidate();
+            if (DrawnShapes.Count > 0)
+            {
+                DrawnShapes.RemoveAt(DrawnShapes.Count - 1);
+                canvasControl.Invalidate();
+            }
         }
 
         private void control_Unloaded(object sender, RoutedEventArgs e)
@@ -87,9 +92,7 @@ namespace PaintCube
                 {
                     ClickedOnce = false;
 
-                    DrawnShapes.Add(PendingShape);
-                    PendingShape = null;
-                    canvasControl.Invalidate();
+                    AddShape();
 
                     return;
                 }
@@ -127,9 +130,15 @@ namespace PaintCube
             if (PendingShape == null || IsMouseDragDrawOn)
                 return; // Nothing to do
 
-            DrawnShapes.Add(PendingShape);
-            PendingShape = null;
+            AddShape();
+        }
 
+        private void AddShape()
+        {
+            DrawnShapes.Add(PendingShape);
+            DrawnShapesCombo.ItemsSource = null;
+            DrawnShapesCombo.ItemsSource = DrawnShapes;
+            PendingShape = null;
             canvasControl.Invalidate();
         }
     }

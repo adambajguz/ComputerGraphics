@@ -14,19 +14,24 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="400"
+    d:DesignHeight="600"
+    d:DesignWidth="480"
     Unloaded="control_Unloaded">
 
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="256"/>
+            <ColumnDefinition Width="16"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" Width="182">
+        <ScrollViewer Grid.Column="0" Grid.Row="0" VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical" MinWidth="100" Margin="5" x:Name="optionsPanel">
 
                 <Button HorizontalAlignment="Stretch" Click="Clear_Clicked">
@@ -38,7 +43,7 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                 <TextBlock>Mouse drag draw:</TextBlock>
 
                 <ToggleSwitch IsOn="{Binding IsMouseDragDrawOn, ElementName=control, Mode=TwoWay}"/>
-                
+
                 <Button HorizontalAlignment="Stretch" Click="Undo_Clicked">
                     <StackPanel Orientation="Horizontal">
                         <SymbolIcon Symbol="Undo" Margin="0,0,8,0"/>
@@ -50,18 +55,50 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                   ItemsSource="{Binding ElementName=control, Path=Shapes}"
                   SelectedItem="{Binding CurrentShapeType, ElementName=control, Mode=TwoWay}"
                   FontSize="15"
-                  SelectionChanged="SettingsCombo_SelectionChanged" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                  SelectionChanged="SettingsCombo_SelectionChanged" 
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
             </StackPanel>
         </ScrollViewer>
 
-        <canvas:CanvasControl Grid.Column="1" 
+        <!--Column Grid Splitter-->
+        <controls:GridSplitter Grid.Column="1" Width="8" Grid.RowSpan="2" ResizeBehavior="BasedOnAlignment"
+            ResizeDirection="Auto" Background="Gray" Foreground="White" FontSize="13" Margin="0,8,0,8">
+            <controls:GridSplitter.Element>
+                <Grid>
+                    <TextBlock HorizontalAlignment="Center" IsHitTestVisible="False" VerticalAlignment="Center"  
+                               Text="&#xE784;" Foreground="Black" FontFamily="Segoe MDL2 Assets">
+                    </TextBlock>
+                </Grid>
+            </controls:GridSplitter.Element>
+        </controls:GridSplitter>
+
+        <ScrollViewer Grid.Column="0" Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,8">
+            <StackPanel Orientation="Vertical" MinWidth="100" Margin="5" x:Name="optionsPanel2">
+                <TextBlock>Drawn shapes:</TextBlock>
+                <ComboBox x:Name="DrawnShapesCombo"
+                  ItemsSource="{Binding ElementName=control, Path=DrawnShapes, Mode=TwoWay}"
+                  SelectedItem="{Binding ShapeToEdit, ElementName=control, Mode=TwoWay}"
+                  FontSize="15"
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+                <StackPanel Orientation="Vertical">
+                    <TextBlock>Start location:</TextBlock>
+                    <TextBox x:Name="StartLocationEdit"/>
+                    <TextBlock>End location:</TextBlock>
+                    <TextBox x:Name="EndLocationEdit"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+        <canvas:CanvasControl Grid.Column="3" 
+                              Grid.Row="0" Grid.RowSpan="2"
                               x:Name="canvasControl"
                               ClearColor="White"
                               CreateResources="canvasControl_CreateResources"
                               Draw="canvasControl_Draw"
                               PointerPressed="canvasControl_PointerPressed"
                               PointerReleased="canvasControl_PointerReleased"
-                              PointerMoved="canvasControl_PointerMoved"/>
+                              PointerMoved="canvasControl_PointerMoved" Grid.ColumnSpan="2" Margin="3,0,0,0"/>
     </Grid>
 </UserControl>

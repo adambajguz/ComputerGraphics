@@ -80,5 +80,10 @@ namespace PaintCube.Shapes
         {
             args.DrawingSession.DrawCircle(Center.ToVector2(), Radius, Colors.Magenta, 1);
         }
+
+        public override string ToString()
+        {
+            return $"Circle: {base.ToString()}; c={Center} r={Radius}";
+        }
     }
 }

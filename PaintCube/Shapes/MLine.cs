@@ -21,5 +21,10 @@ namespace PaintCube.Shapes
         {
             args.DrawingSession.DrawLine(StartLocation.ToVector2(), EndLocation.ToVector2(), Colors.Magenta, 1);
         }
+
+        public override string ToString()
+        {
+            return $"Line: {base.ToString()}";
+        }
     }
 }
