@@ -117,7 +117,7 @@
     <Compile Include="Direct3DInteropExample.xaml.cs">
       <DependentUpon>Direct3DInteropExample.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\ColorPicker.cs" />
+    <Compile Include="Infrastructure\RGBHelper.cs" />
     <Compile Include="Infrastructure\SuspensionManager.cs" />
     <Compile Include="Infrastructure\ExampleDefinition.cs" />
     <Compile Include="Infrastructure\ExamplePage.xaml.cs">
@@ -137,6 +137,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shapes\ShapeModes.cs" />
     <Compile Include="Shapes\ShapeTypes.cs" />
+    <Compile Include="ColorConverter.xaml.cs">
+      <DependentUpon>ColorConverter.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SvgExample.xaml.cs">
       <DependentUpon>SvgExample.xaml</DependentUpon>
     </Compile>
@@ -220,6 +223,10 @@
     <Page Include="PlatformResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ColorConverter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="SvgExample.xaml">
       <Generator>MSBuild:Compile</Generator>

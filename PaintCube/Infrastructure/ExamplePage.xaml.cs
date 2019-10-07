@@ -35,8 +35,7 @@ namespace PaintCube
         {
             this.navigationHelper.OnNavigatedTo(e);
 
-            var example = e.Parameter as ExampleDefinition;
-            if (example != null)
+            if (e.Parameter is ExampleDefinition example)
             {
                 this.DataContext = example;
                 if (example.Control != null)

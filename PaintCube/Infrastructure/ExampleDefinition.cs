@@ -18,6 +18,7 @@ namespace PaintCube
     {
         public static ExampleDefinition[] Definitions { get; } = {
             new ExampleDefinition("Paint", typeof(SvgExample)),
+            new ExampleDefinition("RGB <-> CMYK converter", typeof(ColorConverter)),
             new ExampleDefinition("RGB Color cube", typeof(Direct3DInteropExample)),
         };
     }

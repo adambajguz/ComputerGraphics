@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<!--
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+Licensed under the MIT License. See LICENSE.txt in the project root for license information.
+-->
+
+<UserControl
+    x:Class="PaintCube.ColorConverter"
+    x:Name="control"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PaintCube"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    d:DesignHeight="600"
+    d:DesignWidth="800">
+
+    <!-- Content body -->
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="100px"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Text="Color:" 
+                   Margin="4,8,4,4" VerticalAlignment="Top" />
+        <Rectangle x:Name="NewColorPreview" Grid.Row="6" Height="64" Grid.Column="0"
+                   Grid.ColumnSpan="2" Stroke="Gray" StrokeThickness="2">
+            <ToolTipService.ToolTip>
+                <ToolTip x:Name="NewColorPreviewTooltip" Content=""/>
+            </ToolTipService.ToolTip>
+        </Rectangle>
+
+        <ColorPicker x:Name="PixelColorPicker" Grid.Row="0" Grid.Column="2" Grid.RowSpan="9"
+                     Margin="12,0,0,0" ColorSpectrumShape="Box" ElementSoundMode="Off" IsAlphaEnabled="True"
+                     IsColorPreviewVisible="False" ColorChanged="ColorPicker_ColorChanged" 
+                     IsAlphaSliderVisible="False" IsAlphaTextInputVisible="False"/>
+
+        <StackPanel Grid.Row="0" Grid.Column="0">
+            <TextBlock Text="RGB value:"/>
+            <!-- Content body -->
+            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100px"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="R:" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                <Slider x:Name="SliderValueR" Grid.Row="0" Grid.Column="1" Margin="4" Minimum="0" Maximum="255"
+                 TickFrequency="1" TickPlacement="Outside" Value="120" StepFrequency="1" SmallChange="1" LargeChange="1"/>
+                <TextBox x:Name="SliderValueRText" Grid.Row="0" Grid.Column="2" />        
+                
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="G:" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                <Slider x:Name="SliderValueG" Grid.Row="1" Grid.Column="1" Margin="4" Minimum="0" Maximum="255"
+                 TickFrequency="1" TickPlacement="Outside" Value="120" StepFrequency="1"/>
+                <TextBox x:Name="SliderValueGText" Grid.Row="1" Grid.Column="2" />    
+                
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="B:" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                <Slider x:Name="SliderValueB" Grid.Row="2" Grid.Column="1" Margin="4" Minimum="0" Maximum="255"
+                 TickFrequency="1" TickPlacement="Outside" Value="120" StepFrequency="1"/>
+                <TextBox x:Name="SliderValueBText" Grid.Row="2" Grid.Column="2" />
+            </Grid>
+
+            <TextBlock Text="CMYK value:" FocusVisualMargin="0,0,0,0" Margin="0,16,0,0" />
+            <!-- Content body -->
+            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100px"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="C:" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                <Slider x:Name="SliderValueC" Grid.Row="0" Grid.Column="1" Margin="4" Minimum="0" Maximum="100"
+                 TickFrequency="1" TickPlacement="Outside" Value="50" StepFrequency="1"/>
+                <TextBox x:Name="SliderValueCText" Grid.Row="0" Grid.Column="2" />
+
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="M:" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                <Slider x:Name="SliderValueM" Grid.Row="1" Grid.Column="1" Margin="4" Minimum="0" Maximum="100"
+                 TickFrequency="1" TickPlacement="Outside" Value="50" StepFrequency="1"/>
+                <TextBox x:Name="SliderValueMText" Grid.Row="1" Grid.Column="2" />
+
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="Y:" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                <Slider x:Name="SliderValueY" Grid.Row="2" Grid.Column="1" Margin="4" Minimum="0" Maximum="100"
+                 TickFrequency="1" TickPlacement="Outside" Value="50" StepFrequency="1"/>
+                <TextBox x:Name="SliderValueYText" Grid.Row="2" Grid.Column="2" />
+                
+                <TextBlock Grid.Column="0" Grid.Row="3" Text="K:" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                <Slider x:Name="SliderValueK" Grid.Row="3" Grid.Column="1" Margin="4" Minimum="0" Maximum="100"
+                 TickFrequency="1" TickPlacement="Outside" Value="50" StepFrequency="1"/>
+                <TextBox x:Name="SliderValueKText" Grid.Row="3" Grid.Column="2" />
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>
