@@ -14,23 +14,28 @@ namespace ImageProcessor.Data
     public static class MorphologicalHelper
     {
 
-        public static void Make(WriteableBitmap Input, MorphologicalOperation op)
+        public static void Make(WriteableBitmap Input, MorphologicalOperation op, int baseElementWidth = 3)
         {
             using (BitmapContext context = Input.GetBitmapContext())
             {
                 if (op == MorphologicalOperation.Dilation)
-                    DilatateImage(context);
+                    GetDilatation(context, baseElementWidth);
                 else if (op == MorphologicalOperation.Erosion)
-                    ErodeImage(context);
+                    GetErosion(context, baseElementWidth);
                 else if (op == MorphologicalOperation.Opening)
-                    OpenImage(context);
+                {
+                    GetErosion(context, baseElementWidth);
+                    GetDilatation(context, baseElementWidth);
+                }
                 else if (op == MorphologicalOperation.Closing)
-                    CloseImage(context);
+                {
+                    GetDilatation(context, baseElementWidth);
+                    GetErosion(context, baseElementWidth);
+                }
                 else if (op == MorphologicalOperation.HitOrMiss)
-                    HitOrMiss(context);
+                    HitOrIsImage(context, baseElementWidth);
             }
         }
-
 
         private static void GetErosion(BitmapContext context, int baseElementWidth)
         {
@@ -82,29 +87,7 @@ namespace ImageProcessor.Data
             }
         }
 
-        private static void ErodeImage(BitmapContext context, int baseElementWidth = 3)
-        {
-            GetErosion(context, baseElementWidth);
-        }
-
-        private static void DilatateImage(BitmapContext context, int baseElementWidth = 3)
-        {
-            GetDilatation(context, baseElementWidth);
-        }
-
-        private static void OpenImage(BitmapContext context, int baseElementWidth = 3)
-        {
-            ErodeImage(context, baseElementWidth);
-            DilatateImage(context, baseElementWidth);
-        }
-
-        private static void CloseImage(BitmapContext context, int baseElementWidth = 3)
-        {
-            DilatateImage(context, baseElementWidth);
-            ErodeImage(context, baseElementWidth);
-        }
-
-        private static void HitOrMiss(BitmapContext context, int baseElementWidth = 3)
+        private static void HitOrIsImage(BitmapContext context, int baseElementWidth)
         {
 
         }
