@@ -18,6 +18,10 @@ namespace PaintCube
         {
             ShapeOptionsMoveByVectorLabel.Visibility = Visibility.Visible;
             ShapeOptionsMoveByVector.Visibility = Visibility.Visible;
+            ShapeOptionsScaleVectorLabel.Visibility = Visibility.Visible;
+            ShapeOptionsScaleVector.Visibility = Visibility.Visible;
+            ShapeOptionsRotateVectorLabel.Visibility = Visibility.Visible;
+            ShapeOptionsRotateVector.Visibility = Visibility.Visible;
 
             EditPanelButtonsUpdate.Visibility = Visibility.Visible;
 
@@ -200,6 +204,10 @@ namespace PaintCube
             EditPanelButtonsUpdate.Visibility = Visibility.Collapsed;
             ShapeOptionsMoveByVectorLabel.Visibility = Visibility.Collapsed;
             ShapeOptionsMoveByVector.Visibility = Visibility.Collapsed;
+            ShapeOptionsScaleVectorLabel.Visibility = Visibility.Collapsed;
+            ShapeOptionsScaleVector.Visibility = Visibility.Collapsed;
+            ShapeOptionsRotateVectorLabel.Visibility = Visibility.Collapsed;
+            ShapeOptionsRotateVector.Visibility = Visibility.Collapsed;
         }
 
         private void MoveByVector_Clicked(object sender, RoutedEventArgs e)

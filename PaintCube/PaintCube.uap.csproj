@@ -211,10 +211,6 @@
     <Content Include="Assets\StoreLogo.scale-100.png" />
     <Content Include="Assets\WideLogo.scale-100.png" />
     <Content Include="Assets\InkThumbnailStrokes.bin" />
-    <Content Include="Thumbnails\SvgNarrow.png" />
-    <Content Include="Thumbnails\SvgWide.png" />
-    <Content Include="Thumbnails\Direct3DInteropNarrow.png" />
-    <Content Include="Thumbnails\Direct3DInteropWide.png" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Infrastructure\SharedResources.xaml">

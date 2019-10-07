@@ -16,7 +16,7 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    d:DesignHeight="1200"
+    d:DesignHeight="1500"
     d:DesignWidth="800"
     Unloaded="control_Unloaded">
 
@@ -59,13 +59,13 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                         <AppBarButton.Icon>
                             <SymbolIcon Symbol="Undo" Margin="0,0,8,0"/>
                         </AppBarButton.Icon>
-                    </AppBarButton>        
+                    </AppBarButton>
                     <AppBarButton Label="Rotate" ToolTipService.ToolTip="Rotate" HorizontalContentAlignment="Center" 
                                         Click="Rotate_Clicked">
                         <AppBarButton.Icon>
                             <SymbolIcon Symbol="Rotate" Margin="0,0,8,0"/>
                         </AppBarButton.Icon>
-                    </AppBarButton>        
+                    </AppBarButton>
                     <AppBarButton Label="Scale" ToolTipService.ToolTip="Scale" HorizontalContentAlignment="Center" 
                                         Click="Scale_Clicked">
                         <AppBarButton.Icon>
@@ -146,7 +146,7 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                                 <TextBox x:Name="AddEndLocationY"/>
                             </StackPanel>
                         </StackPanel>
-                        <Button HorizontalAlignment="Stretch" Click="ShapeAdd_Clicked" Margin="8,0,0,0">
+                        <Button HorizontalAlignment="Stretch" Click="ShapeAdd_Clicked" Margin="8,0,8,0">
                             <StackPanel Orientation="Horizontal">
                                 <SymbolIcon Symbol="Add" Margin="0,0,8,0"/>
                                 <TextBlock>Add shape</TextBlock>
@@ -260,6 +260,46 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                     </StackPanel>
                 </StackPanel>
 
+                <TextBlock x:Name="ShapeOptionsRotateVectorLabel">Rotate:</TextBlock>
+                <StackPanel x:Name="ShapeOptionsRotateVector" Orientation="Vertical" BorderBrush="MediumVioletRed" BorderThickness="2" Padding="4" Margin="4">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,4,0">X:</TextBlock>
+                        <TextBox x:Name="RotateOrginXEdit" />
+                        <TextBlock VerticalAlignment="Center" Margin="4,0,4,0">Y:</TextBlock>
+                        <TextBox x:Name="RotateOrginYEdit"/>
+                        <TextBlock VerticalAlignment="Center" Margin="4,0,4,0">Angle:</TextBlock>
+                        <TextBox x:Name="RotateAngleEdit"/>
+
+                    </StackPanel>
+                        <Button HorizontalAlignment="Stretch" Click="MoveByVector_Clicked" Margin="8,8,8,0">
+                            <StackPanel Orientation="Horizontal">
+                                <SymbolIcon Symbol="Rotate" Margin="0,0,8,0"/>
+                                <TextBlock>Rotate</TextBlock>
+                            </StackPanel>
+                        </Button>
+                </StackPanel>              
+                
+                <TextBlock x:Name="ShapeOptionsScaleVectorLabel">Scale:</TextBlock>
+                <StackPanel x:Name="ShapeOptionsScaleVector" Orientation="Vertical" BorderBrush="MediumVioletRed" BorderThickness="2" Padding="4" Margin="4">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,4,0">X:</TextBlock>
+                        <TextBox x:Name="ScaleOrginXEdit" />
+                        <TextBlock VerticalAlignment="Center" Margin="4,0,4,0">Y:</TextBlock>
+                        <TextBox x:Name="ScaleOrginYEdit"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0" >
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,4,0">Scale X:</TextBlock>
+                        <TextBox x:Name="ScaleXEdit" />
+                        <TextBlock VerticalAlignment="Center" Margin="4,0,4,0">Scale Y:</TextBlock>
+                        <TextBox x:Name="ScaleYEdit"/>
+                    </StackPanel>
+                    <Button HorizontalAlignment="Stretch" Click="MoveByVector_Clicked" Margin="8,8,8,0">
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon Symbol="FullScreen" Margin="0,0,8,0"/>
+                            <TextBlock>Scale</TextBlock>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
 
