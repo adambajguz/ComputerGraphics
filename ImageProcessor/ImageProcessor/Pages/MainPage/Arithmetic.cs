@@ -8,8 +8,6 @@
 
     public sealed partial class MainPage
     {
-        //TODO clamp to 255
-
         private async void AddPageMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             ThreeIntsDialog dialog = new ThreeIntsDialog("Add", "Default value for empty cell is 0", "Red", "Green", "Blue", true, false);

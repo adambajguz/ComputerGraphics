@@ -200,6 +200,7 @@
     <Compile Include="Pages\MainPage\TrackScroll.cs" />
     <Compile Include="Pages\MainPage\Undo.cs" />
     <Compile Include="Pages\MainPage\Zoom.cs" />
+    <Compile Include="Pages\Morphological.cs" />
     <Compile Include="Pages\PixelManagerPage.xaml.cs">
       <DependentUpon>PixelManagerPage.xaml</DependentUpon>
     </Compile>

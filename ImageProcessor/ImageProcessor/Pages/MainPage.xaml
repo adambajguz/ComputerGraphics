@@ -56,6 +56,14 @@
                         <MenuFlyoutItem Text="Entropy Selection" Click="EntropySelectionPageMenuFlyoutItem_Click"/>
                         <MenuFlyoutItem Text="Otsu binaryzation" Click="OtsuBinaryzationPageMenuFlyoutItem_Click"/>
                         <MenuFlyoutItem Text="Niblack binaryzation" Click="NiblackinaryzationPageMenuFlyoutItem_Click"/>
+                    </MenuFlyoutSubItem>  
+                    
+                    <MenuFlyoutSubItem Text="Morphological operations">
+                        <MenuFlyoutItem Text="Dilation" Click="DilationPageMenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Text="Erosion" Click="ErosionPageMenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Text="Opening" Click="OpeningPageMenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Text="Closing" Click="ClosingPageMenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Text="Hit-or-miss" Click="HitOrMissPageMenuFlyoutItem_Click"/>
                     </MenuFlyoutSubItem>
 
                     <MenuFlyoutSubItem Text="Arithmetic">
