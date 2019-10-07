@@ -112,10 +112,5 @@ namespace PaintCube
             canvas.RemoveFromVisualTree();
             canvas = null;
         }
-
-        private void canvas_PointerReleased(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            e.Handled = true;
-        }
     }
 }
