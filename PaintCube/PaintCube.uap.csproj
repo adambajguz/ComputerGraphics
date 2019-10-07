@@ -117,6 +117,7 @@
     <Compile Include="Direct3DInteropExample.xaml.cs">
       <DependentUpon>Direct3DInteropExample.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\RotationHelper.cs" />
     <Compile Include="Infrastructure\RGBHelper.cs" />
     <Compile Include="Infrastructure\SuspensionManager.cs" />
     <Compile Include="Infrastructure\ExampleDefinition.cs" />

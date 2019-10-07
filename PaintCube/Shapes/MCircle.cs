@@ -103,6 +103,12 @@ namespace PaintCube.Shapes
 
             return false;
         }
+
+        public override void Rotate(Point orgin, double angle)
+        {
+
+        }
+
         private bool PointIsInCircle(Point center, double radius, Point point)
         {
             var c1 = center.X - point.X;

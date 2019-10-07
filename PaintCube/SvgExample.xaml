@@ -59,6 +59,18 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                         <AppBarButton.Icon>
                             <SymbolIcon Symbol="Undo" Margin="0,0,8,0"/>
                         </AppBarButton.Icon>
+                    </AppBarButton>        
+                    <AppBarButton Label="Rotate" ToolTipService.ToolTip="Rotate" HorizontalContentAlignment="Center" 
+                                        Click="Rotate_Clicked">
+                        <AppBarButton.Icon>
+                            <SymbolIcon Symbol="Rotate" Margin="0,0,8,0"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>        
+                    <AppBarButton Label="Scale" ToolTipService.ToolTip="Scale" HorizontalContentAlignment="Center" 
+                                        Click="Scale_Clicked">
+                        <AppBarButton.Icon>
+                            <SymbolIcon Symbol="FullScreen" Margin="0,0,8,0"/>
+                        </AppBarButton.Icon>
                     </AppBarButton>
                 </CommandBar>
 

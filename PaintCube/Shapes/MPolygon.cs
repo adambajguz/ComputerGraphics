@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Windows.Foundation;
 
@@ -155,6 +156,21 @@ namespace PaintCube.Shapes
         {
             Point start = Lines.Count == 0 ? StartLocation : Lines[Lines.Count - 1].EndLocation;
             Lines.Add(new MLine(start, end));
+        }
+
+        public override void Rotate(Point orgin, double angle)
+        {
+            foreach (MLine line in Lines)
+            {
+                line.Rotate(orgin, angle);
+            }
+        }
+        public override void Scale(Point orgin, double scaleX, double scaleY)
+        {
+            foreach (MLine line in Lines)
+            {
+                line.Scale(orgin, scaleX, scaleY);
+            }
         }
 
         public override string ToString()

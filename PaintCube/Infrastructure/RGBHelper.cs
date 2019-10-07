@@ -1,7 +1,7 @@
 ﻿using System;
 using Windows.UI;
 
-namespace ExampleGallery.Infrastructure
+namespace PaintCube.Infrastructure
 {
     public static class RGBHelper
     {

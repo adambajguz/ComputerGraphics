@@ -1,7 +1,9 @@
 ﻿using System;
+using PaintCube.Helpers;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Windows.Foundation;
 using Windows.UI;
+using Windows.UI.Xaml.Media;
 
 namespace PaintCube.Shapes
 {
@@ -101,6 +103,19 @@ namespace PaintCube.Shapes
         {
             StartLocation = new Point(StartLocation.X + shift.X, StartLocation.Y + shift.Y);
             EndLocation = new Point(EndLocation.X + shift.X, EndLocation.Y + shift.Y);
+        }
+
+        public virtual void Rotate(Point orgin, double angle)
+        {
+            StartLocation = RotationHelper.RotatePoint(StartLocation, orgin, angle);
+            EndLocation = RotationHelper.RotatePoint(EndLocation, orgin, angle);
+        }
+
+        public virtual void Scale(Point orgin, double scaleX, double scaleY)
+        {
+            var transform = new ScaleTransform() { ScaleX = scaleX, ScaleY = scaleY, CenterX = orgin.X, CenterY = orgin.Y };
+            StartLocation = transform.TransformPoint(StartLocation);
+            EndLocation = transform.TransformPoint(EndLocation);
         }
 
         public abstract bool OnMouseOver(Point mousePosition);

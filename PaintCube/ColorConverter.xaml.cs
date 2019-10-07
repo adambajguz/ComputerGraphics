@@ -1,4 +1,6 @@
-using ExampleGallery.Infrastructure;
+using System;
+using System.Threading.Tasks;
+using PaintCube.Infrastructure;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -37,6 +39,14 @@ namespace PaintCube
             G = RGBColor.G;
             B = RGBColor.B;
             UpdateCMYK();
+
+            SliderValueRText.TextChanged += SliderValueRText_TextChanged;
+            SliderValueGText.TextChanged += SliderValueGText_TextChanged;
+            SliderValueBText.TextChanged += SliderValueBText_TextChanged;
+            SliderValueCText.TextChanged += SliderValueCText_TextChanged;
+            SliderValueMText.TextChanged += SliderValueMText_TextChanged;
+            SliderValueYText.TextChanged += SliderValueYText_TextChanged;
+            SliderValueKText.TextChanged += SliderValueKText_TextChanged;
         }
 
         public Color RGBColor { get; set; }
@@ -196,6 +206,69 @@ namespace PaintCube
         {
             //    NewColorPreview.Fill = new SolidColorBrush(sender.Color);
             //    NewColorPreviewTooltip.Content = sender.Color.ToString();
+        }
+
+        private static async Task InvalidValuesFormatDialog()
+        {
+            ContentDialog noWifiDialog = new ContentDialog
+            {
+                Title = "Error",
+                Content = "Invalid values passed into fields",
+                CloseButtonText = "Ok"
+            };
+
+            ContentDialogResult result = await noWifiDialog.ShowAsync();
+        }
+
+        private async System.Threading.Tasks.Task<byte> UpdateValueOfTextBox(object sender)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            try
+            {
+                return byte.Parse(textBox.Text);
+            }
+            catch (Exception)
+            {
+                await InvalidValuesFormatDialog();
+
+                return 0;
+            }
+        }
+
+        private async void SliderValueRText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            R = await UpdateValueOfTextBox(sender);
+        }
+
+        private async void SliderValueGText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            G = await UpdateValueOfTextBox(sender);
+        }
+
+        private async void SliderValueBText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            B = await UpdateValueOfTextBox(sender);
+        }
+
+        private async void SliderValueCText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            C = await UpdateValueOfTextBox(sender);
+        }
+
+        private async void SliderValueMText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            M = await UpdateValueOfTextBox(sender);
+        }
+
+        private async void SliderValueYText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Y = await UpdateValueOfTextBox(sender);
+        }
+
+        private async void SliderValueKText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            K = await UpdateValueOfTextBox(sender);
         }
     }
 }

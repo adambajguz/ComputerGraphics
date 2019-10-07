@@ -86,6 +86,11 @@ namespace PaintCube.Shapes
             return false;
         }
 
+        public override void Rotate(Point orgin, double angle)
+        {
+
+        }
+
         public override string ToString()
         {
             return $"Rect: {base.ToString()}";
