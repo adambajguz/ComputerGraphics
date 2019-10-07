@@ -26,56 +26,77 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="320"/>
+            <ColumnDefinition Width="400"/>
             <ColumnDefinition Width="16"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <ScrollViewer Grid.Column="0" Grid.Row="0" VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical" MinWidth="100" Margin="5" x:Name="optionsPanel">
-                <Button HorizontalAlignment="Stretch" Click="Clear_Clicked">
-                    <StackPanel Orientation="Horizontal">
-                        <SymbolIcon Symbol="Delete" Margin="0,0,8,0"/>
-                        <TextBlock>Clear</TextBlock>
-                    </StackPanel>
-                </Button>
+                <TextBlock>Basic:</TextBlock>
+                <CommandBar IsOpen="False" HorizontalAlignment="Left">
+                    <AppBarButton Label="New document" ToolTipService.ToolTip="New document" HorizontalContentAlignment="Center" 
+                                        Click="Clear_Clicked">
+                        <AppBarButton.Icon>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8A5;"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton Label="Open..." ToolTipService.ToolTip="Open..." HorizontalContentAlignment="Center" 
+                                        Click="Open_Clicked">
+                        <AppBarButton.Icon>
+                            <SymbolIcon Symbol="OpenFile" Margin="0,0,8,0"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>       
+                    <AppBarButton Label="Save as..." ToolTipService.ToolTip="Save as..." HorizontalContentAlignment="Center" 
+                                        Click="SaveAs_Clicked">
+                        <AppBarButton.Icon>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEA35;"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarSeparator />
+                    <AppBarButton Label="Undo" ToolTipService.ToolTip="Undo" HorizontalContentAlignment="Center" 
+                                        Click="Undo_Clicked">
+                        <AppBarButton.Icon>
+                            <SymbolIcon Symbol="Undo" Margin="0,0,8,0"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </CommandBar>
 
                 <TextBlock>Tools:</TextBlock>
-                <CommandBar Background="Transparent" IsOpen="False" DefaultLabelPosition="Collapsed"
-                            HorizontalAlignment="Left">
+                <CommandBar IsOpen="False" HorizontalAlignment="Left">
                     <AppBarToggleButton x:Name="SelectTool"
-                                        IsCompact="True" Label="Select" ToolTipService.ToolTip="Select" HorizontalContentAlignment="Center" Width="48" 
+                                        Label="Select" ToolTipService.ToolTip="Select" HorizontalContentAlignment="Center" 
                                         Checked="SelectTool_Checked" Unchecked="Tool_Unchecked">
                         <AppBarToggleButton.Icon>
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8B0;"/>
                         </AppBarToggleButton.Icon>
                     </AppBarToggleButton>
                     <AppBarToggleButton x:Name="MoveTool" 
-                                        IsCompact="True" Label="Move" ToolTipService.ToolTip="Move" Width="48" 
+                                        Label="Move" ToolTipService.ToolTip="Move"
                                         Checked="MoveTool_Checked" Unchecked="Tool_Unchecked">
                         <AppBarToggleButton.Icon>
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE759;"/>
-                        </AppBarToggleButton.Icon>                      
+                        </AppBarToggleButton.Icon>
                     </AppBarToggleButton>
                     <AppBarToggleButton x:Name="ResizeTool" 
-                                        IsCompact="True" Label="Resize" ToolTipService.ToolTip="Resize" Width="48" 
+                                        Label="Resize" ToolTipService.ToolTip="Resize"
                                         Checked="ResizeTool_Checked" Unchecked="Tool_Unchecked">
                         <AppBarToggleButton.Icon>
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE744;"/>
-                        </AppBarToggleButton.Icon>                      
+                        </AppBarToggleButton.Icon>
                     </AppBarToggleButton>
                     <AppBarToggleButton x:Name="DrawTool" 
-                                        IsCompact="True" Label="Drag draw" ToolTipService.ToolTip="Drag draw" Width="48" 
+                                        Label="Drag draw" ToolTipService.ToolTip="Drag draw" 
                                         Checked="DrawTool_Checked" Unchecked="Tool_Unchecked">
                         <AppBarToggleButton.Icon>
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEC87;"/>
                         </AppBarToggleButton.Icon>
                     </AppBarToggleButton>
                     <AppBarToggleButton x:Name="DrawClickTool" Icon="Edit" 
-                                        IsCompact="True" Label="Click drwa" ToolTipService.ToolTip="Click draw" Width="48" 
+                                        Label="Click draw" ToolTipService.ToolTip="Click draw" 
                                         Checked="DrawClickTool_Checked" Unchecked="Tool_Unchecked"/>
                     <AppBarToggleButton x:Name="DrawTextTool" 
-                                        IsCompact="True" Label="Text draw" ToolTipService.ToolTip="Text draw" Width="48" 
+                                        Label="Text draw" ToolTipService.ToolTip="Text draw"
                                         Checked="DrawTextTool_Checked" Unchecked="Tool_Unchecked">
                         <AppBarToggleButton.Icon>
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE97C;"/>
@@ -83,12 +104,6 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                     </AppBarToggleButton>
                 </CommandBar>
 
-                <Button HorizontalAlignment="Stretch" Click="Undo_Clicked">
-                    <StackPanel Orientation="Horizontal">
-                        <SymbolIcon Symbol="Undo" Margin="0,0,8,0"/>
-                        <TextBlock>Undo draw</TextBlock>
-                    </StackPanel>
-                </Button>
                 <TextBlock>Shape:</TextBlock>
                 <ComboBox
                   ItemsSource="{Binding ElementName=control, Path=Shapes}"
@@ -100,7 +115,7 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                 <ScrollViewer Grid.Column="0" Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,8">
                     <StackPanel Orientation="Vertical" MinWidth="100" Margin="5" x:Name="optionsPanelAddShape" 
                         BorderBrush="DarkGreen" BorderThickness="2" Padding="4">
-                   
+
                         <TextBlock x:Name="AddShapeOptionsLabel">Define shape:</TextBlock>
                         <StackPanel x:Name="AddShapeOptionsLine" Orientation="Vertical" BorderBrush="MediumVioletRed" BorderThickness="2" Padding="4" Margin="4">
                             <TextBlock>Start:</TextBlock>

@@ -1,12 +1,24 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Numerics;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Windows.Foundation;
 
 namespace PaintCube.Shapes
 {
+    [Serializable]
     public class MLine : MShape
     {
+        public override ShapeType Type
+        {
+            get { return ShapeType.Line; }
+        }
+
+        public MLine()
+        {
+
+        }
+
         public MLine(Point startLocation, Point endLocation) : base(startLocation, endLocation)
         {
 

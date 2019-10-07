@@ -1,10 +1,17 @@
-﻿using Microsoft.Graphics.Canvas.UI.Xaml;
+﻿using System;
+using Microsoft.Graphics.Canvas.UI.Xaml;
 using Windows.Foundation;
 
 namespace PaintCube.Shapes
 {
+    [Serializable]
     public class MRectangle : MShape
     {
+        public override ShapeType Type
+        {
+            get { return ShapeType.Rectangle; }
+        }
+
         private Rect _rectangle;
         public Rect Rectangle
         {
@@ -37,6 +44,11 @@ namespace PaintCube.Shapes
                 _endLocation = value;
                 Rectangle = new Rect(StartLocation, EndLocation);
             }
+        }
+
+        public MRectangle()
+        {
+
         }
 
         public MRectangle(Point startLocation, Point endLocation)

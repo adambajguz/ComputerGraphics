@@ -8,8 +8,17 @@ namespace PaintCube
         private void Clear_Clicked(object sender, RoutedEventArgs e)
         {
             DrawnShapes.Clear();
-            ClearShapesComboSelection();
 
+            HideEditPanel();
+
+            DrawnShapesCombo.ItemsSource = null;
+            DrawnShapesCombo.ItemsSource = DrawnShapes;
+
+            if (ShapeToEdit != null)
+            {
+                ShapeToEdit.Mode = ShapeModes.Drawn;
+                ShapeToEdit = null;
+            }
             canvasControl.Invalidate();
         }
 

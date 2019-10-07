@@ -7,18 +7,10 @@ namespace PaintCube
 {
     public sealed partial class SvgExample : UserControl
     {
-        public enum ShapeType
-        {
-            Rectangle,
-            Circle,
-            Line,
-            Polygon,
-        }
-
         public List<ShapeType> Shapes { get { return Utils.GetEnumAsList<ShapeType>(); } }
         public ShapeType CurrentShapeType { get; set; }
 
-        public List<MShape> DrawnShapes { get; } = new List<MShape>();
+        public List<MShape> DrawnShapes { get; private set; } = new List<MShape>();
         public MShape ShapeToEdit { get; set; }
 
         public MShape PendingShape { get; set; }
@@ -35,6 +27,12 @@ namespace PaintCube
 
         private void ShapeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (SelectedTool == Tools.DrawTextTool)
+                if (CurrentShapeType == ShapeType.Polygon)
+                    optionsPanelAddShape.Visibility = Visibility.Collapsed;
+                else
+                    optionsPanelAddShape.Visibility = Visibility.Visible;
+
             canvasControl.Invalidate();
         }
     }

@@ -1,13 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Numerics;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Windows.Foundation;
 
 namespace PaintCube.Shapes
 {
+    [Serializable]
     public class MPolygon : MShape
     {
-        public List<MLine> Lines = new List<MLine>();
+        public override ShapeType Type
+        {
+            get { return ShapeType.Polygon; }
+        }
+
+        public List<MLine> Lines { get; set; } = new List<MLine>();
         public bool Closed { get; set; }
 
 
@@ -49,6 +56,11 @@ namespace PaintCube.Shapes
 
                 _endLocation = value;
             }
+        }
+
+        public MPolygon()
+        {
+
         }
 
         public MPolygon(Point startLocation, Point endLocation) : base(startLocation, endLocation)

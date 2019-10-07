@@ -1,11 +1,15 @@
-﻿using Microsoft.Graphics.Canvas.UI.Xaml;
+﻿using System;
+using Microsoft.Graphics.Canvas.UI.Xaml;
 using Windows.Foundation;
 using Windows.UI;
 
 namespace PaintCube.Shapes
 {
+    [Serializable]
     public abstract class MShape
     {
+        public abstract ShapeType Type { get; }
+
         public const int CharacteristicPointsSize = 8;
         public const int CharacteristicPointsSizeHalf = CharacteristicPointsSize / 2;
         public virtual Point StartLocation { get; set; }

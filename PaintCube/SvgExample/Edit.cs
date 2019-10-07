@@ -16,6 +16,8 @@ namespace PaintCube
 
         private void UpdateEditPanel()
         {
+            EditPanelButtonsUpdate.Visibility = Visibility.Visible;
+
             if (ShapeToEdit != null)
             {
                 ShapeToEdit.Mode = ShapeModes.Drawn;

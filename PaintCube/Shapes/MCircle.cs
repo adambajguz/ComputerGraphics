@@ -6,8 +6,14 @@ using Windows.Foundation;
 
 namespace PaintCube.Shapes
 {
+    [Serializable]
     public class MCircle : MShape
     {
+        public override ShapeType Type
+        {
+            get { return ShapeType.Circle; }
+        }
+
         private Point _center;
         public Point Center
         {
@@ -63,6 +69,11 @@ namespace PaintCube.Shapes
             var dx = _endLocation.X - _startLocation.X;
             var dy = _endLocation.Y - _startLocation.Y;
             _radius = (float)Math.Sqrt((dx * dx) + (dy * dy));
+        }
+
+        public MCircle()
+        {
+
         }
 
         public MCircle(Point startLocation, Point endLocation)
