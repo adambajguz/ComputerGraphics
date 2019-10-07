@@ -12,7 +12,9 @@ namespace PaintCube
             Resize,
             Draw,
             DrawClick,
-            DrawTextTool
+            DrawTextTool,
+            Rotate,
+            Scale
         }
 
         public Tools SelectedTool { get; set; }
@@ -26,6 +28,8 @@ namespace PaintCube
             DrawClickTool.IsChecked = false;
             DrawTextTool.IsChecked = false;
             ResizeTool.IsChecked = false;
+            RotateTool.IsChecked = false;
+            ScaleTool.IsChecked = false;
         }
 
         private void MoveTool_Checked(object sender, RoutedEventArgs e)
@@ -37,6 +41,8 @@ namespace PaintCube
             DrawClickTool.IsChecked = false;
             DrawTextTool.IsChecked = false;
             ResizeTool.IsChecked = false;
+            RotateTool.IsChecked = false;
+            ScaleTool.IsChecked = false;
         }
 
         private void ResizeTool_Checked(object sender, RoutedEventArgs e)
@@ -48,6 +54,8 @@ namespace PaintCube
             DrawClickTool.IsChecked = false;
             DrawTextTool.IsChecked = false;
             MoveTool.IsChecked = false;
+            RotateTool.IsChecked = false;
+            ScaleTool.IsChecked = false;
 
             canvasControl.Invalidate();
         }
@@ -61,6 +69,8 @@ namespace PaintCube
             DrawClickTool.IsChecked = false;
             DrawTextTool.IsChecked = false;
             ResizeTool.IsChecked = false;
+            RotateTool.IsChecked = false;
+            ScaleTool.IsChecked = false;
         }
 
         private void DrawClickTool_Checked(object sender, RoutedEventArgs e)
@@ -72,6 +82,8 @@ namespace PaintCube
             DrawTool.IsChecked = false;
             DrawTextTool.IsChecked = false;
             ResizeTool.IsChecked = false;
+            RotateTool.IsChecked = false;
+            ScaleTool.IsChecked = false;
         }
 
         private void DrawTextTool_Checked(object sender, RoutedEventArgs e)
@@ -83,6 +95,37 @@ namespace PaintCube
             DrawTool.IsChecked = false;
             DrawClickTool.IsChecked = false;
             ResizeTool.IsChecked = false;
+            RotateTool.IsChecked = false;
+            ScaleTool.IsChecked = false;
+            optionsPanelAddShape.Visibility = Visibility.Visible;
+        }
+
+        private void RotateTool_Checked(object sender, RoutedEventArgs e)
+        {
+            SelectedTool = Tools.Rotate;
+
+            SelectTool.IsChecked = false;
+            MoveTool.IsChecked = false;
+            DrawTool.IsChecked = false;
+            DrawClickTool.IsChecked = false;
+            ResizeTool.IsChecked = false;
+            DrawTextTool.IsChecked = false;
+            ScaleTool.IsChecked = false;
+
+            optionsPanelAddShape.Visibility = Visibility.Visible;
+        }
+
+        private void ScaleTool_Checked(object sender, RoutedEventArgs e)
+        {
+            SelectedTool = Tools.Scale;
+
+            SelectTool.IsChecked = false;
+            MoveTool.IsChecked = false;
+            DrawTool.IsChecked = false;
+            DrawClickTool.IsChecked = false;
+            ResizeTool.IsChecked = false;
+            DrawTextTool.IsChecked = false;
+            RotateTool.IsChecked = false;
 
             optionsPanelAddShape.Visibility = Visibility.Visible;
         }
@@ -101,6 +144,8 @@ namespace PaintCube
                 SelectTool.IsChecked == true ||
                 DrawTextTool.IsChecked == true ||
                 ResizeTool.IsChecked == true ||
+                RotateTool.IsChecked == true ||
+                ScaleTool.IsChecked == true ||
                 DrawClickTool.IsChecked == true)
                 return;
 

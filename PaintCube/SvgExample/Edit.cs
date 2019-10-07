@@ -183,14 +183,14 @@ namespace PaintCube
 
         private static async Task InvalidValuesFormatDialog()
         {
-            ContentDialog noWifiDialog = new ContentDialog
+            ContentDialog dialog = new ContentDialog
             {
                 Title = "Error",
                 Content = "Invalid values passed into fields",
                 CloseButtonText = "Ok"
             };
 
-            ContentDialogResult result = await noWifiDialog.ShowAsync();
+            ContentDialogResult result = await dialog.ShowAsync();
         }
 
         private void HideEditPanel()
@@ -215,6 +215,16 @@ namespace PaintCube
             MoveByVectorFromEditPanel();
         }
 
+        private void Rotate_Clicked(object sender, RoutedEventArgs e)
+        {
+            RotateFromEditPanel();
+        }
+
+        private void Scale_Clicked(object sender, RoutedEventArgs e)
+        {
+            ScaleFromEditPanel();
+        }
+
         private async void MoveByVectorFromEditPanel()
         {
             double x, y;
@@ -231,6 +241,53 @@ namespace PaintCube
             }
 
             ShapeToEdit.MoveBy(new Point(x, y));
+
+            UpdateEditPanel();
+
+            canvasControl.Invalidate();
+        }
+
+        private async void ScaleFromEditPanel()
+        {
+            double x, y, sx, sy;
+            try
+            {
+                x = double.Parse(ScaleOrginXEdit.Text);
+                y = double.Parse(ScaleOrginYEdit.Text);
+                sx = double.Parse(ScaleXEdit.Text);
+                sy = double.Parse(ScaleYEdit.Text);
+            }
+            catch (Exception)
+            {
+                await InvalidValuesFormatDialog();
+
+                return;
+            }
+
+            ShapeToEdit.Scale(new Point(x, y), sx, sy);
+
+            UpdateEditPanel();
+
+            canvasControl.Invalidate();
+        }
+
+        private async void RotateFromEditPanel()
+        {
+            double x, y, angle;
+            try
+            {
+                x = double.Parse(RotateOrginXEdit.Text);
+                y = double.Parse(RotateOrginYEdit.Text);
+                angle = double.Parse(RotateAngleEdit.Text);
+            }
+            catch (Exception)
+            {
+                await InvalidValuesFormatDialog();
+
+                return;
+            }
+
+            ShapeToEdit.Rotate(new Point(x, y), angle);
 
             UpdateEditPanel();
 

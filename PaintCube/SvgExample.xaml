@@ -114,6 +114,20 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE97C;"/>
                         </AppBarToggleButton.Icon>
                     </AppBarToggleButton>
+                    <AppBarToggleButton x:Name="RotateTool" 
+                                        Label="Rotate" ToolTipService.ToolTip="Rotate"
+                                        Checked="RotateTool_Checked" Unchecked="Tool_Unchecked">
+                        <AppBarToggleButton.Icon>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE759;"/>
+                        </AppBarToggleButton.Icon>
+                    </AppBarToggleButton>
+                    <AppBarToggleButton x:Name="ScaleTool" 
+                                        Label="Scale" ToolTipService.ToolTip="Scaler"
+                                        Checked="ScaleTool_Checked" Unchecked="Tool_Unchecked">
+                        <AppBarToggleButton.Icon>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE759;"/>
+                        </AppBarToggleButton.Icon>
+                    </AppBarToggleButton>
                 </CommandBar>
 
                 <TextBlock>Shape:</TextBlock>
@@ -271,7 +285,7 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                         <TextBox x:Name="RotateAngleEdit"/>
 
                     </StackPanel>
-                        <Button HorizontalAlignment="Stretch" Click="MoveByVector_Clicked" Margin="8,8,8,0">
+                        <Button HorizontalAlignment="Stretch" Click="Rotate_Clicked" Margin="8,8,8,0">
                             <StackPanel Orientation="Horizontal">
                                 <SymbolIcon Symbol="Rotate" Margin="0,0,8,0"/>
                                 <TextBlock>Rotate</TextBlock>
@@ -293,7 +307,7 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                         <TextBlock VerticalAlignment="Center" Margin="4,0,4,0">Scale Y:</TextBlock>
                         <TextBox x:Name="ScaleYEdit"/>
                     </StackPanel>
-                    <Button HorizontalAlignment="Stretch" Click="MoveByVector_Clicked" Margin="8,8,8,0">
+                    <Button HorizontalAlignment="Stretch" Click="Scale_Clicked" Margin="8,8,8,0">
                         <StackPanel Orientation="Horizontal">
                             <SymbolIcon Symbol="FullScreen" Margin="0,0,8,0"/>
                             <TextBlock>Scale</TextBlock>
