@@ -36,8 +36,6 @@ namespace PaintCube
         private void ShapeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             canvasControl.Invalidate();
-            if (CurrentShapeType == ShapeType.Polygon)
-                SelectedTool = Tools.DrawClick;
         }
     }
 }

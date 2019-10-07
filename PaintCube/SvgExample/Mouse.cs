@@ -28,60 +28,71 @@ namespace PaintCube
 
         private int ResizingPoint { get; set; } = -1;
 
+        #region PointerPressed
         private void canvasControl_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
+            bool rightButtonPressed = false;
+            // Check for input device
+            if (e.Pointer.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse)
+            {
+                var properties = e.GetCurrentPoint(this).Properties;
+                if (properties.IsRightButtonPressed)
+                    rightButtonPressed = true;
+            }
+
             Point startPosition = e.GetCurrentPoint(canvasControl).Position;
 
             if (SelectedTool == Tools.Select || SelectedTool == Tools.Move)
-            {
-                foreach (MShape shape in DrawnShapes)
-                {
-                    if (shape.OnMouseOver(startPosition))
-                    {
-                        if (SelectedTool == Tools.Select)
-                        {
-                            DrawnShapesCombo.SelectedItem = shape;
-                            break;
-                        }
-                        else if (SelectedTool == Tools.Move)
-                        {
-                            MovingShape = shape;
-                            MovingShape.Mode = ShapeModes.Drawing;
-                            MovingShapeBeginStart = shape.StartLocation;
-                            MovingShapeBeginEnd = shape.EndLocation;
-                            MovingShapeBeginMouse = startPosition;
-
-                            canvasControl.Invalidate();
-
-                            break;
-                        }
-                    }
-                }
-            }
+                PointerPressedSelectOrMove(startPosition);
             else if (SelectedTool == Tools.Resize)
+                PointerPressedResize(startPosition);
+            else if (SelectedTool == Tools.Draw || SelectedTool == Tools.DrawClick)
+                PointerPressedDraw(rightButtonPressed, startPosition);
+        }
+
+        private void PointerPressedDraw(bool rightButtonPressed, Point startPosition)
+        {
+            if (CurrentShapeType == ShapeType.Polygon)
             {
-                foreach (MShape shape in DrawnShapes)
+                DrawClickTool.IsChecked = true;
+                SelectedTool = Tools.DrawClick;
+            }
+
+            if (SelectedTool == Tools.DrawClick)
+            {
+                if (CurrentShapeType == ShapeType.Polygon)
                 {
-                    int tmpResizingPoint = shape.OnPointOver(startPosition);
-                    if (tmpResizingPoint >= 0)
+                    if (ClickedTimes++ >= 1)
                     {
-                        ResizingPoint = tmpResizingPoint;
+                        if (rightButtonPressed)
+                        {
+                            if (ClickedTimes >= 4)
+                            {
+                                ClickedTimes = 0;
 
-                        MovingShape = shape;
-                        MovingShape.Mode = ShapeModes.Drawing;
-                        MovingShapeBeginStart = shape.StartLocation;
-                        MovingShapeBeginEnd = shape.EndLocation;
-                        MovingShapeBeginMouse = startPosition;
+                                var poly = PendingShape as MPolygon;
+                                poly.AddSegment(poly.StartLocation);
+                                poly.StartLocation = new Point(0, 0);
+                                poly.EndLocation = new Point(0, 0);
+                                poly.Closed = true;
 
-                        canvasControl.Invalidate();
+                                AddShape();
 
-                        break;
+                                return;
+                            }
+                            else
+                                --ClickedTimes;
+                        }
+                        else
+                        {
+                            (PendingShape as MPolygon).AddSegment(startPosition);
+                        }
+                        this.canvasControl.Invalidate();
+
+                        return;
                     }
                 }
-            }
-            else if (SelectedTool == Tools.Draw || SelectedTool == Tools.DrawClick)
-            {
-                if (SelectedTool == Tools.DrawClick)
+                else
                 {
                     if (ClickedTimes == 0)
                         ClickedTimes = 1;
@@ -94,43 +105,96 @@ namespace PaintCube
                         return;
                     }
                 }
+            }
 
-                if (CurrentShapeType == ShapeType.Rectangle)
-                {
-                    PendingShape = new MRectangle(startPosition, startPosition);
-                }
-                else if (CurrentShapeType == ShapeType.Circle)
-                {
-                    PendingShape = new MCircle(startPosition, startPosition);
-                }
-                else if (CurrentShapeType == ShapeType.Line)
-                {
-                    PendingShape = new MLine(startPosition, startPosition);
-                }
-                else if (CurrentShapeType == ShapeType.Polygon)
-                {
-                    PendingShape = new MPolygon(startPosition, startPosition);
-                }
+            if (CurrentShapeType == ShapeType.Rectangle)
+            {
+                PendingShape = new MRectangle(startPosition, startPosition);
+            }
+            else if (CurrentShapeType == ShapeType.Circle)
+            {
+                PendingShape = new MCircle(startPosition, startPosition);
+            }
+            else if (CurrentShapeType == ShapeType.Line)
+            {
+                PendingShape = new MLine(startPosition, startPosition);
+            }
+            else if (CurrentShapeType == ShapeType.Polygon)
+            {
+                PendingShape = new MPolygon(startPosition, startPosition);
+            }
 
-                PendingShape.Mode = ShapeModes.Drawing;
+            PendingShape.Mode = ShapeModes.Drawing;
 
-                canvasControl.Invalidate();
+            this.canvasControl.Invalidate();
+        }
+
+        private void PointerPressedResize(Point startPosition)
+        {
+            foreach (MShape shape in DrawnShapes)
+            {
+                int tmpResizingPoint = shape.OnPointOver(startPosition);
+                if (tmpResizingPoint >= 0)
+                {
+                    ResizingPoint = tmpResizingPoint;
+
+                    MovingShape = shape;
+                    MovingShape.Mode = ShapeModes.Drawing;
+                    MovingShapeBeginStart = shape.StartLocation;
+                    MovingShapeBeginEnd = shape.EndLocation;
+                    MovingShapeBeginMouse = startPosition;
+
+                    canvasControl.Invalidate();
+
+                    break;
+                }
+            }
+        }
+
+        private void PointerPressedSelectOrMove(Point startPosition)
+        {
+            foreach (MShape shape in DrawnShapes)
+            {
+                if (shape.OnMouseOver(startPosition))
+                {
+                    if (SelectedTool == Tools.Select)
+                    {
+                        DrawnShapesCombo.SelectedItem = shape;
+                        break;
+                    }
+                    else if (SelectedTool == Tools.Move)
+                    {
+                        MovingShape = shape;
+                        MovingShape.Mode = ShapeModes.Drawing;
+                        MovingShapeBeginStart = shape.StartLocation;
+                        MovingShapeBeginEnd = shape.EndLocation;
+                        MovingShapeBeginMouse = startPosition;
+
+                        canvasControl.Invalidate();
+
+                        break;
+                    }
+                }
             }
         }
 
         private void AddShape()
         {
-            PendingShape.Mode = ShapeModes.Drawn;
-            DrawnShapes.Add(PendingShape);
+            if (PendingShape != null)
+            {
+                PendingShape.Mode = ShapeModes.Drawn;
+                DrawnShapes.Add(PendingShape);
 
-            int idx = DrawnShapesCombo.SelectedIndex;
-            DrawnShapesCombo.ItemsSource = null;
-            DrawnShapesCombo.ItemsSource = DrawnShapes;
-            DrawnShapesCombo.SelectedIndex = idx;
+                int idx = DrawnShapesCombo.SelectedIndex;
+                DrawnShapesCombo.ItemsSource = null;
+                DrawnShapesCombo.ItemsSource = DrawnShapes;
+                DrawnShapesCombo.SelectedIndex = idx;
 
-            PendingShape = null;
+                PendingShape = null;
+            }
             canvasControl.Invalidate();
         }
+        #endregion
 
         private void canvasControl_PointerMoved(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
@@ -139,19 +203,27 @@ namespace PaintCube
             {
                 if (MovingShape != null)
                 {
-                    double x0 = MovingShapeBeginStart.X;
-                    double y0 = MovingShapeBeginStart.Y;
-                    double x1 = MovingShapeBeginEnd.X;
-                    double y1 = MovingShapeBeginEnd.Y;
-
                     double mx = MovingShapeBeginMouse.X;
                     double my = MovingShapeBeginMouse.Y;
 
                     double shiftX = mx - pos.X;
                     double shiftY = my - pos.Y;
 
-                    MovingShape.StartLocation = new Point(x0 - shiftX, y0 - shiftY);
-                    MovingShape.EndLocation = new Point(x1 - shiftX, y1 - shiftY);
+                    if (MovingShape is MPolygon)
+                    {
+                        MovingShape.StartLocation = new Point(shiftX, shiftY);
+                        MovingShapeBeginMouse = pos;
+                    }
+                    else
+                    {
+                        double x0 = MovingShapeBeginStart.X;
+                        double y0 = MovingShapeBeginStart.Y;
+                        double x1 = MovingShapeBeginEnd.X;
+                        double y1 = MovingShapeBeginEnd.Y;
+
+                        MovingShape.StartLocation = new Point(x0 - shiftX, y0 - shiftY);
+                        MovingShape.EndLocation = new Point(x1 - shiftX, y1 - shiftY);
+                    }
                     canvasControl.Invalidate();
                 }
             }

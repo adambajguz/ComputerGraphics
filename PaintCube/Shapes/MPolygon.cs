@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Windows.Foundation;
@@ -9,6 +8,48 @@ namespace PaintCube.Shapes
     public class MPolygon : MShape
     {
         public List<MLine> Lines = new List<MLine>();
+        public bool Closed { get; set; }
+
+
+        private Point _startLocation;
+        public override Point StartLocation
+        {
+            get => _startLocation;
+            set
+            {
+                if (Closed)
+                {
+                    double xShift = value.X;
+                    double yShift = value.Y;
+
+                    for (int i = 0; i < Lines.Count; ++i)
+                    {
+                        MLine line = Lines[i];
+                        line.StartLocation = new Point(line.StartLocation.X - xShift, line.StartLocation.Y - yShift);
+                        line.EndLocation = new Point(line.EndLocation.X - xShift, line.EndLocation.Y - yShift);
+                    }
+
+                    return;
+                }
+
+                _startLocation = value;
+            }
+        }
+
+        private Point _endLocation;
+        public override Point EndLocation
+        {
+            get => _endLocation;
+            set
+            {
+                if (Closed)
+                {
+                    return;
+                }
+
+                _endLocation = value;
+            }
+        }
 
         public MPolygon(Point startLocation, Point endLocation) : base(startLocation, endLocation)
         {
@@ -17,50 +58,76 @@ namespace PaintCube.Shapes
 
         protected override void DrawNormal(CanvasControl sender, CanvasDrawEventArgs args)
         {
-            args.DrawingSession.DrawLine(StartLocation.ToVector2(), EndLocation.ToVector2(), ShapeColor, 2);
+            foreach (var line in Lines)
+            {
+                line.Mode = Mode;
+                line.Draw(sender, args);
+            }
         }
 
         protected override void DrawGhost(CanvasControl sender, CanvasDrawEventArgs args)
         {
-            args.DrawingSession.DrawLine(StartLocation.ToVector2(), EndLocation.ToVector2(), ShapeColor, 1);
+            if (!Closed)
+            {
+                Point start = Lines.Count == 0 ? StartLocation : Lines[Lines.Count - 1].EndLocation;
+                args.DrawingSession.DrawLine(start.ToVector2(), EndLocation.ToVector2(), ShapeColor, 1);
+            }
+
+            foreach (var line in Lines)
+            {
+                line.Mode = Mode;
+                line.Draw(sender, args);
+            }
+        }
+        public override void DrawResize(CanvasControl sender, CanvasDrawEventArgs args)
+        {
+            foreach (var line in Lines)
+            {
+                line.DrawResize(sender, args);
+            }
         }
 
         public override bool OnMouseOver(Point mousePosition)
         {
-            const double tol = 2;
-
-            double x0 = StartLocation.X;
-            double y0 = StartLocation.Y;
-            double x1 = EndLocation.X;
-            double y1 = EndLocation.Y;
-
-            Point[] pts = new Point[] { new Point { X = x0 - tol, Y = y0 - tol },
-                                        new Point { X = x1 - tol, Y = y1 - tol },
-                                        new Point { X = x1 + tol, Y = y1 + tol },
-                                        new Point { X = x0 + tol, Y = y0 + tol } };
-
-            if (IsInPolygon(pts, mousePosition))
-                return true;
+            foreach (var line in Lines)
+            {
+                if (line.OnMouseOver(mousePosition))
+                    return true;
+            }
 
             return false;
         }
 
-        public static bool IsInPolygon(Point[] poly, Point point)
+        public override int OnPointOver(Point mousePosition)
         {
-            var coef = poly.Skip(1).Select((p, i) =>
-                                            (point.Y - poly[i].Y) * (p.X - poly[i].X)
-                                          - (point.X - poly[i].X) * (p.Y - poly[i].Y))
-                                    .ToList();
-
-            if (coef.Any(p => p == 0))
-                return true;
-
-            for (int i = 1; i < coef.Count(); i++)
+            for (int i = 0; i < Lines.Count; ++i)
             {
-                if (coef[i] * coef[i - 1] < 0)
-                    return false;
+                MLine line = Lines[i];
+                int result = line.OnPointOver(mousePosition);
+
+                if (result == 1)
+                {
+                    return i;
+                }
             }
-            return true;
+
+            return -1;
+        }
+
+        public override void Resize(int point, Point coord)
+        {
+            Lines[point++].EndLocation = coord;
+
+            if (point >= Lines.Count)
+                point = 0;
+
+            Lines[point].StartLocation = coord;
+        }
+
+        public void AddSegment(Point end)
+        {
+            Point start = Lines.Count == 0 ? StartLocation : Lines[Lines.Count - 1].EndLocation;
+            Lines.Add(new MLine(start, end));
         }
 
         public override string ToString()

@@ -51,7 +51,7 @@ namespace PaintCube.Shapes
                 DrawGhost(sender, args);
         }
 
-        public void DrawResize(CanvasControl sender, CanvasDrawEventArgs args)
+        public virtual void DrawResize(CanvasControl sender, CanvasDrawEventArgs args)
         {
             args.DrawingSession.FillRectangle((float)StartLocation.X - CharacteristicPointsSizeHalf,
                                               (float)StartLocation.Y - CharacteristicPointsSizeHalf,
