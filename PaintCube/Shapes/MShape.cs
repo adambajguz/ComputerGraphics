@@ -15,7 +15,7 @@ namespace PaintCube.Shapes
         public virtual Point StartLocation { get; set; }
         public virtual Point EndLocation { get; set; }
 
-        public ShapeModes Mode { get; set; } = ShapeModes.Drawn;
+        public virtual ShapeModes Mode { get; set; } = ShapeModes.Drawn;
 
         public Color ShapeColor
         {
@@ -95,6 +95,12 @@ namespace PaintCube.Shapes
                 StartLocation = coord;
             else if (point == 1)
                 EndLocation = coord;
+        }
+
+        public virtual void MoveBy(Point shift)
+        {
+            StartLocation = new Point(StartLocation.X + shift.X, StartLocation.Y + shift.Y);
+            EndLocation = new Point(EndLocation.X + shift.X, EndLocation.Y + shift.Y);
         }
 
         public abstract bool OnMouseOver(Point mousePosition);

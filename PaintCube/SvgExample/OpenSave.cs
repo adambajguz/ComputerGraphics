@@ -33,6 +33,9 @@ namespace PaintCube
                 CachedFileManager.DeferUpdates(file);
                 // write to file
 
+                foreach (var shape in DrawnShapes)
+                    shape.Mode = ShapeModes.Drawn;
+
                 string serialized = JsonConvert.SerializeObject(DrawnShapes);
                 await FileIO.WriteBytesAsync(file, Encoding.UTF8.GetBytes(serialized));
 
@@ -121,6 +124,7 @@ namespace PaintCube
                 byte[] bytes = buffer.ToArray();
 
                 DrawnShapes = JsonConvert.DeserializeObject<List<MShape>>(Encoding.UTF8.GetString(bytes), new ShapeConverter());
+                ClearShapesComboSelection();
                 canvasControl.Invalidate();
             }
             else

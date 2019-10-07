@@ -17,6 +17,19 @@ namespace PaintCube.Shapes
         public List<MLine> Lines { get; set; } = new List<MLine>();
         public bool Closed { get; set; }
 
+        public override ShapeModes Mode
+        {
+            get => base.Mode;
+            set
+            {
+                base.Mode = value;
+
+                foreach (var line in Lines)
+                {
+                    line.Mode = Mode;
+                }
+            }
+        }
 
         private Point _startLocation;
         public override Point StartLocation
@@ -26,16 +39,6 @@ namespace PaintCube.Shapes
             {
                 if (Closed)
                 {
-                    double xShift = value.X;
-                    double yShift = value.Y;
-
-                    for (int i = 0; i < Lines.Count; ++i)
-                    {
-                        MLine line = Lines[i];
-                        line.StartLocation = new Point(line.StartLocation.X - xShift, line.StartLocation.Y - yShift);
-                        line.EndLocation = new Point(line.EndLocation.X - xShift, line.EndLocation.Y - yShift);
-                    }
-
                     return;
                 }
 
@@ -72,7 +75,6 @@ namespace PaintCube.Shapes
         {
             foreach (var line in Lines)
             {
-                line.Mode = Mode;
                 line.Draw(sender, args);
             }
         }
@@ -87,10 +89,10 @@ namespace PaintCube.Shapes
 
             foreach (var line in Lines)
             {
-                line.Mode = Mode;
                 line.Draw(sender, args);
             }
         }
+
         public override void DrawResize(CanvasControl sender, CanvasDrawEventArgs args)
         {
             foreach (var line in Lines)
@@ -134,6 +136,19 @@ namespace PaintCube.Shapes
                 point = 0;
 
             Lines[point].StartLocation = coord;
+        }
+
+        public override void MoveBy(Point shift)
+        {
+            double xShift = shift.X;
+            double yShift = shift.Y;
+
+            for (int i = 0; i < Lines.Count; ++i)
+            {
+                MLine line = Lines[i];
+                line.StartLocation = new Point(line.StartLocation.X + xShift, line.StartLocation.Y + yShift);
+                line.EndLocation = new Point(line.EndLocation.X + xShift, line.EndLocation.Y + yShift);
+            }
         }
 
         public void AddSegment(Point end)

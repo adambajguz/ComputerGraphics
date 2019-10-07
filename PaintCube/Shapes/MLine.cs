@@ -36,7 +36,7 @@ namespace PaintCube.Shapes
 
         public override bool OnMouseOver(Point mousePosition)
         {
-            const double tol = 2.5;
+            const double tol = 4;
 
             double x0 = StartLocation.X;
             double y0 = StartLocation.Y;

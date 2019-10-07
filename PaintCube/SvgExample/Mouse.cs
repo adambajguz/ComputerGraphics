@@ -22,8 +22,6 @@ namespace PaintCube
         }
 
         private MShape MovingShape { get; set; }
-        private Point MovingShapeBeginStart { get; set; }
-        private Point MovingShapeBeginEnd { get; set; }
         private Point MovingShapeBeginMouse { get; set; }
 
         private int ResizingPoint { get; set; } = -1;
@@ -140,8 +138,6 @@ namespace PaintCube
 
                     MovingShape = shape;
                     MovingShape.Mode = ShapeModes.Drawing;
-                    MovingShapeBeginStart = shape.StartLocation;
-                    MovingShapeBeginEnd = shape.EndLocation;
                     MovingShapeBeginMouse = startPosition;
 
                     canvasControl.Invalidate();
@@ -166,8 +162,6 @@ namespace PaintCube
                     {
                         MovingShape = shape;
                         MovingShape.Mode = ShapeModes.Drawing;
-                        MovingShapeBeginStart = shape.StartLocation;
-                        MovingShapeBeginEnd = shape.EndLocation;
                         MovingShapeBeginMouse = startPosition;
 
                         canvasControl.Invalidate();
@@ -209,21 +203,10 @@ namespace PaintCube
                     double shiftX = mx - pos.X;
                     double shiftY = my - pos.Y;
 
-                    if (MovingShape is MPolygon)
-                    {
-                        MovingShape.StartLocation = new Point(shiftX, shiftY);
-                        MovingShapeBeginMouse = pos;
-                    }
-                    else
-                    {
-                        double x0 = MovingShapeBeginStart.X;
-                        double y0 = MovingShapeBeginStart.Y;
-                        double x1 = MovingShapeBeginEnd.X;
-                        double y1 = MovingShapeBeginEnd.Y;
 
-                        MovingShape.StartLocation = new Point(x0 - shiftX, y0 - shiftY);
-                        MovingShape.EndLocation = new Point(x1 - shiftX, y1 - shiftY);
-                    }
+                    MovingShape.MoveBy(new Point(-shiftX, -shiftY));
+                    MovingShapeBeginMouse = pos;
+
                     canvasControl.Invalidate();
                 }
             }

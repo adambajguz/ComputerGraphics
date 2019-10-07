@@ -96,7 +96,7 @@ namespace PaintCube.Shapes
 
         public override bool OnMouseOver(Point mousePosition)
         {
-            const double tol = 2.5;
+            const double tol = 4;
 
             if (PointIsInCircle(Center, Radius + tol, mousePosition) && !PointIsInCircle(Center, Radius - tol, mousePosition))
                 return true;

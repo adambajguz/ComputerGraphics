@@ -46,7 +46,7 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                         <AppBarButton.Icon>
                             <SymbolIcon Symbol="OpenFile" Margin="0,0,8,0"/>
                         </AppBarButton.Icon>
-                    </AppBarButton>       
+                    </AppBarButton>
                     <AppBarButton Label="Save as..." ToolTipService.ToolTip="Save as..." HorizontalContentAlignment="Center" 
                                         Click="SaveAs_Clicked">
                         <AppBarButton.Icon>
@@ -230,6 +230,24 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                         </StackPanel>
                     </Button>
                 </StackPanel>
+
+                <TextBlock x:Name="ShapeOptionsMoveByVectorLabel">Move by vector:</TextBlock>
+                <StackPanel x:Name="ShapeOptionsMoveByVector" Orientation="Vertical" BorderBrush="MediumVioletRed" BorderThickness="2" Padding="4" Margin="4">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,4,0">X:</TextBlock>
+                        <TextBox x:Name="MoveByvectorXEdit" />
+                        <TextBlock VerticalAlignment="Center" Margin="4,0,4,0">Y:</TextBlock>
+                        <TextBox x:Name="MoveByvectorYEdit"/>
+
+                        <Button HorizontalAlignment="Stretch" Click="MoveByVector_Clicked" Margin="8,0,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <SymbolIcon Symbol="Go" Margin="0,0,8,0"/>
+                                <TextBlock>Move</TextBlock>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+
             </StackPanel>
         </ScrollViewer>
 

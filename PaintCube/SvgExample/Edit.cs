@@ -16,6 +16,9 @@ namespace PaintCube
 
         private void UpdateEditPanel()
         {
+            ShapeOptionsMoveByVectorLabel.Visibility = Visibility.Visible;
+            ShapeOptionsMoveByVector.Visibility = Visibility.Visible;
+
             EditPanelButtonsUpdate.Visibility = Visibility.Visible;
 
             if (ShapeToEdit != null)
@@ -69,6 +72,7 @@ namespace PaintCube
 
         private void ShapeCancelUpdate_Clicked(object sender, RoutedEventArgs e)
         {
+            HideEditPanel();
             ClearShapesComboSelection();
         }
 
@@ -85,6 +89,10 @@ namespace PaintCube
             else if (ShapeToEdit is MRectangle rect)
             {
                 UpdateRect(rect);
+            }
+            else if (ShapeToEdit is MPolygon poly)
+            {
+                UpdatePoly(poly);
             }
 
             UpdateEditPanel();
@@ -164,6 +172,11 @@ namespace PaintCube
             rect.Rectangle = new Rect(x, y, w, h);
         }
 
+        private void UpdatePoly(MPolygon poly)
+        {
+
+        }
+
         private static async Task InvalidValuesFormatDialog()
         {
             ContentDialog noWifiDialog = new ContentDialog
@@ -174,6 +187,46 @@ namespace PaintCube
             };
 
             ContentDialogResult result = await noWifiDialog.ShowAsync();
+        }
+
+        private void HideEditPanel()
+        {
+            ShapeOptionsLine.Visibility = Visibility.Collapsed;
+            ShapeOptionsLineLabel.Visibility = Visibility.Collapsed;
+            ShapeOptionsRectangle.Visibility = Visibility.Collapsed;
+            ShapeOptionsRectangleLabel.Visibility = Visibility.Collapsed;
+            ShapeOptionsCircle.Visibility = Visibility.Collapsed;
+            ShapeOptionsCircleLabel.Visibility = Visibility.Collapsed;
+            EditPanelButtonsUpdate.Visibility = Visibility.Collapsed;
+            ShapeOptionsMoveByVectorLabel.Visibility = Visibility.Collapsed;
+            ShapeOptionsMoveByVector.Visibility = Visibility.Collapsed;
+        }
+
+        private void MoveByVector_Clicked(object sender, RoutedEventArgs e)
+        {
+            MoveByVectorFromEditPanel();
+        }
+
+        private async void MoveByVectorFromEditPanel()
+        {
+            double x, y;
+            try
+            {
+                x = double.Parse(MoveByvectorXEdit.Text);
+                y = double.Parse(MoveByvectorYEdit.Text);
+            }
+            catch (Exception)
+            {
+                await InvalidValuesFormatDialog();
+
+                return;
+            }
+
+            ShapeToEdit.MoveBy(new Point(x, y));
+
+            UpdateEditPanel();
+
+            canvasControl.Invalidate();
         }
     }
 }
