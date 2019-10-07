@@ -1,5 +1,4 @@
 ﻿using PaintCube.Shapes;
-using Windows.Foundation;
 using Windows.UI.Xaml;
 
 namespace PaintCube
@@ -32,26 +31,6 @@ namespace PaintCube
 
                 canvasControl.Invalidate();
             }
-        }
-
-        private void Rotate_Clicked(object sender, RoutedEventArgs e)
-        {
-            foreach (MShape shape in DrawnShapes)
-            {
-                shape.Rotate(new Point(0, 0), 27);
-            }
-
-            canvasControl.Invalidate();
-        }
-
-        private void Scale_Clicked(object sender, RoutedEventArgs e)
-        {
-            foreach (MShape shape in DrawnShapes)
-            {
-                shape.Scale(new Point(0, 0), 1.5, 1.5);
-            }
-
-            canvasControl.Invalidate();
         }
 
         private void ClearShapesComboSelection()

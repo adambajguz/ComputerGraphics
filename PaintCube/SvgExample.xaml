@@ -60,18 +60,6 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                             <SymbolIcon Symbol="Undo" Margin="0,0,8,0"/>
                         </AppBarButton.Icon>
                     </AppBarButton>
-                    <AppBarButton Label="Rotate" ToolTipService.ToolTip="Rotate" HorizontalContentAlignment="Center" 
-                                        Click="Rotate_Clicked">
-                        <AppBarButton.Icon>
-                            <SymbolIcon Symbol="Rotate" Margin="0,0,8,0"/>
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                    <AppBarButton Label="Scale" ToolTipService.ToolTip="Scale" HorizontalContentAlignment="Center" 
-                                        Click="Scale_Clicked">
-                        <AppBarButton.Icon>
-                            <SymbolIcon Symbol="FullScreen" Margin="0,0,8,0"/>
-                        </AppBarButton.Icon>
-                    </AppBarButton>
                 </CommandBar>
 
                 <TextBlock>Tools:</TextBlock>
@@ -118,14 +106,14 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                                         Label="Rotate" ToolTipService.ToolTip="Rotate"
                                         Checked="RotateTool_Checked" Unchecked="Tool_Unchecked">
                         <AppBarToggleButton.Icon>
-                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE759;"/>
+                            <SymbolIcon Symbol="Rotate" Margin="0,0,8,0"/>
                         </AppBarToggleButton.Icon>
                     </AppBarToggleButton>
                     <AppBarToggleButton x:Name="ScaleTool" 
                                         Label="Scale" ToolTipService.ToolTip="Scaler"
                                         Checked="ScaleTool_Checked" Unchecked="Tool_Unchecked">
                         <AppBarToggleButton.Icon>
-                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE759;"/>
+                            <SymbolIcon Symbol="FullScreen" Margin="0,0,8,0"/>
                         </AppBarToggleButton.Icon>
                     </AppBarToggleButton>
                 </CommandBar>
@@ -285,14 +273,14 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                         <TextBox x:Name="RotateAngleEdit"/>
 
                     </StackPanel>
-                        <Button HorizontalAlignment="Stretch" Click="Rotate_Clicked" Margin="8,8,8,0">
-                            <StackPanel Orientation="Horizontal">
-                                <SymbolIcon Symbol="Rotate" Margin="0,0,8,0"/>
-                                <TextBlock>Rotate</TextBlock>
-                            </StackPanel>
-                        </Button>
-                </StackPanel>              
-                
+                    <Button HorizontalAlignment="Stretch" Click="Rotate_Clicked" Margin="8,8,8,0">
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon Symbol="Rotate" Margin="0,0,8,0"/>
+                            <TextBlock>Rotate</TextBlock>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
                 <TextBlock x:Name="ShapeOptionsScaleVectorLabel">Scale:</TextBlock>
                 <StackPanel x:Name="ShapeOptionsScaleVector" Orientation="Vertical" BorderBrush="MediumVioletRed" BorderThickness="2" Padding="4" Margin="4">
                     <StackPanel Orientation="Horizontal">
