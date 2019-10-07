@@ -33,7 +33,7 @@ namespace PaintCube
                 CachedFileManager.DeferUpdates(file);
                 // write to file
 
-                string serialized = JsonConvert.SerializeObject(DrawnShapes, new ShapeConverter());
+                string serialized = JsonConvert.SerializeObject(DrawnShapes);
                 await FileIO.WriteBytesAsync(file, Encoding.UTF8.GetBytes(serialized));
 
                 // Let Windows know that we're finished changing the file so the other app can update the remote version of the file.
