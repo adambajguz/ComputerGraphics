@@ -9,6 +9,7 @@ namespace PaintCube
         {
             Select,
             Move,
+            Resize,
             Draw,
             DrawClick,
             DrawTextTool
@@ -24,6 +25,7 @@ namespace PaintCube
             MoveTool.IsChecked = false;
             DrawClickTool.IsChecked = false;
             DrawTextTool.IsChecked = false;
+            ResizeTool.IsChecked = false;
         }
 
         private void MoveTool_Checked(object sender, RoutedEventArgs e)
@@ -34,6 +36,20 @@ namespace PaintCube
             DrawTool.IsChecked = false;
             DrawClickTool.IsChecked = false;
             DrawTextTool.IsChecked = false;
+            ResizeTool.IsChecked = false;
+        }
+
+        private void ResizeTool_Checked(object sender, RoutedEventArgs e)
+        {
+            SelectedTool = Tools.Resize;
+
+            SelectTool.IsChecked = false;
+            DrawTool.IsChecked = false;
+            DrawClickTool.IsChecked = false;
+            DrawTextTool.IsChecked = false;
+            MoveTool.IsChecked = false;
+
+            canvasControl.Invalidate();
         }
 
         private void DrawTool_Checked(object sender, RoutedEventArgs e)
@@ -44,6 +60,7 @@ namespace PaintCube
             MoveTool.IsChecked = false;
             DrawClickTool.IsChecked = false;
             DrawTextTool.IsChecked = false;
+            ResizeTool.IsChecked = false;
         }
 
         private void DrawClickTool_Checked(object sender, RoutedEventArgs e)
@@ -54,6 +71,7 @@ namespace PaintCube
             MoveTool.IsChecked = false;
             DrawTool.IsChecked = false;
             DrawTextTool.IsChecked = false;
+            ResizeTool.IsChecked = false;
         }
 
         private void DrawTextTool_Checked(object sender, RoutedEventArgs e)
@@ -64,11 +82,15 @@ namespace PaintCube
             MoveTool.IsChecked = false;
             DrawTool.IsChecked = false;
             DrawClickTool.IsChecked = false;
+            ResizeTool.IsChecked = false;
+
             optionsPanelAddShape.Visibility = Visibility.Visible;
         }
 
         private void Tool_Unchecked(object sender, RoutedEventArgs e)
         {
+            canvasControl.Invalidate();
+
             if (PendingShape != null)
                 CancelDraw();
 
@@ -78,6 +100,7 @@ namespace PaintCube
                 MoveTool.IsChecked == true ||
                 SelectTool.IsChecked == true ||
                 DrawTextTool.IsChecked == true ||
+                ResizeTool.IsChecked == true ||
                 DrawClickTool.IsChecked == true)
                 return;
 

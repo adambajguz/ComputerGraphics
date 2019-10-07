@@ -5,19 +5,28 @@ namespace PaintCube
 {
     public sealed partial class SvgExample
     {
-        private bool ClickedOnce { get; set; }
+        private int ClickedTimes { get; set; }
 
         private void CancelDraw()
         {
-            ClickedOnce = false;
+            ClickedTimes = 0;
             PendingShape = null;
             canvasControl.Invalidate();
+
+            if (MovingShape != null)
+            {
+                MovingShape.Mode = ShapeModes.Drawn;
+                MovingShape = null;
+            }
+            ResizingPoint = -1;
         }
 
         private MShape MovingShape { get; set; }
         private Point MovingShapeBeginStart { get; set; }
         private Point MovingShapeBeginEnd { get; set; }
         private Point MovingShapeBeginMouse { get; set; }
+
+        private int ResizingPoint { get; set; } = -1;
 
         private void canvasControl_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
@@ -49,15 +58,36 @@ namespace PaintCube
                     }
                 }
             }
+            else if (SelectedTool == Tools.Resize)
+            {
+                foreach (MShape shape in DrawnShapes)
+                {
+                    int tmpResizingPoint = shape.OnPointOver(startPosition);
+                    if (tmpResizingPoint >= 0)
+                    {
+                        ResizingPoint = tmpResizingPoint;
+
+                        MovingShape = shape;
+                        MovingShape.Mode = ShapeModes.Drawing;
+                        MovingShapeBeginStart = shape.StartLocation;
+                        MovingShapeBeginEnd = shape.EndLocation;
+                        MovingShapeBeginMouse = startPosition;
+
+                        canvasControl.Invalidate();
+
+                        break;
+                    }
+                }
+            }
             else if (SelectedTool == Tools.Draw || SelectedTool == Tools.DrawClick)
             {
                 if (SelectedTool == Tools.DrawClick)
                 {
-                    if (!ClickedOnce)
-                        ClickedOnce = true;
+                    if (ClickedTimes == 0)
+                        ClickedTimes = 1;
                     else
                     {
-                        ClickedOnce = false;
+                        ClickedTimes = 0;
 
                         AddShape();
 
@@ -76,6 +106,10 @@ namespace PaintCube
                 else if (CurrentShapeType == ShapeType.Line)
                 {
                     PendingShape = new MLine(startPosition, startPosition);
+                }
+                else if (CurrentShapeType == ShapeType.Polygon)
+                {
+                    PendingShape = new MPolygon(startPosition, startPosition);
                 }
 
                 PendingShape.Mode = ShapeModes.Drawing;
@@ -121,6 +155,14 @@ namespace PaintCube
                     canvasControl.Invalidate();
                 }
             }
+            else if (SelectedTool == Tools.Resize)
+            {
+                if (MovingShape != null)
+                {
+                    MovingShape.Resize(ResizingPoint, pos);
+                    canvasControl.Invalidate();
+                }
+            }
             else if (SelectedTool == Tools.Draw || SelectedTool == Tools.DrawClick)
             {
                 if (PendingShape == null)
@@ -134,12 +176,13 @@ namespace PaintCube
 
         private void canvasControl_PointerReleased(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            if (SelectedTool == Tools.Move)
+            if (SelectedTool == Tools.Move || SelectedTool == Tools.Resize)
             {
                 if (MovingShape != null)
                 {
                     MovingShape.Mode = ShapeModes.Drawn;
                     MovingShape = null;
+                    ResizingPoint = -1;
                     canvasControl.Invalidate();
                 }
             }

@@ -24,6 +24,8 @@ namespace PaintCube
             foreach (MShape shape in DrawnShapes)
             {
                 shape.Draw(sender, args);
+                if (SelectedTool == Tools.Resize)
+                    shape.DrawResize(sender, args);
             }
 
             if (PendingShape != null)

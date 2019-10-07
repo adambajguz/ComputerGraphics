@@ -12,6 +12,7 @@ namespace PaintCube
             Rectangle,
             Circle,
             Line,
+            Polygon,
         }
 
         public List<ShapeType> Shapes { get { return Utils.GetEnumAsList<ShapeType>(); } }
@@ -27,12 +28,7 @@ namespace PaintCube
             this.InitializeComponent();
             SelectTool.IsChecked = true;
 
-            ShapeOptionsLine.Visibility = Visibility.Collapsed;
-            ShapeOptionsLineLabel.Visibility = Visibility.Collapsed;
-            ShapeOptionsRectangle.Visibility = Visibility.Collapsed;
-            ShapeOptionsRectangleLabel.Visibility = Visibility.Collapsed;
-            ShapeOptionsCircle.Visibility = Visibility.Collapsed;
-            ShapeOptionsCircleLabel.Visibility = Visibility.Collapsed;
+            HideEditPanel();
 
             optionsPanelAddShape.Visibility = Visibility.Collapsed;
         }
@@ -40,6 +36,8 @@ namespace PaintCube
         private void ShapeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             canvasControl.Invalidate();
+            if (CurrentShapeType == ShapeType.Polygon)
+                SelectedTool = Tools.DrawClick;
         }
     }
 }

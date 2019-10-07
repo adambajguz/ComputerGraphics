@@ -26,6 +26,8 @@ namespace PaintCube
 
         private void ClearShapesComboSelection()
         {
+            HideEditPanel();
+
             DrawnShapesCombo.ItemsSource = null;
             DrawnShapesCombo.ItemsSource = DrawnShapes;
 
@@ -37,6 +39,16 @@ namespace PaintCube
 
             UpdateEditPanel();
             canvasControl.Invalidate();
+        }
+        private void HideEditPanel()
+        {
+            ShapeOptionsLine.Visibility = Visibility.Collapsed;
+            ShapeOptionsLineLabel.Visibility = Visibility.Collapsed;
+            ShapeOptionsRectangle.Visibility = Visibility.Collapsed;
+            ShapeOptionsRectangleLabel.Visibility = Visibility.Collapsed;
+            ShapeOptionsCircle.Visibility = Visibility.Collapsed;
+            ShapeOptionsCircleLabel.Visibility = Visibility.Collapsed;
+            EditPanelButtonsUpdate.Visibility = Visibility.Collapsed;
         }
     }
 }
