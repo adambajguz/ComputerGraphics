@@ -29,6 +29,24 @@ namespace PaintCube
         #region PointerPressed
         private void canvasControl_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
+            Point startPosition = e.GetCurrentPoint(canvasControl).Position;
+
+            if (MouseClickAction != MouseAction.Normal)
+            {
+                switch (MouseClickAction)
+                {
+                    case MouseAction.GetRotate:
+                        RotateOrginXEdit.Text = startPosition.X.ToString();
+                        RotateOrginYEdit.Text = startPosition.Y.ToString();
+                        break;
+                    case MouseAction.GetScale:
+                        ScaleOrginXEdit.Text = startPosition.X.ToString();
+                        ScaleOrginYEdit.Text = startPosition.Y.ToString();
+                        break;
+                }
+                MouseClickAction = MouseAction.Normal;
+            }
+
             bool rightButtonPressed = false;
             // Check for input device
             if (e.Pointer.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse)
@@ -38,7 +56,6 @@ namespace PaintCube
                     rightButtonPressed = true;
             }
 
-            Point startPosition = e.GetCurrentPoint(canvasControl).Position;
 
             if (SelectedTool == Tools.Select || SelectedTool == Tools.Move)
                 PointerPressedSelectOrMove(startPosition);
@@ -199,6 +216,8 @@ namespace PaintCube
         private void canvasControl_PointerMoved(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             Point pos = e.GetCurrentPoint(canvasControl).Position;
+            MousePositionTextBlock.Text = $"{pos.X.ToString("N4")} x {pos.Y.ToString("N4")}";
+
             if (SelectedTool == Tools.Move)
             {
                 if (MovingShape != null)

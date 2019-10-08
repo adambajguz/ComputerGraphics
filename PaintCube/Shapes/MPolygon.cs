@@ -93,6 +93,13 @@ namespace PaintCube.Shapes
             }
         }
 
+        public override void DrawResize(CanvasControl sender, CanvasDrawEventArgs args)
+        {
+            foreach (var line in Lines)
+            {
+                line.DrawResize(sender, args);
+            }
+        }
 
         public override bool OnMouseOver(Point mousePosition)
         {
@@ -166,7 +173,7 @@ namespace PaintCube.Shapes
 
         public override string ToString()
         {
-            return $"Polygon: {base.ToString()}";
+            return $"Polygon: lines={Lines.Count}";
         }
     }
 }

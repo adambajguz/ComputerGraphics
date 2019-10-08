@@ -225,6 +225,25 @@ namespace PaintCube
             ScaleFromEditPanel();
         }
 
+        public enum MouseAction
+        {
+            Normal,
+            GetRotate,
+            GetScale
+        }
+
+        private MouseAction MouseClickAction { get; set; } = MouseAction.Normal;
+
+        private void RotateOrginGet_Clicked(object sender, RoutedEventArgs e)
+        {
+            MouseClickAction = MouseAction.GetRotate;
+        }
+
+        private void ScaleOrginGet_Clicked(object sender, RoutedEventArgs e)
+        {
+            MouseClickAction = MouseAction.GetScale;
+        }
+
         private async void MoveByVectorFromEditPanel()
         {
             double x, y;

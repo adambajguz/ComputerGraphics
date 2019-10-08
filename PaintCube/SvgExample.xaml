@@ -118,6 +118,11 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                     </AppBarToggleButton>
                 </CommandBar>
 
+                <StackPanel Orientation="Horizontal" Margin="0,8,0,8">
+                    <TextBlock>Mouse: </TextBlock>
+                    <TextBlock Margin="8,0,0,0" x:Name="MousePositionTextBlock"/>
+                </StackPanel>
+                
                 <TextBlock>Shape:</TextBlock>
                 <ComboBox
                   ItemsSource="{Binding ElementName=control, Path=Shapes}"
@@ -269,9 +274,16 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                         <TextBox x:Name="RotateOrginXEdit" />
                         <TextBlock VerticalAlignment="Center" Margin="4,0,4,0">Y:</TextBlock>
                         <TextBox x:Name="RotateOrginYEdit"/>
+                        <Button HorizontalAlignment="Stretch" Click="RotateOrginGet_Clicked" Margin="8,8,8,0">
+                            <StackPanel Orientation="Horizontal">
+                                <SymbolIcon Symbol="FullScreen" Margin="0,0,8,0"/>
+                                <TextBlock>Get</TextBlock>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
                         <TextBlock VerticalAlignment="Center" Margin="4,0,4,0">Angle:</TextBlock>
                         <TextBox x:Name="RotateAngleEdit"/>
-
                     </StackPanel>
                     <Button HorizontalAlignment="Stretch" Click="Rotate_Clicked" Margin="8,8,8,0">
                         <StackPanel Orientation="Horizontal">
@@ -288,6 +300,12 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                         <TextBox x:Name="ScaleOrginXEdit" />
                         <TextBlock VerticalAlignment="Center" Margin="4,0,4,0">Y:</TextBlock>
                         <TextBox x:Name="ScaleOrginYEdit"/>
+                        <Button HorizontalAlignment="Stretch" Click="ScaleOrginGet_Clicked" Margin="8,8,8,0">
+                            <StackPanel Orientation="Horizontal">
+                                <SymbolIcon Symbol="FullScreen" Margin="0,0,8,0"/>
+                                <TextBlock>Get</TextBlock>
+                            </StackPanel>
+                        </Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,8,0,0" >
                         <TextBlock VerticalAlignment="Center" Margin="0,0,4,0">Scale X:</TextBlock>
