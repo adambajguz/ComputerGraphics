@@ -147,6 +147,9 @@
     <Compile Include="Dialogs\ColorAreaDialog.xaml.cs">
       <DependentUpon>ColorAreaDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\HitMissMorphologyDialog.xaml.cs">
+      <DependentUpon>HitMissMorphologyDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\ScaleImageDialog.xaml.cs">
       <DependentUpon>ScaleImageDialog.xaml</DependentUpon>
     </Compile>
@@ -271,6 +274,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Dialogs\ColorAreaDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\HitMissMorphologyDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
