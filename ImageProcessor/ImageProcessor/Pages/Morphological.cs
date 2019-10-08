@@ -9,7 +9,7 @@ namespace ImageProcessor.Pages
         private async Task RunMorphological(MorphologicalOperation op)
         {
             AddToUndo(WriteableOutputImage.Clone());
-            MorphologicalHelper.Make(WriteableOutputImage, op);
+            WriteableOutputImage = MorphologicalHelper.Make(WriteableOutputImage, op);
 
             await UpdateOutputImage();
         }

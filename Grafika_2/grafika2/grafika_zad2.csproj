@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A0051096-C7EB-4683-A401-1A0CC454D542}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>grafika2</RootNamespace>
+    <AssemblyName>grafika2</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BinaryzacjaNiblack.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BinaryzacjaNiblack.Designer.cs">
+      <DependentUpon>BinaryzacjaNiblack.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BinaryzacjaZRecznymProgiem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BinaryzacjaZRecznymProgiem.Designer.cs">
+      <DependentUpon>BinaryzacjaZRecznymProgiem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FilterMaskCreator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FilterMaskCreator.Designer.cs">
+      <DependentUpon>FilterMaskCreator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\VariationAndAverage.cs" />
+    <Compile Include="MorphologicalOperationsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MorphologicalOperationsForm.Designer.cs">
+      <DependentUpon>MorphologicalOperationsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pixel.cs" />
+    <Compile Include="PPMForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PPMForm.Designer.cs">
+      <DependentUpon>PPMForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PixelMap.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Przeksztalcenia2D.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Przeksztalcenia2D.Designer.cs">
+      <DependentUpon>Przeksztalcenia2D.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrzestrzenieBarwForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrzestrzenieBarwForm.Designer.cs">
+      <DependentUpon>PrzestrzenieBarwForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RozciagniecieHistogramuForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RozciagniecieHistogramuForm.Designer.cs">
+      <DependentUpon>RozciagniecieHistogramuForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\GlobalFunctions.cs" />
+    <Compile Include="Utilities\ImageAnalysis.cs" />
+    <Compile Include="Utilities\MorphologicalOperations.cs" />
+    <Compile Include="ValuePopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ValuePopup.Designer.cs">
+      <DependentUpon>ValuePopup.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="BinaryzacjaNiblack.resx">
+      <DependentUpon>BinaryzacjaNiblack.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BinaryzacjaZRecznymProgiem.resx">
+      <DependentUpon>BinaryzacjaZRecznymProgiem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FilterMaskCreator.resx">
+      <DependentUpon>FilterMaskCreator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MorphologicalOperationsForm.resx">
+      <DependentUpon>MorphologicalOperationsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PPMForm.resx">
+      <DependentUpon>PPMForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Przeksztalcenia2D.resx">
+      <DependentUpon>Przeksztalcenia2D.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrzestrzenieBarwForm.resx">
+      <DependentUpon>PrzestrzenieBarwForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RozciagniecieHistogramuForm.resx">
+      <DependentUpon>RozciagniecieHistogramuForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ValuePopup.resx">
+      <DependentUpon>ValuePopup.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\picBg.jpg" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

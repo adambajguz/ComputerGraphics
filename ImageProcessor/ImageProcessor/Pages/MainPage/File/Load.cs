@@ -81,9 +81,9 @@
                         PPMImage ppmImage = await PPMImage.Open(inputFile);
                         WriteableOutputImage = ppmImage.ConvertToWriteableBitmap();
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        await ShowErrorDialog("An error occured during file open. Damaged file!");
+                        await ShowErrorDialog("An error occured during file open. Damaged file!\nError message: " + ex.Message);
                         return;
                     }
 
