@@ -9,7 +9,7 @@ namespace ImageProcessor.Data
         Erosion,
         Opening,
         Closing,
-        HitOrMiss
+        HitOrMiss,
     }
 
     public static class MorphologicalHelper
