@@ -1,5 +1,4 @@
-﻿using Windows.UI;
-using Windows.UI.Xaml.Media.Imaging;
+﻿using Windows.UI.Xaml.Media.Imaging;
 
 namespace ImageProcessor.Data
 {
@@ -14,128 +13,89 @@ namespace ImageProcessor.Data
 
     public static class MorphologicalHelper
     {
-        public static WriteableBitmap Make(WriteableBitmap Input, MorphologicalOperation op, int baseElementWidth = 3)
+        public static readonly bool?[,] DilateMatrix = new bool?[,]
+        {
+            { true, true, true },
+            { true, true, true },
+            { true, true, true }
+        };
+
+        public static readonly bool?[,] ErosionMatrix = new bool?[,]
+        {
+            { false, false, false },
+            { false, false, false },
+            { false, false, false }
+        };
+
+        public static WriteableBitmap Make(WriteableBitmap Input, MorphologicalOperation op, bool?[,] matrix3x3 = null)
         {
             if (op == MorphologicalOperation.Dilation)
-                return DilateAndErode(Input, 3, MorphologicalOperation.Dilation);
+                return DilateAndErode(Input, DilateMatrix);
             else if (op == MorphologicalOperation.Erosion)
-                return DilateAndErode(Input, 3, MorphologicalOperation.Erosion);
+            {
+                var ret = DilateAndErode(Input, ErosionMatrix);
+                return ret.Invert();
+            }
             else if (op == MorphologicalOperation.Opening)
             {
-                WriteableBitmap newImage = DilateAndErode(Input, 3, MorphologicalOperation.Erosion);
-                return DilateAndErode(newImage, 3, MorphologicalOperation.Dilation);
+                WriteableBitmap newImage = DilateAndErode(Input, ErosionMatrix);
+                newImage = newImage.Invert();
+                return DilateAndErode(newImage, DilateMatrix);
             }
             else if (op == MorphologicalOperation.Closing)
             {
-                WriteableBitmap newImage = DilateAndErode(Input, 3, MorphologicalOperation.Dilation);
-                return DilateAndErode(newImage, 3, MorphologicalOperation.Erosion);
+                WriteableBitmap newImage = DilateAndErode(Input, DilateMatrix);
+                newImage = DilateAndErode(newImage, ErosionMatrix);
+                return newImage.Invert();
             }
-            //else if (op == MorphologicalOperation.HitOrMiss)
-            //    HitOrIsImage(null, baseElementWidth);
+            else if (op == MorphologicalOperation.HitOrMiss)
+                return DilateAndErode(Input, matrix3x3);
 
             return Input;
         }
 
-
-        public static WriteableBitmap DilateAndErode(WriteableBitmap writeableBitmap,
-                                               int matrixSize,
-                                               MorphologicalOperation morphType,
-                                               bool applyBlue = true,
-                                               bool applyGreen = true,
-                                               bool applyRed = true)
+        public static WriteableBitmap DilateAndErode(WriteableBitmap writeableBitmap, bool?[,] matrix3x3)
         {
+            int width = writeableBitmap.PixelWidth;
+            int height = writeableBitmap.PixelHeight;
+
             WriteableBitmap newImage = writeableBitmap.Clone();
             using (BitmapContext newcontext = newImage.GetBitmapContext())
             {
                 using (BitmapContext context = writeableBitmap.GetBitmapContext())
                 {
-                    byte morphResetValue = 0;
-                    if (morphType == MorphologicalOperation.Dilation)
-                    {
-                        morphResetValue = 255;
-                    }
-
-
-                    int filterOffset = (matrixSize - 1) / 2;
-                    for (int offsetY = filterOffset; offsetY < context.Height - filterOffset; offsetY++)
-                    {
-                        for (int offsetX = filterOffset; offsetX < context.Width - filterOffset; offsetX++)
+                    for (int x = 0; x < width; ++x)
+                        for (int y = 0; y < height; ++y)
                         {
-                            int byteOffset = offsetY * offsetX * 4;
 
-                            byte blue = morphResetValue;
-                            byte green = morphResetValue;
-                            byte red = morphResetValue;
+                            bool exaclyMatch = true;
 
-                            int calcOffset = 0;
-                            for (int filterY = -filterOffset; filterY <= filterOffset; filterY++)
-                            {
-                                for (int filterX = -filterOffset; filterX <= filterOffset; filterX++)
+                            for (int i = 0; i < 3; ++i)
+                                for (int j = 0; j < 3; ++j)
                                 {
-                                    calcOffset = byteOffset + (filterX * 4) + (filterY);
+                                    bool? matVal = matrix3x3[i, j];
+                                    int cX = x - 1 + i;
+                                    int cY = y - 1 + j;
 
-                                    Color pixel = PixelHelper.GetPixel(context, calcOffset);
-                                    if (morphType == MorphologicalOperation.Erosion)
+                                    if (cX > 0 && cY > 0 && cX < width && cY < height && matVal != null)
                                     {
-                                        if (pixel.B > blue)
+                                        if (!(PixelHelper.IsBlack(context, cX, cY) == matVal))
                                         {
-                                            blue = pixel.B;
-                                        }
-
-                                        if (pixel.G > green)
-                                        {
-                                            green = pixel.G;
-                                        }
-
-                                        if (pixel.R > red)
-                                        {
-                                            red = pixel.R;
-                                        }
-                                    }
-                                    else if (morphType == MorphologicalOperation.Dilation)
-                                    {
-                                        if (pixel.B < blue)
-                                        {
-                                            blue = pixel.B;
-                                        }
-
-                                        if (pixel.G < green)
-                                        {
-                                            green = pixel.G;
-                                        }
-
-                                        if (pixel.R < red)
-                                        {
-                                            red = pixel.R;
+                                            exaclyMatch = false;
+                                            goto ExitLoop;
                                         }
                                     }
                                 }
-                            }
+                            ExitLoop:
 
+                            if (exaclyMatch)
+                                PixelHelper.SetBlack(newcontext, x, y);
+                            else
+                                PixelHelper.SetWhite(newcontext, x, y);
 
-                            Color pixel2 = PixelHelper.GetPixel(context, calcOffset);
-
-                            if (applyBlue == false)
-                            {
-                                blue = pixel2.B;
-                            }
-
-                            if (applyGreen == false)
-                            {
-                                green = pixel2.G;
-                            }
-
-                            if (applyRed == false)
-                            {
-                                red = pixel2.R;
-                            }
-                            PixelHelper.SetPixel(newcontext, byteOffset, red, green, blue);
                         }
-                    }
-
                 }
             }
-
             return newImage;
         }
 

@@ -63,7 +63,7 @@
                         <MenuFlyoutItem Text="Erosion" Click="ErosionPageMenuFlyoutItem_Click"/>
                         <MenuFlyoutItem Text="Opening" Click="OpeningPageMenuFlyoutItem_Click"/>
                         <MenuFlyoutItem Text="Closing" Click="ClosingPageMenuFlyoutItem_Click"/>
-                        <MenuFlyoutItem Text="Hit-or-miss" Click="HitOrMissPageMenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Text="Hit-and-miss" Click="HitOrMissPageMenuFlyoutItem_Click"/>
                     </MenuFlyoutSubItem>
 
                     <MenuFlyoutSubItem Text="Arithmetic">
