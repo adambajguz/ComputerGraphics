@@ -103,6 +103,8 @@ namespace PaintCube
                         return new MRectangle();
                     case ShapeType.Polygon:
                         return new MPolygon();
+                    case ShapeType.Bezier:
+                        return new MBezier();
                 }
                 return null;
             }

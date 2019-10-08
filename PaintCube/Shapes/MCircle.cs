@@ -98,7 +98,7 @@ namespace PaintCube.Shapes
         {
             const double tol = 4;
 
-            if (PointIsInCircle(Center, Radius + tol, mousePosition) && !PointIsInCircle(Center, Radius - tol, mousePosition))
+            if (MouseHelpers.PointIsInCircle(Center, Radius + tol, mousePosition) && !MouseHelpers.PointIsInCircle(Center, Radius - tol, mousePosition))
                 return true;
 
             return false;
@@ -107,15 +107,6 @@ namespace PaintCube.Shapes
         public override void Rotate(Point orgin, double angle)
         {
 
-        }
-
-        private bool PointIsInCircle(Point center, double radius, Point point)
-        {
-            var c1 = center.X - point.X;
-            var c2 = center.Y - point.Y;
-
-            var D = Math.Sqrt(Math.Pow(c1, 2) + Math.Pow(c2, 2));
-            return D <= radius;
         }
 
         public override string ToString()

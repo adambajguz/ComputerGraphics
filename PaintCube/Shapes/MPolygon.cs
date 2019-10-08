@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
-using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Windows.Foundation;
 
@@ -94,21 +93,13 @@ namespace PaintCube.Shapes
             }
         }
 
-        public override void DrawResize(CanvasControl sender, CanvasDrawEventArgs args)
-        {
-            foreach (var line in Lines)
-            {
-                line.DrawResize(sender, args);
-            }
-        }
 
         public override bool OnMouseOver(Point mousePosition)
         {
-            foreach (var line in Lines)
-            {
-                if (line.OnMouseOver(mousePosition))
-                    return true;
-            }
+            const double tol = 3;
+
+            if (MouseHelpers.PointIsInCircle(Lines[0].StartLocation, tol, mousePosition) || MouseHelpers.PointIsInCircle(Lines[Lines.Count - 1].EndLocation, tol, mousePosition))
+                return true;
 
             return false;
         }

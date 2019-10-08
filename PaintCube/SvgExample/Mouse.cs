@@ -50,7 +50,7 @@ namespace PaintCube
 
         private void PointerPressedDraw(bool rightButtonPressed, Point startPosition)
         {
-            if (CurrentShapeType == ShapeType.Polygon)
+            if (CurrentShapeType == ShapeType.Polygon || CurrentShapeType == ShapeType.Bezier)
             {
                 DrawClickTool.IsChecked = true;
                 SelectedTool = Tools.DrawClick;
@@ -58,7 +58,7 @@ namespace PaintCube
 
             if (SelectedTool == Tools.DrawClick)
             {
-                if (CurrentShapeType == ShapeType.Polygon)
+                if (CurrentShapeType == ShapeType.Polygon || CurrentShapeType == ShapeType.Bezier)
                 {
                     if (ClickedTimes++ >= 1)
                     {
@@ -69,7 +69,8 @@ namespace PaintCube
                                 ClickedTimes = 0;
 
                                 var poly = PendingShape as MPolygon;
-                                poly.AddSegment(poly.StartLocation);
+                                if (CurrentShapeType == ShapeType.Polygon)
+                                    poly.AddSegment(poly.StartLocation);
                                 poly.StartLocation = new Point(0, 0);
                                 poly.EndLocation = new Point(0, 0);
                                 poly.Closed = true;
@@ -83,7 +84,8 @@ namespace PaintCube
                         }
                         else
                         {
-                            (PendingShape as MPolygon).AddSegment(startPosition);
+                            if (CurrentShapeType == ShapeType.Polygon || CurrentShapeType == ShapeType.Bezier)
+                                (PendingShape as MPolygon).AddSegment(startPosition);
                         }
                         this.canvasControl.Invalidate();
 
@@ -120,6 +122,10 @@ namespace PaintCube
             else if (CurrentShapeType == ShapeType.Polygon)
             {
                 PendingShape = new MPolygon(startPosition, startPosition);
+            }
+            else if (CurrentShapeType == ShapeType.Bezier)
+            {
+                PendingShape = new MBezier(startPosition, startPosition);
             }
 
             PendingShape.Mode = ShapeModes.Drawing;

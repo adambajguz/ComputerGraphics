@@ -131,6 +131,8 @@
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Infrastructure\Utils.cs" />
     <Compile Include="Shapes\MCircle.cs" />
+    <Compile Include="Shapes\MBezier.cs" />
+    <Compile Include="Shapes\MouseHelpers.cs" />
     <Compile Include="Shapes\MPolygon.cs" />
     <Compile Include="Shapes\MRectangle.cs" />
     <Compile Include="Shapes\MLine.cs" />

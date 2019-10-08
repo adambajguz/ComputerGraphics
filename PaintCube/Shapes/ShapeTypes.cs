@@ -6,5 +6,6 @@
         Circle,
         Line,
         Polygon,
+        Bezier,
     }
 }

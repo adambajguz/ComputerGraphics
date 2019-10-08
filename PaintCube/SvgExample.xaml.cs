@@ -28,7 +28,7 @@ namespace PaintCube
         private void ShapeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (SelectedTool == Tools.DrawTextTool)
-                if (CurrentShapeType == ShapeType.Polygon)
+                if (CurrentShapeType == ShapeType.Polygon || CurrentShapeType == ShapeType.Bezier)
                     optionsPanelAddShape.Visibility = Visibility.Collapsed;
                 else
                     optionsPanelAddShape.Visibility = Visibility.Visible;
