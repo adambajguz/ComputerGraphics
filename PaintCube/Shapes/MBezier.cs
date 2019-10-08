@@ -31,7 +31,7 @@ namespace PaintCube.Shapes
         {
             foreach (var line in Lines)
             {
-                DrawBezier(sender, args, DRAW_PRECISION, ConvertLinesToPoints());
+                DrawBezier(args, DRAW_PRECISION, ConvertLinesToPoints());
             }
         }
         protected override void DrawGhost(CanvasControl sender, CanvasDrawEventArgs args)
@@ -44,15 +44,16 @@ namespace PaintCube.Shapes
 
             foreach (var line in Lines)
             {
-                DrawBezier(sender, args, DRAW_PRECISION, ConvertLinesToPoints());
+                DrawBezier(args, DRAW_PRECISION, ConvertLinesToPoints());
                 line.Draw(sender, args);
             }
         }
+
         public override void DrawResize(CanvasControl sender, CanvasDrawEventArgs args)
         {
             foreach (var line in Lines)
             {
-                DrawBezier(sender, args, DRAW_PRECISION, ConvertLinesToPoints());
+                DrawBezier(args, DRAW_PRECISION, ConvertLinesToPoints());
                 Mode = ShapeModes.Editing;
                 line.Draw(sender, args);
                 Mode = ShapeModes.Drawn;
@@ -89,29 +90,27 @@ namespace PaintCube.Shapes
             return points;
         }
 
-        private void DrawBezier(CanvasControl sender, CanvasDrawEventArgs args, double dt, List<Point> points)
+        private void DrawBezier(CanvasDrawEventArgs args, double precision, List<Point> points)
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
             int pointsCount = points.Count;
 
-
-            //TODO change to array
-            List<double> tempX = new List<double>(pointsCount);
-            List<double> tempY = new List<double>(pointsCount);
+            double[] coordXArray = new double[pointsCount];
+            double[] coordYArray = new double[pointsCount];
             for (int i = 0; i < pointsCount; ++i)
             {
-                tempX.Add(points[i].X);
-                tempY.Add(points[i].Y);
+                coordXArray[i] = points[i].X;
+                coordYArray[i] = points[i].Y;
             }
 
             List<Point> p = new List<Point>();
 
-            for (double t = 0; t < 1; t += dt)
-                p.Add(new Point(NextCoord(t, tempX), NextCoord(t, tempY)));
+            for (double t = 0; t < 1; t += precision)
+                p.Add(new Point(NextCoord(t, coordXArray), NextCoord(t, coordYArray)));
 
-            p.Add(new Point(NextCoord(1.0f, tempX), NextCoord(1.0f, tempY)));
+            p.Add(new Point(NextCoord(1.0f, coordXArray), NextCoord(1.0f, coordYArray)));
 
             int pCountEnd = p.Count - 1;
             for (int i = 0; i < pCountEnd; ++i)
@@ -123,15 +122,16 @@ namespace PaintCube.Shapes
         }
 
         //https://pomax.github.io/bezierinfo/   
-        private static double NextCoord(double t, List<double> x)
+        private static double NextCoord(double t, double[] x)
         {
-            int count = x.Count;
-            int[] distribution = BinomialDistribution(count);
+            int length = x.Length;
+            int[] distribution = BinomialDistribution(length);
 
             double s = 0;
-            for (int i = 0; i < count; ++i)
+            for (int i = 0; i < length; ++i)
             {
-                int c1 = count - (i + 1);
+                int c1 = length - (i + 1);
+
                 double a1 = c1 == 0 ? 1 : Math.Pow(1 - t, c1);
                 double a2 = i == 0 ? 1 : Math.Pow(t, i);
 
@@ -143,14 +143,14 @@ namespace PaintCube.Shapes
 
         private static int[] BinomialDistribution(int n)
         {
-            int[] temp = new int[n];
-            temp[0] = 1;
+            int[] result = new int[n];
+            result[0] = 1;
 
             for (int j = 0; j < n - 1; ++j)
                 for (int i = n - 1; i > 0; --i)
-                    temp[i] = temp[i] + (((i - 1) >= 0) ? temp[i - 1] : 0);
+                    result[i] = result[i] + (((i - 1) >= 0) ? result[i - 1] : 0);
 
-            return temp;
+            return result;
         }
 
         #endregion
